@@ -1,6 +1,7 @@
 package it.univr.is.services;
 
 import it.univr.is.database.Datasource;
+import it.univr.is.entity.Utente;
 
 import java.io.IOException;
 
@@ -49,7 +50,7 @@ public class MainServlet extends HttpServlet {
 	 * @param response
 	 */
 	
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
+	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// FRANCESCO: 
 		// -nella form in action indichi il servlet e come metodo GET o POST
@@ -66,8 +67,27 @@ public class MainServlet extends HttpServlet {
 					if (tipoInterrogazione.equalsIgnoreCase("Iscrizione")) {
 						//request.setAttribute("localMode", "INSERT");
 						//TODO
-						//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
-        			
+						
+						
+						
+						Utente u = new Utente();
+						u.setNome(request.getParameter("nome"));
+						u.setCognome(request.getParameter("cognome"));
+						u.setEmail(request.getParameter("email") );
+						u.setPassword(request.getParameter("password"));
+						u.setVia(request.getParameter("via"));
+						u.setCap(request.getParameter("cap"));
+						u.setCitta(request.getParameter("citta"));
+						u.setProvincia(request.getParameter("provincia"));
+						
+						//se l'inserimento ha successo
+						if(ds.insertUtente(u));
+							//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
+						
+						//altrimenti 
+						else
+						request.setAttribute("utente", u);
+						request.getRequestDispatcher("Pagina.jsp").forward(request, response);
 					}
 					
 					//Caso Form di Login
