@@ -16,32 +16,16 @@ import javax.servlet.http.HttpServletResponse;
  * che recupera i dati dal DB
  */
 
-public class MainServlet extends HttpServlet {
+public class MainServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private Datasource ds = new Datasource();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public MainServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
 
 	/*
 	 * Effettua le operazioni relative al tipo di request (sia GET che POST)
@@ -50,7 +34,7 @@ public class MainServlet extends HttpServlet {
 	 * @param response
 	 */
 	
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// FRANCESCO: 
 		// -nella form in action indichi il servlet e come metodo GET o POST
@@ -63,91 +47,28 @@ public class MainServlet extends HttpServlet {
 				
 				if (tipoInterrogazione != null) {
 					
-					//Caso Form di iscrizione
-					if (tipoInterrogazione.equalsIgnoreCase("Iscrizione")) {
-						//request.setAttribute("localMode", "INSERT");
-						//TODO
-						
-						
-						
-						Utente u = new Utente();
-						u.setNome(request.getParameter("nome"));
-						u.setCognome(request.getParameter("cognome"));
-						u.setEmail(request.getParameter("email") );
-						u.setPassword(request.getParameter("password"));
-						u.setVia(request.getParameter("via"));
-						u.setCap(request.getParameter("cap"));
-						u.setCitta(request.getParameter("citta"));
-						u.setProvincia(request.getParameter("provincia"));
-						
-						//se l'inserimento ha successo
-						if(ds.insertUtente(u));
-							//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
-						
-						//altrimenti 
-						else
-						request.setAttribute("utente", u);
-						request.getRequestDispatcher("Pagina.jsp").forward(request, response);
-					}
-					
-					//Caso Form di Login
-					if (tipoInterrogazione.equalsIgnoreCase("Login")) {
-										
-					}
-					
-					//Caso Form di recupero password
-					if (tipoInterrogazione.equalsIgnoreCase("Recupero_psw")) {
-						//request.setAttribute("localMode", "DELETE");
-					}
-					
-					//Caso Form di inserimento nuova password
-					if (tipoInterrogazione.equalsIgnoreCase("Recupero_newpsw")) {
-										
-					}
-					
-					//Caso Form di modifica dati utente
-					if (tipoInterrogazione.equalsIgnoreCase("Modifica")) {
-										
-					}
-					
-					//Caso Form di inserimento nuovo libro
-					if (tipoInterrogazione.equalsIgnoreCase("Inserimento_libro")) {
-										
-					}
-					
-					//Caso Form di eliminazione libro
-					if (tipoInterrogazione.equalsIgnoreCase("Cancella_libro")) {
-										
-					}
-					
-					//Caso Form di Login
-					if (tipoInterrogazione.equalsIgnoreCase("Login")) {
-										
-					}
-					
-					//Caso Form di aggiornamento stato libro
-					if (tipoInterrogazione.equalsIgnoreCase("Aggiorna_libro")) {
-										
-					}
-			       
-					//Caso Form di Login
-					if (tipoInterrogazione.equalsIgnoreCase("Login")) {
-										
-					}
-					
-					//Caso Form di Ricerca libri con filtri
-					if (tipoInterrogazione.equalsIgnoreCase("Ricerca")) {
-										
-					}
-					
-					//Caso Form modifica del moderatore da Segnalazione 
-					if (tipoInterrogazione.equalsIgnoreCase("Moderatore")) {
-										
-					}
-					
-					//Caso Form Ottenimento statistiche
-					if (tipoInterrogazione.equalsIgnoreCase("Statistiche")) {
-										
+					switch(tipoInterrogazione){
+					case "Iscrizione":
+					case "Login":
+					case "Recupero_psw":
+					case "Recupero_newpsw":
+					case "Modifica_utente":
+						request.getRequestDispatcher("UtenteServlet").forward(request, response);
+						break;
+					case "Inserimento_libro":
+					case "Cancella_libro":
+					case "Aggiorna_libro":
+					case "Ricerca_libro":
+						request.getRequestDispatcher("LibroServlet").forward(request, response);
+						break;
+					case "Moderatore":
+						request.getRequestDispatcher("ModeratoreServlet").forward(request, response);
+						break;
+					case "Statistiche":
+						request.getRequestDispatcher("StatisticheServlet").forward(request, response);
+						break;
+					default:
+						System.out.println("Errore");
 					}
 					
 				} 

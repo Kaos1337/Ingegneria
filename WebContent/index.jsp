@@ -12,7 +12,7 @@
 
 	<table>
 		<tr><td>	
-		Nome: <input type="text" name="nome" ></td></tr>
+		Nome: <input type="text" name="nome" value=<%=request.getParameter("nome") %>></td></tr>
 		<tr><td>	
 		Cognome: <input type="text" name="cognome"> </td></tr>
 		<tr><td>	
@@ -29,8 +29,6 @@
 		Città: <input type="text" name="citta"></td></tr>
 		<tr><td>	
 		Provincia: <input type="text" name="provincia"></td></tr>
-		<tr><td>	
-		Nazione: <input type="text" name="nazione"></td></tr>
 	</table>
 		
 	

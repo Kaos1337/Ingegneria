@@ -4,7 +4,8 @@ import it.univr.is.entity.Utente;
 
 public class Datasource {
 
-	public boolean insertUtente(Utente u) {
+
+	public boolean checkAndSubscribe(Utente utente) {
 		// TODO Auto-generated method stub
 		return false;
 	}
