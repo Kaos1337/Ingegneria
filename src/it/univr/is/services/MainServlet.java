@@ -1,8 +1,5 @@
 package it.univr.is.services;
 
-import it.univr.is.database.Datasource;
-import it.univr.is.entity.Utente;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -12,10 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet per comunicazione tra client e classe Datasource
- * che recupera i dati dal DB
+ * Servlet di interfaccia con le pagine.
+ * Determina le operazioni da eseguire in base al 
+ * valore String del parametro "Mode" nella request;
+ * valori supportati: {"Iscrizione","Login","Recupero_psw",
+ * "Recupero_newpsw","Modifica_utente","Inserimento_libro",
+ * "Cancella_libro","Aggiorna_libro","Ricerca_libro",
+ * "Moderatore","Statistiche"}
+ * @author marco
+ *
  */
-
 public class MainServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -27,13 +30,10 @@ public class MainServlet extends AbstractServlet {
         super();
     }
 
-	/*
-	 * Effettua le operazioni relative al tipo di request (sia GET che POST)
-	 * 
-	 * @param request
-	 * @param response
-	 */
 	
+	/**
+	 * Determina a quale Servlet secondaria deve essere passata la richiesta
+	 */
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// FRANCESCO: 
@@ -68,14 +68,19 @@ public class MainServlet extends AbstractServlet {
 						request.getRequestDispatcher("StatisticheServlet").forward(request, response);
 						break;
 					default:
-						System.out.println("Errore");
+						request.setAttribute("error", "Mode con valore non gestito: "+ tipoInterrogazione);
+						request.getRequestDispatcher("Errore.jsp").forward(request, response);
+						
 					}
 					
 				} 
+				
+				// se Mode non settata
 				else {
-					//caso per errore (metodo non indicato) torna home o pagina errore?
-					//request.getRequestDispatcher("Home.jsp").forward(request, response);
-					//TODO
+					//Nota: soluzione temporanea
+					request.setAttribute("error", "Mode senza valore: "+ tipoInterrogazione);
+					request.getRequestDispatcher("Errore.jsp").forward(request, response);
+					
 					}
 				}
 

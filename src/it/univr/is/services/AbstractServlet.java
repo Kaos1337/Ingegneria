@@ -1,7 +1,6 @@
 package it.univr.is.services;
 
 import it.univr.is.database.Datasource;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -12,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class AbstractServlet
+ * @author marco
+ *
  */
 @WebServlet("/AbstractServlet")
 abstract public class AbstractServlet extends HttpServlet {
@@ -42,6 +43,13 @@ abstract public class AbstractServlet extends HttpServlet {
 		processRequest(request, response);
 	}
 	
+	/**
+	 * Metodo da implementare nei figli per eseguire operazioni relative alla request
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	abstract void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	
 }

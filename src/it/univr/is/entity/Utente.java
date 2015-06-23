@@ -1,10 +1,12 @@
 package it.univr.is.entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 /*
  * Bean per elemento tabella Utente
  */
 
-public class Utente {
+public class Utente implements Entity{
 	
 	private String email ;
 	private String nome ;
@@ -30,6 +32,17 @@ public class Utente {
 		ruolo = -1 ;
 	}
 	
+	public Utente(HttpServletRequest request) {
+		setNome(request.getParameter("nome"));
+		setCognome(request.getParameter("cognome"));
+		setEmail(request.getParameter("email") );
+		setPassword(request.getParameter("password"));
+		setVia(request.getParameter("via"));
+		setCap(request.getParameter("cap"));
+		setCitta(request.getParameter("citta"));
+		setProvincia(request.getParameter("provincia"));
+	}
+
 	public String getEmail() {
 		return email;
 	}

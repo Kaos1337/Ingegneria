@@ -1,10 +1,12 @@
 package it.univr.is.entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 /*
  * Bean per elemento tabella Prestito
  */
 
-public class Prestito {
+public class Prestito implements Entity{
 	
 	private String titolo ;
 	private String utente ;
@@ -20,6 +22,10 @@ public class Prestito {
 	
 	}
 	
+	public Prestito(HttpServletRequest request) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getTitolo() {
 		return titolo;
 	}
