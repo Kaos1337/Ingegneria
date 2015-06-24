@@ -33,6 +33,7 @@ public class Utente implements Entity{
 	}
 	
 	public Utente(HttpServletRequest request) {
+		this();
 		setNome(request.getParameter("nome"));
 		setCognome(request.getParameter("cognome"));
 		setEmail(request.getParameter("email") );

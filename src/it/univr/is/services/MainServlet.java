@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author marco
  *
  */
+@WebServlet("/MainServlet")
 public class MainServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -36,7 +37,7 @@ public class MainServlet extends AbstractServlet {
 	 */
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// FRANCESCO: 
+		// @FRANCESCO: 
 		// -nella form in action indichi il servlet e come metodo GET o POST
 		// -nel tuo pulsante submit delle form dovresti scrivere qualcosa del tipo 
 		// <input type="submit" name="Mode" value="Iscrizione"> cosicchè io catturando
@@ -77,7 +78,7 @@ public class MainServlet extends AbstractServlet {
 				
 				// se Mode non settata
 				else {
-					//Nota: soluzione temporanea
+					//Nota: soluzione temporanea manda a pagina di errore
 					request.setAttribute("error", "Mode senza valore: "+ tipoInterrogazione);
 					request.getRequestDispatcher("Errore.jsp").forward(request, response);
 					

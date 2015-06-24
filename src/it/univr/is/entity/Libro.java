@@ -2,10 +2,11 @@ package it.univr.is.entity;
 
 import javax.servlet.http.HttpServletRequest;
 
-/*
+/**
  * Bean per elemento tabella Libro
+ * @author marco
+ *
  */
-
 public class Libro implements Entity{
 	
 	private String titolo ;
@@ -31,7 +32,14 @@ public class Libro implements Entity{
 	}
 	
 	public Libro(HttpServletRequest request) {
-		// TODO Auto-generated constructor stub
+		this();
+		setTitolo(request.getParameter("titolo"));
+		setAutore(request.getParameter("autore") );
+		setCategoria(request.getParameter("categoria"));
+		setCategoria2(request.getParameter("categoria2"));
+		setEdizione(request.getParameter("edizione"));
+		setIsbn(request.getParameter("isbn"));
+		setCopertina(request.getParameter("copertina"));
 	}
 
 	public String getTitolo() {

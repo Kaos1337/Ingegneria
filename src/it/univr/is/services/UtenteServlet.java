@@ -30,6 +30,9 @@ public class UtenteServlet extends AbstractServlet {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Metodo per determinare l'operazione da eseguire relativa ai dati utente
+     */
 	@Override
 	void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -53,12 +56,40 @@ public class UtenteServlet extends AbstractServlet {
 			this.updatePsw(request, response);
 			break;
 		case "Modifica_utente":
+			this.updateUtente(request,response);
+			break;
 			
 		default :
-			request.setAttribute("error", "Mode senza valore: "+ tipoInterrogazione);
+			request.setAttribute("error", "Valore non gestito: "+ tipoInterrogazione);
 			request.getRequestDispatcher("Errore.jsp").forward(request, response);
 		
 		}
+	}
+
+	private void updateUtente(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		//raccolgo i dati nuovi dalla request
+		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		
+		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
+		//Nota: chi fa controllo su corrispondenza con psw attuale? Qui ho considerato servlet,
+		//se è conservata nella sessione può essere fatta su client?
+		Utente actualUtente = (Utente) request.getSession().getAttribute("utente");
+		actualUtente.setPassword((String) request.getAttribute("actualpassword"));
+		
+		//se l'aggiornamento ha successo
+		if(!ds.updateUtente(utente, actualUtente)){//! da eliminare all'implementazione del datasource
+			request.getRequestDispatcher("Home.jsp").forward(request, response);
+			
+		}
+		
+		//altrimenti ricarica la pagina per immettere nuovi dati
+		else{
+		request.setAttribute("error", "Dati o password non accettabili");
+		request.getRequestDispatcher("Aggiornamento.jsp").forward(request, response);
+		}
+		
 	}
 
 	/**
@@ -128,14 +159,17 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//se l'inserimento ha successo
 		if(!ds.checkAndSubscribe(utente)){//! da eliminare all'implementazione del datasource
-			request.setAttribute("utente", utente);//da eliminare quando esempio non più necessario
-			request.getRequestDispatcher("Pagina.jsp").forward(request, response);
+			//request.setAttribute("utente", utente);//da eliminare quando esempio non più necessario
+			//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
+			request.getSession().setAttribute("utente", utente);
+			//response.sendRedirect("Pagina.jsp");
+		
 		}
 		
 		//altrimenti 
 		else {
 			request.setAttribute("errore", "Impossibile completare l'iscrizione");
-			request.getRequestDispatcher("Errore.jsp").forward(request, response);
+			request.getRequestDispatcher("Iscrizione.jsp").forward(request, response);
 		}
 		
 	}
