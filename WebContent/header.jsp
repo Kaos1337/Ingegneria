@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
+<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean> 
+<%
+
+
+
+String userEmail = null;
+
+// Check if this is new comer on your web page.
+if (session.isNew()){
+	userEmail = utente.getEmail();
+}
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -97,8 +111,17 @@ code {
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+          
+          <% if(userEmail == null){ %>
+          
             <li><a href="./login.jsp">Login</a></li>
             <li><a href="./register.jsp">Registrati</a></li>
+            
+          <% }else{  %>
+
+			<li><a href="#">Ciao <%=utente.getNome()%>!</a></li>
+  
+          <% } %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

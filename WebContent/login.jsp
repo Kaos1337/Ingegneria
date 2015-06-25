@@ -30,6 +30,12 @@
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value="login">Login</button>
 		</form>
+		
+		<%
+		if(request.getParameter("error") != null){
+		%>
+		<br><p class="bg-danger"><%=request.getParameter("error")%></p>
+		<% } %>
 
       </div> <!-- /jumbotron -->
 
