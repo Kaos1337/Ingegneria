@@ -4,8 +4,6 @@
 <jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean> 
 <%
 
-
-
 String userEmail = null;
 
 // Check if this is new comer on your web page.
@@ -18,6 +16,7 @@ if (session.isNew()){
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="shortcut icon" href="./img/favicon.ico" />
 
 <!-- jQuery -->
 <script src="./js/jquery-2.1.4.min.js"></script>
@@ -75,10 +74,9 @@ code {
 
 </style>
 
-
 </head>
-<body>
 
+<body>
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -126,6 +124,3 @@ code {
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
-</body>
-</html>
