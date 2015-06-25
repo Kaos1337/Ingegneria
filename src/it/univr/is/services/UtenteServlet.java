@@ -68,7 +68,7 @@ public class UtenteServlet extends AbstractServlet {
 			
 		default :
 			request.setAttribute("error", "Valore non gestito: "+ tipoInterrogazione);
-			request.getRequestDispatcher("Error.jsp").forward(request, response);
+			request.getRequestDispatcher("error.jsp").forward(request, response);
 		
 		}
 	}
@@ -83,9 +83,10 @@ public class UtenteServlet extends AbstractServlet {
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
+		
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
-		//verifico validità
+		//verifico validità credenziali
 		utente = ds.login(utente);
 		
 		//se c'è riscontro delle credenziali
@@ -116,25 +117,70 @@ public class UtenteServlet extends AbstractServlet {
 	private void updateUtente(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		//controllo validità dati
+		boolean reqValid = true;
+		String error = "Dati non validi:/n<ul>";
+			
+		String param = request.getParameter("email");
+		if(param==null || !param.contains("@") || param.length()>25) {
+			reqValid=false;
+			error += "<li>email</li>";}
+			
+		param = request.getParameter("password");
+		if(param==null || param.length()<4 || param.length()>25) {
+			reqValid=false;
+			error += "<li>password</li>";
+		}
+				
+		param = request.getParameter("via");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>via</li>";
+		}
+				
+		param = request.getParameter("civico");
+		if(param==null || (new Integer(param)) instanceof Integer || param.length()>25) {
+			reqValid=false;
+			error += "<li>civico</li>";
+		}
+				
+		param = request.getParameter("cap");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>cap</li>";
+		}
+				
+		param = request.getParameter("citta");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>citta</li>";
+		}
+				
+		param = request.getParameter("provincia");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>provincia</li>";
+		}
+	
 		//raccolgo i dati nuovi dalla request
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
 		//Nota: chi fa controllo su corrispondenza con psw attuale? Qui ho considerato servlet,
 		//se è conservata nella sessione può essere fatta su client?
-		Utente actualUtente = (Utente) request.getSession().getAttribute("utente");
-		actualUtente.setPassword((String) request.getAttribute("actualpassword"));
+		Utente utente_attuale = (Utente) request.getSession().getAttribute("utente");
+		utente_attuale.setPassword((String) request.getAttribute("password_attuale"));
 		
 		//se l'aggiornamento ha successo
-		if(!ds.updateUtente(utente, actualUtente)){//! da eliminare all'implementazione del datasource
-			request.getRequestDispatcher("Home.jsp").forward(request, response);
+		if(!ds.updateUtente(utente, utente_attuale) && reqValid){//! da eliminare all'implementazione del datasource
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 		}
 		
 		//altrimenti ricarica la pagina per immettere nuovi dati
 		else{
-		request.setAttribute("error", "Dati o password non accettabili");
-		request.getRequestDispatcher("Aggiornamento.jsp").forward(request, response);
+		request.setAttribute("error", error+"</ul>");
+		request.getRequestDispatcher("ucp.jsp").forward(request, response);
 		}
 		
 	}
@@ -149,11 +195,16 @@ public class UtenteServlet extends AbstractServlet {
 	private void updatePsw(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		boolean reqValid = true;
+		
+		String param = request.getParameter("password");
+		if(param==null || param.length()<4 || param.length()>25) reqValid=false;
+		
+		
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
-		
 		//se la sostituzione ha successo
-		if(!ds.updatePswl(utente)){//! da eliminare all'implementazione del datasource
+		if(!ds.updatePswl(utente) && reqValid){//! da eliminare all'implementazione del datasource
 			request.setAttribute("info", "Ora puoi effettuare il login");
 			request.getRequestDispatcher("Login.jsp").forward(request, response);
 			
@@ -179,7 +230,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//se c'è riscontro eseguo effettive operazioni
 		if(!ds.checkMail(request.getParameter("email"))){//! da eliminare all'implementazione del datasource
-			//TODO
+			//TODO invio mail
 		}
 			
 		//in ogni caso dico che la mail è stata inviata
@@ -199,24 +250,76 @@ public class UtenteServlet extends AbstractServlet {
 	private void checkAndSubscribe(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		//faccio uso dell'abstract factory, sarebbe stato equivalente new Utente(request)
-		//se vogliamo dirla tutta non è utile qui perchè comunque uso Utente, dovrei piuttosto 
-		//usare solo riferimenti a Entity. Intanto l'ho messa, chiedetemi
+		//controllo validità dati
+		boolean reqValid = true;
+		String error = "Dati non validi:/n<ul>";
+		
+		String param = request.getParameter("nome");
+		if(param==null || param.length()<2 || param.length()>25) {
+			reqValid=false;
+			error += "<li>nome</li>";
+		}
+		
+		param = request.getParameter("cognome");
+		if(param==null || param.length()<4 || param.length()>25) {
+			reqValid=false;
+			error += "<li>cognome</li>";
+		}
+		
+		param = request.getParameter("email");
+		if(param==null || !param.contains("@") || param.length()>25) {
+			reqValid=false;
+			error += "<li>email</li>";}
+			
+		param = request.getParameter("password");
+		if(param==null || param.length()<4 || param.length()>25) {
+			reqValid=false;
+			error += "<li>password</li>";
+		}
+				
+		param = request.getParameter("via");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>via</li>";
+		}
+				
+		param = request.getParameter("civico");
+		if(param==null || (new Integer(param)) instanceof Integer || param.length()>25) {
+			reqValid=false;
+			error += "<li>civico</li>";
+		}
+				
+		param = request.getParameter("cap");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>cap</li>";
+		}
+				
+		param = request.getParameter("citta");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>citta</li>";
+		}
+				
+		param = request.getParameter("provincia");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>provincia</li>";
+		}
+		
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//se l'inserimento ha successo
-		if(!ds.checkAndSubscribe(utente)){//! da eliminare all'implementazione del datasource
-			//request.setAttribute("utente", utente);//da eliminare quando esempio non più necessario
-			//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
+		if(!ds.checkAndSubscribe(utente) && reqValid){//! da eliminare all'implementazione del datasource
 			request.getSession().setAttribute("utente", utente);
-			response.sendRedirect("Pagina.jsp");
+			response.sendRedirect("index.jsp");
 		
 		}
 		
 		//altrimenti 
 		else {
-			request.setAttribute("errore", "Impossibile completare l'iscrizione");
-			request.getRequestDispatcher("Iscrizione.jsp").forward(request, response);
+			request.setAttribute("error", "Impossibile completare l'iscrizione");
+			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
 		
 	}

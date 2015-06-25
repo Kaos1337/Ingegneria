@@ -40,6 +40,7 @@ public class Utente implements Entity{
 		setEmail(request.getParameter("email"));
 		setPassword(request.getParameter("password"));
 		setVia(request.getParameter("via"));
+		if(request.getParameter("civico")!=null) setCivico(Integer.parseInt(request.getParameter("civico")));
 		setCap(request.getParameter("cap"));
 		setCitta(request.getParameter("citta"));
 		setProvincia(request.getParameter("provincia"));

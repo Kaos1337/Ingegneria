@@ -37,12 +37,6 @@ public class MainServlet extends AbstractServlet {
 	 */
 	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// @FRANCESCO: 
-		// -nella form in action indichi il servlet e come metodo GET o POST
-		// -nel tuo pulsante submit delle form dovresti scrivere qualcosa del tipo 
-		// <input type="submit" name="Mode" value="Iscrizione"> cosicchè io catturando
-		// qui il Mode sappia che la request contiene ad esempio dati per l'iscrizione utente 
-		
 		// ottenimento tipo di richiesta
 				String tipoInterrogazione = request.getParameter("mode");
 				
@@ -71,7 +65,7 @@ public class MainServlet extends AbstractServlet {
 						break;
 					default:
 						request.setAttribute("error", "Mode con valore non gestito: "+ tipoInterrogazione);
-						request.getRequestDispatcher("Errore.jsp").forward(request, response);
+						request.getRequestDispatcher("error.jsp").forward(request, response);
 						
 					}
 					
@@ -81,7 +75,7 @@ public class MainServlet extends AbstractServlet {
 				else {
 					//Nota: soluzione temporanea manda a pagina di errore
 					request.setAttribute("error", "Mode senza valore: "+ tipoInterrogazione);
-					request.getRequestDispatcher("Errore.jsp").forward(request, response);
+					request.getRequestDispatcher("error.jsp").forward(request, response);
 					
 					}
 				}
