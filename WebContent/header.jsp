@@ -63,6 +63,24 @@ code {
   font-size: 80%;
 }
 
+.navbar-default .navbar-nav>li>form>a {
+  color: #777;
+  display: block;
+  padding: 10px 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-default .navbar-nav>li>form>a:focus, .navbar-default .navbar-nav>li>form>a:hover {
+  color: #333;
+  background-color: transparent;
+}
+
+.nav>li>form>a:focus, .nav>li>form>a:hover {
+  text-decoration: none;
+  background-color: #eee;
+}
+
 </style>
 
 </head>
@@ -111,7 +129,7 @@ code {
           <% }else{  %>
 
 			<li><a href="#">Ciao <%=utente.getNome()%>!</a></li>
-			<li><form action="MainServlet"><a href="#" type="submit" name="mode" value="logout" >Logout</a></form></li>
+			<li><form action="MainServlet"><a href="#" type="submit" name="mode" value="logout">Logout</a></form></li>
   
           <% } %>
           </ul>
