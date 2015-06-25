@@ -108,7 +108,6 @@ public class UtenteServlet extends AbstractServlet {
 		//se c'è riscontro delle credenziali
 		if(utente!=null){
 			
-			System.out.println("------------------------------------"+utente);
 			utente.setPassword(null);
 			request.getSession().setAttribute("utente",utente );
 			response.sendRedirect("index.jsp");
