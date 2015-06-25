@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author marco
  *
  */
-@WebServlet("/MainServlet")
+
 public class MainServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
 	
