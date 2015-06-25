@@ -19,12 +19,6 @@
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value="recupero_psw">Recupera</button>
 		</form>
-		
-		<%
-		if(request.getAttribute("info") != null){
-		%>
-		<br><p class="bg-success"><%=request.getAttribute("info")%></p>
-		<% } %>
 
       </div> <!-- /jumbotron -->
 
