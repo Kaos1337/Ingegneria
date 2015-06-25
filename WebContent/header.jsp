@@ -63,20 +63,25 @@ code {
   font-size: 80%;
 }
 
-.navbar-default .navbar-nav>li>form>a {
+/* Per il bottone di logout
+-------------------------------------------------- */
+.navbar-default .navbar-nav>li>form>button {
   color: #777;
   display: block;
   padding: 10px 15px;
   padding-top: 15px;
   padding-bottom: 15px;
+  background:none!important;
+  border:none;
+  font: inherit;
 }
 
-.navbar-default .navbar-nav>li>form>a:focus, .navbar-default .navbar-nav>li>form>a:hover {
+.navbar-default .navbar-nav>li>form>button:focus, .navbar-default .navbar-nav>li>form>button:hover {
   color: #333;
   background-color: transparent;
 }
 
-.nav>li>form>a:focus, .nav>li>form>a:hover {
+.nav>li>form>a:focus, .nav>li>form>button:hover {
   text-decoration: none;
   background-color: #eee;
 }
@@ -129,7 +134,8 @@ code {
           <% }else{  %>
 
 			<li><a href="#">Ciao <%=utente.getNome()%>!</a></li>
-			<li><form action="MainServlet"><a href="#" type="submit" name="mode" value="logout">Logout</a></form></li>
+			<li><form action="MainServlet"><button type="submit" name="mode" value="logout">Logout</button></form></li>
+			
   
           <% } %>
           </ul>
