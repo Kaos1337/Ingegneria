@@ -49,6 +49,11 @@ public class UtenteServlet extends AbstractServlet {
 			this.login(request, response);
 			break;
 			
+		case "logout":
+			request.getSession().invalidate();
+			response.sendRedirect("index.jsp");
+			break;
+			
 		case "recupero_psw":
 			this.checkMail(request, response);
 			break;

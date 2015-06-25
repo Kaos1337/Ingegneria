@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet di interfaccia con le pagine.
  * Determina le operazioni da eseguire in base al 
  * valore String del parametro "Mode" nella request;
- * valori supportati: {"iscrizione","login","recupero_psw",
+ * valori supportati: {"iscrizione","login","logout","recupero_psw",
  * "recupero_newpsw","modifica_utente","inserimento_libro",
  * "cancella_libro","aggiorna_libro","ricerca_libro",
  * "moderatore","statistiche"}
@@ -51,6 +51,7 @@ public class MainServlet extends AbstractServlet {
 					switch(tipoInterrogazione){
 					case "iscrizione":
 					case "login":
+					case "logout":
 					case "recupero_psw":
 					case "recupero_newpsw":
 					case "modifica_utente":
