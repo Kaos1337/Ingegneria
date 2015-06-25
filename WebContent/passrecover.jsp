@@ -17,13 +17,13 @@
 		    <input type="email" class="form-control" name="email">
 		  </div>
 		  
-		  <button type="submit" class="btn btn-default" name="mode" value="recupero">Recupera</button>
+		  <button type="submit" class="btn btn-default" name="mode" value="recupero_psw">Recupera</button>
 		</form>
 		
 		<%
-		if(request.getAttribute("msg") != null){
+		if(request.getAttribute("info") != null){
 		%>
-		<br><p class="bg-success"><%=request.getAttribute("msg")%></p>
+		<br><p class="bg-success"><%=request.getAttribute("info")%></p>
 		<% } %>
 
       </div> <!-- /jumbotron -->
