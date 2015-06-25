@@ -79,7 +79,8 @@ code {
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.jsp">Home</a></li>
+            <!-- <li class="active"><a href="index.jsp">Home</a></li>  -->
+            <li><a href="index.jsp">Home</a></li>
             <li><a href="#voce2">Voce2</a></li>
             <li><a href="#voce3">Voce3</a></li>
             <li class="dropdown">
@@ -97,6 +98,7 @@ code {
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="./login.jsp">Login</a></li>
+            <li><a href="./register.jsp">Registrati</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
