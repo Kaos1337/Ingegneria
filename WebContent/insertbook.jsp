@@ -1,9 +1,16 @@
+<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <jsp:include page="header.jsp" />
 
 <head>
 <title>Inserisci libro</title>
 </head>
 	
+<% if(utente.getEmail() == null){ %>
+<div class="container">
+	<p class="bg-danger">Errore: Per vedere questa pagina bisogna essere loggati.</p>
+</div>
+<% }else{  %>
+
 	<div class="container">
 
       <div class="jumbotron">
@@ -53,5 +60,7 @@
       </div> <!-- /jumbotron -->
 
     </div> <!-- /container -->
+    
+<% } %>
     
 <jsp:include page="footer.jsp" />

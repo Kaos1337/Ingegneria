@@ -1,9 +1,15 @@
+<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <jsp:include page="header.jsp" />
-<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean> 
 
 <head>
 <title>Pannello Utente</title>
 </head>
+
+<% if(utente.getEmail() == null){ %>
+<div class="container">
+	<p class="bg-danger">Errore: Per vedere questa pagina bisogna essere loggati.</p>
+</div>
+<% }else{  %>
 
 	<div class="container">
 
@@ -14,27 +20,27 @@
 		<form action="MainServlet" method="POST">
 		  <div class="form-group">
 		    <label for="via">Via</label>
-		    <input type="text" class="form-control" name="via" value=<%=request.getParameter(utente.getVia())%>>
+		    <input type="text" class="form-control" name="via" value=<%=utente.getVia()%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="civico">Civico</label>
-		    <input type="text" class="form-control" name="civico" value=<%=request.getParameter(String.valueOf(utente.getCivico()))%>>
+		    <input type="text" class="form-control" name="civico" value=<%=utente.getCivico()%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="cap">Cap</label>
-		    <input type="text" class="form-control" name="cap" value=<%=request.getParameter(utente.getCap())%>>
+		    <input type="text" class="form-control" name="cap" value=<%=utente.getCap()%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="citta">Città</label>
-		    <input type="text" class="form-control" name="citta" value=<%=request.getParameter(utente.getCitta())%>>
+		    <input type="text" class="form-control" name="citta" value=<%=utente.getCitta()%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="provincia">Provincia</label>
-		    <input type="text" class="form-control" name="provincia" value=<%=request.getParameter(utente.getProvincia())%>>
+		    <input type="text" class="form-control" name="provincia" value=<%=utente.getProvincia()%>>
 		  </div>
 		  
 		  <div class="form-group">
@@ -53,5 +59,7 @@
       </div> <!-- /jumbotron -->
 
     </div> <!-- /container -->
+    
+<% } %>
     
 <jsp:include page="footer.jsp" />
