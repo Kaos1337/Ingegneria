@@ -26,9 +26,9 @@
 		</form>
 		
 		<%
-		if(request.getParameter("error") != null){
+		if(request.getAttribute("error") != null){
 		%>
-		<br><p class="bg-danger"><%=request.getParameter("error")%></p>
+		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
 		<% } %>
 
       </div> <!-- /jumbotron -->
