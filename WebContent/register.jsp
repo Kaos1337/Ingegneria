@@ -22,37 +22,37 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Email</label>
+		    <label for="email">Email</label>
 		    <input type="email" class="form-control" name="email">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Password</label>
+		    <label for="password">Password</label>
 		    <input type="password" class="form-control" placeholder="Password" name="password" >
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Via</label>
+		    <label for="via">Via</label>
 		    <input type="text" class="form-control" name="via">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Civico</label>
+		    <label for="civico">Civico</label>
 		    <input type="text" class="form-control" name="civico">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Cap</label>
+		    <label for="cap">Cap</label>
 		    <input type="text" class="form-control" name="cap">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Città</label>
+		    <label for="citta">Città</label>
 		    <input type="text" class="form-control" name="citta">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Provincia</label>
+		    <label for="provincia">Provincia</label>
 		    <input type="text" class="form-control" name="provincia">
 		  </div>
 		  

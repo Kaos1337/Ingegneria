@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean> 
+<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <%
 
 String userEmail = null;
@@ -94,15 +94,14 @@ code {
             <!-- <li class="active"><a href="index.jsp">Home</a></li>  -->
             <li><a href="index.jsp">Home</a></li>
             
-            <% if(userEmail != null){ %>
-            <li><a href="#voce2">Pannello Utente</a></li>
+            <% if(userEmail == null){ %>
+            <li><a href="./ucp.jsp">Pannello Utente</a></li>
             
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Inserisci libro</a></li>
+                <li><a href="./insertbook.jsp">Inserisci libro</a></li>
                 <li><a href="#">Cerca libro</a></li>
-                <li><a href="#">Ricerca</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">La tua libreria</li>
                 <li><a href="#">Gestisci</a></li>
@@ -113,7 +112,7 @@ code {
           </ul>
           <ul class="nav navbar-nav navbar-right">
           
-          <% if(userEmail == null){ %>
+          <% if(userEmail != null){ %>
           
             <li><a href="./login.jsp">Login</a></li>
             <li><a href="./register.jsp">Registrati</a></li>

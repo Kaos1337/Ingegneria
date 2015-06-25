@@ -13,12 +13,12 @@
 		<form action="MainServlet" method="POST">
 		
 		  <div class="form-group">
-		    <label for="cognome">Email</label>
+		    <label for="email">Email</label>
 		    <input type="email" class="form-control" name="email">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="cognome">Password</label>
+		    <label for="password">Password</label>
 		    <input type="password" class="form-control" placeholder="Password" name="password" >
 		  </div>
 		  

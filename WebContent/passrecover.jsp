@@ -13,7 +13,7 @@
 		<form action="MainServlet" method="POST">
 		
 		  <div class="form-group">
-		    <label for="cognome">Email</label>
+		    <label for="email">Email</label>
 		    <input type="email" class="form-control" name="email">
 		  </div>
 		  
