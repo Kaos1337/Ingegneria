@@ -35,14 +35,14 @@ public class Utente implements Entity{
 	
 	public Utente(HttpServletRequest request) {
 		this();
-		setNome(request.getParameter("nome")!=null?request.getParameter("nome"):nome);
-		setCognome(request.getParameter("cognome")!=null?request.getParameter("cognome"):cognome);
-		setEmail(request.getParameter("email")!=null?request.getParameter("email"):email);
-		setPassword(request.getParameter("password")!=null?request.getParameter("password"):password);
-		setVia(request.getParameter("via")!=null?request.getParameter("via"):via);
-		setCap(request.getParameter("cap")!=null?request.getParameter("cap"):cap);
-		setCitta(request.getParameter("citta")!=null?request.getParameter("citta"):citta);
-		setProvincia(request.getParameter("provincia")!=null?request.getParameter("provincia"):provincia);
+		setNome(request.getParameter("nome"));
+		setCognome(request.getParameter("cognome"));
+		setEmail(request.getParameter("email"));
+		setPassword(request.getParameter("password"));
+		setVia(request.getParameter("via"));
+		setCap(request.getParameter("cap"));
+		setCitta(request.getParameter("citta"));
+		setProvincia(request.getParameter("provincia"));
 	}
 
 	public String getEmail() {

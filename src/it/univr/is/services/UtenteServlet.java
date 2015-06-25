@@ -154,7 +154,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//se la sostituzione ha successo
 		if(!ds.updatePswl(utente)){//! da eliminare all'implementazione del datasource
-			request.setAttribute("msg", "Ora puoi effettuare il login");
+			request.setAttribute("info", "Ora puoi effettuare il login");
 			request.getRequestDispatcher("Login.jsp").forward(request, response);
 			
 		}
@@ -183,8 +183,8 @@ public class UtenteServlet extends AbstractServlet {
 		}
 			
 		//in ogni caso dico che la mail è stata inviata
-		request.setAttribute("msg", "Controlla la tua casella di posta elettronica");
-		request.getRequestDispatcher("Login.jsp").forward(request, response);
+		request.setAttribute("info", "Controlla la tua casella di posta elettronica");
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 		
 		
 	}
