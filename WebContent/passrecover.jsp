@@ -1,14 +1,14 @@
 <jsp:include page="header.jsp" />
 
 <head>
-<title>Login</title>
+<title>Recupero Password</title>
 </head>
 
 	<div class="container">
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h2>Loggati</h2>
+        <h2>Recupero password</h2>
         
 		<form action="MainServlet" method="POST">
 		
@@ -17,19 +17,13 @@
 		    <input type="email" class="form-control" name="email">
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="cognome">Password</label>
-		    <input type="password" class="form-control" placeholder="Password" name="password" >
-		  </div>
-		  
-		  <a href="./passrecover.jsp"><button class="btn btn-primary">Recupero password</button></a>
-		  <button type="submit" class="btn btn-default" name="mode" value="login">Login</button>
+		  <button type="submit" class="btn btn-default" name="mode" value="recupero">Recupera</button>
 		</form>
 		
 		<%
-		if(request.getAttribute("error") != null){
+		if(request.getAttribute("msg") != null){
 		%>
-		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+		<br><p class="bg-success"><%=request.getAttribute("msg")%></p>
 		<% } %>
 
       </div> <!-- /jumbotron -->
