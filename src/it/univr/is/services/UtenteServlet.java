@@ -83,7 +83,7 @@ public class UtenteServlet extends AbstractServlet {
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
-		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//verifico validità
 		utente = ds.login(utente);
@@ -117,7 +117,7 @@ public class UtenteServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		//raccolgo i dati nuovi dalla request
-		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
 		//Nota: chi fa controllo su corrispondenza con psw attuale? Qui ho considerato servlet,
@@ -149,7 +149,7 @@ public class UtenteServlet extends AbstractServlet {
 	private void updatePsw(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		
 		//se la sostituzione ha successo
@@ -202,7 +202,7 @@ public class UtenteServlet extends AbstractServlet {
 		//faccio uso dell'abstract factory, sarebbe stato equivalente new Utente(request)
 		//se vogliamo dirla tutta non è utile qui perchè comunque uso Utente, dovrei piuttosto 
 		//usare solo riferimenti a Entity. Intanto l'ho messa, chiedetemi
-		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//se l'inserimento ha successo
 		if(!ds.checkAndSubscribe(utente)){//! da eliminare all'implementazione del datasource

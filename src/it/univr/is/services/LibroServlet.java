@@ -75,7 +75,7 @@ public class LibroServlet extends AbstractServlet {
 	private void searchLibri(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		libro = (Libro) EntityFactory.getFactory(libro).makeElement(request);
+		libro = (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
 		
 		request.setAttribute("ListaLibri", ds.searchLibri(libro, request.getParameter("citta"),request.getParameter("provincia")));
 		request.getRequestDispatcher("Ricerca.jsp").forward(request, response);
@@ -112,7 +112,7 @@ public class LibroServlet extends AbstractServlet {
 	private void insertLibro(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		libro =  (Libro) EntityFactory.getFactory(libro).makeElement(request);
+		libro =  (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
 		libro.setUtente(((Utente) request.getAttribute("utente")).getEmail());
 		
 		ds.insertLibro(libro);

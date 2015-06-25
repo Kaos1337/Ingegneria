@@ -15,13 +15,13 @@ public abstract class EntityFactory {
 
 	/**
 	 * Ritorna la factory per l'entità fornita
-	 * @param e
+	 * @param string
 	 * @return
 	 */
-	public static EntityFactory getFactory(Entity e){
-		if (e.getClass()==Utente.class)
+	public static EntityFactory getFactory(String string){
+		if (string=="UTENTE")
 			return new UtenteFactory();
-		else if(e.getClass()==Libro.class)
+		else if(string=="LIBRO")
 			return new LibroFactory();
 		else
 			return new PrestitoFactory();
