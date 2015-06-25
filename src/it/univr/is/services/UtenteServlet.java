@@ -89,9 +89,26 @@ public class UtenteServlet extends AbstractServlet {
 		//verifico validità credenziali
 		utente = ds.login(utente);
 		
+		//////////////////////////////////TEMP per Login
+		if(request.getParameter("email").contentEquals("test@email.com") && request.getParameter("password").contentEquals("password")){
+			
+			utente = new Utente();
+			
+			utente.setEmail("test@email.com");
+			utente.setNome("Darkaos");
+			utente.setCognome("NevioDavide");
+			utente.setProvincia("Verona");
+			utente.setCitta("cita");
+			utente.setCivico(10);
+			utente.setCap("37013");
+			utente.setVia("via da qui");
+		}
+		//////////////////////////////////TEMP
+		
 		//se c'è riscontro delle credenziali
 		if(utente!=null){
 			
+			System.out.println("------------------------------------"+utente);
 			utente.setPassword(null);
 			request.getSession().setAttribute("utente",utente );
 			response.sendRedirect("index.jsp");
@@ -206,7 +223,7 @@ public class UtenteServlet extends AbstractServlet {
 		//se la sostituzione ha successo
 		if(!ds.updatePswl(utente) && reqValid){//! da eliminare all'implementazione del datasource
 			request.setAttribute("info", "Ora puoi effettuare il login");
-			request.getRequestDispatcher("Login.jsp").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		}
 		
