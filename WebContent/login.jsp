@@ -22,7 +22,7 @@
 		    <input type="password" class="form-control" placeholder="Password" name="password" >
 		  </div>
 		  
-		  <a href="./passrecover.jsp"><button class="btn btn-primary">Recupero password</button></a>
+		  <a class="btn btn-primary" href="passrecover.jsp">Recupero password</a>
 		  <button type="submit" class="btn btn-default" name="mode" value="login">Login</button>
 		</form>
 		
