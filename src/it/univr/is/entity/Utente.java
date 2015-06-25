@@ -2,10 +2,11 @@ package it.univr.is.entity;
 
 import javax.servlet.http.HttpServletRequest;
 
-/*
+/**
  * Bean per elemento tabella Utente
+ * @author marco
+ *
  */
-
 public class Utente implements Entity{
 	
 	private String email ;

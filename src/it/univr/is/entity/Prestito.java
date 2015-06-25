@@ -2,8 +2,10 @@ package it.univr.is.entity;
 
 import javax.servlet.http.HttpServletRequest;
 
-/*
+/**
  * Bean per elemento tabella Prestito
+ * @author marco
+ *
  */
 
 public class Prestito implements Entity{

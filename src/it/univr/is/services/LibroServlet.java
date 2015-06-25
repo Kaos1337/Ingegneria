@@ -37,16 +37,22 @@ public class LibroServlet extends AbstractServlet {
 	void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String tipoInterrogazione = request.getParameter("Mode");
+		String tipoInterrogazione = request.getParameter("mode");
 		
 		switch(tipoInterrogazione){
 		
-		case "Inserimento_libro":
+		case "inserimento_libro":
 			this.insertLibro(request,response);
 			break;
 			
-		case "Cancella_libro":
+		case "cancella_libro":
 			this.cancellaLibri(request,response);
+			break;
+			
+		case "aggiorna_libro":
+			//TODO
+		case "ricerca_libro":
+			this.searchLibri(request,response);
 			break;
 
 			
@@ -55,6 +61,25 @@ public class LibroServlet extends AbstractServlet {
 			request.getRequestDispatcher("Errore.jsp").forward(request, response);
 		
 		}
+	}
+
+
+	/**
+	 * Invia dati al Datasource per ottenere la lista di libri 
+	 * associata al filtro della request
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void searchLibri(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		libro = (Libro) EntityFactory.getFactory(libro).makeElement(request);
+		
+		request.setAttribute("ListaLibri", ds.searchLibri(libro, request.getParameter("citta"),request.getParameter("provincia")));
+		request.getRequestDispatcher("Ricerca.jsp").forward(request, response);
+		
 	}
 
 

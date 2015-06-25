@@ -76,4 +76,28 @@ public class Datasource {
 		return null;
 	}
 
+	/**
+	 * Ritorna una lista di libri con campo di selezione fasle
+	 * filtrata dai parametri non null passati
+	 * @param libro
+	 * @param parameter
+	 * @param parameter2
+	 * @return 
+	 */
+	public ArrayList<LibroConSelezione> searchLibri(Libro libro, String citta, String provincia) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Motodo per verifica credenziali di login email e psw.
+	 * Ritorna Utente null se nessuna corrispondenza
+	 * @param utente
+	 * @return Utente loggato
+	 */
+	public Utente login(Utente utente) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

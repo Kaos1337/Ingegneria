@@ -37,35 +37,77 @@ public class UtenteServlet extends AbstractServlet {
 	void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String tipoInterrogazione = request.getParameter("Mode");
+		String tipoInterrogazione = request.getParameter("mode");
 		
 		switch(tipoInterrogazione){
 		
-		case "Iscrizione":
+		case "iscrizione":
 			this.checkAndSubscribe(request,response);
 			break;
 			
-		case "Login":
-			//TODO
+		case "login":
+			this.login(request, response);
+			break;
 			
-		case "Recupero_psw":
+		case "recupero_psw":
 			this.checkMail(request, response);
 			break;
 			
-		case "Recupero_newpsw":
+		case "recupero_newpsw":
 			this.updatePsw(request, response);
 			break;
-		case "Modifica_utente":
+			
+		case "modifica_utente":
 			this.updateUtente(request,response);
 			break;
 			
 		default :
 			request.setAttribute("error", "Valore non gestito: "+ tipoInterrogazione);
-			request.getRequestDispatcher("Errore.jsp").forward(request, response);
+			request.getRequestDispatcher("Error.jsp").forward(request, response);
 		
 		}
 	}
 
+	/**
+	 * Metodo per invio dati al Datasource relativi alle 
+	 * credenziali di login utente
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		utente =  (Utente) EntityFactory.getFactory(utente).makeElement(request);
+		
+		//verifico validità
+		utente = ds.login(utente);
+		
+		//se c'è riscontro delle credenziali
+		if(utente!=null){
+			
+			utente.setPassword(null);
+			request.getSession().setAttribute("utente",utente );
+			response.sendRedirect("index.jsp");
+				
+			}
+				
+		//altrimenti ricarica la pagina per immettere nuovi dati
+		else{
+			request.setAttribute("error", "Dati o password non accettabili");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+		
+	}
+
+	/**
+	 * Metodo per invio dati al Datasource relativi all'aggiornameneto
+	 * utente
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void updateUtente(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -162,7 +204,7 @@ public class UtenteServlet extends AbstractServlet {
 			//request.setAttribute("utente", utente);//da eliminare quando esempio non più necessario
 			//request.getRequestDispatcher("Pagina.jsp").forward(request, response);
 			request.getSession().setAttribute("utente", utente);
-			//response.sendRedirect("Pagina.jsp");
+			response.sendRedirect("Pagina.jsp");
 		
 		}
 		

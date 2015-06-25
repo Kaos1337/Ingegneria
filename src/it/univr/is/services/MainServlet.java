@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet di interfaccia con le pagine.
  * Determina le operazioni da eseguire in base al 
  * valore String del parametro "Mode" nella request;
- * valori supportati: {"Iscrizione","Login","Recupero_psw",
- * "Recupero_newpsw","Modifica_utente","Inserimento_libro",
- * "Cancella_libro","Aggiorna_libro","Ricerca_libro",
- * "Moderatore","Statistiche"}
+ * valori supportati: {"iscrizione","login","recupero_psw",
+ * "recupero_newpsw","modifica_utente","inserimento_libro",
+ * "cancella_libro","aggiorna_libro","ricerca_libro",
+ * "moderatore","statistiche"}
  * @author marco
  *
  */
@@ -44,28 +44,28 @@ public class MainServlet extends AbstractServlet {
 		// qui il Mode sappia che la request contiene ad esempio dati per l'iscrizione utente 
 		
 		// ottenimento tipo di richiesta
-				String tipoInterrogazione = request.getParameter("Mode");
+				String tipoInterrogazione = request.getParameter("mode");
 				
 				if (tipoInterrogazione != null) {
 					
 					switch(tipoInterrogazione){
-					case "Iscrizione":
-					case "Login":
-					case "Recupero_psw":
-					case "Recupero_newpsw":
-					case "Modifica_utente":
+					case "iscrizione":
+					case "login":
+					case "recupero_psw":
+					case "recupero_newpsw":
+					case "modifica_utente":
 						request.getRequestDispatcher("UtenteServlet").forward(request, response);
 						break;
-					case "Inserimento_libro":
-					case "Cancella_libro":
-					case "Aggiorna_libro":
-					case "Ricerca_libro":
+					case "inserimento_libro":
+					case "cancella_libro":
+					case "aggiorna_libro":
+					case "ricerca_libro":
 						request.getRequestDispatcher("LibroServlet").forward(request, response);
 						break;
-					case "Moderatore":
+					case "moderatore":
 						request.getRequestDispatcher("ModeratoreServlet").forward(request, response);
 						break;
-					case "Statistiche":
+					case "statistiche":
 						request.getRequestDispatcher("StatisticheServlet").forward(request, response);
 						break;
 					default:
