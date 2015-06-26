@@ -92,14 +92,19 @@ public class LibroServlet extends AbstractServlet {
 		libro.setIsbn("1234567890AAA");
 		ArrayList<Libro> al= new ArrayList<Libro>();
 		al.add(libro);
+		libro=new Libro();
 		libro.setTitolo("Merda d'artista");
 		al.add(libro);
+		libro=new Libro();
 		libro.setTitolo("Mulino stanco");
 		al.add(libro);
+		libro=new Libro();
 		libro.setTitolo("It's all ogre");
 		al.add(libro);
+		libro=new Libro();
 		libro.setTitolo("Gregorio e grattacapi");
 		al.add(libro);
+		
 		request.setAttribute("lista_libri", al);
 		//////////////TEMP
 		
