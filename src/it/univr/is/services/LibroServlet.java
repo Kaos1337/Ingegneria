@@ -71,7 +71,8 @@ public class LibroServlet extends AbstractServlet {
 
 
 	/**
-	 * Metodo per invio dati al Datasource relativi all'utente loggato
+	 * Metodo per invio dati al Datasource relativi 
+	 * alla libreria dell'utente loggato
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -79,8 +80,15 @@ public class LibroServlet extends AbstractServlet {
 	 */
 	private void searchLibreria(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
+		///////////// TEMP
+		//request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
+		libro.setTitolo("V per vendetta");
+		ArrayList<Libro> al= new ArrayList<Libro>();
+		al.add(libro);
+		System.out.println("------------------"+libro.getTitolo());
+		request.setAttribute("lista_libri", al);
+		System.out.println("------------------"+((ArrayList<Libro>)request.getAttribute("lista_libri")).get(0).getTitolo());
+		//////////////TEMP
 		
 		request.getRequestDispatcher("manage.jsp").forward(request, response);
 		
