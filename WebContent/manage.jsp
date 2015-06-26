@@ -16,11 +16,11 @@
 	<div class="container">
 
       <div class="jumbotron">
-        <h2>Inserisci libro</h2>      
+        <h2>Gestione libreria</h2>      
         
         <% ArrayList<Libro> al = new ArrayList<Libro>(); 
         
-        if(al.isEmpty() || al == null){
+        if(request.getAttribute("lista_libri") == null){
         %>
         Nessun libro presente.
 		<% }else{ %>
@@ -30,10 +30,8 @@
 	        
 			<% 
 			al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
-			for(int i = 0; i < al.size(); i++){ %>
-			
-			<% Libro libro = (Libro) al.get(i);
-			String select[] = request.getParameterValues("selezione");
+			for(int i = 0; i < al.size(); i++){ 
+				Libro libro = (Libro) al.get(i);
 			%>
 			
 			<div class="checkbox">
