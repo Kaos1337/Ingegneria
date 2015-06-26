@@ -82,7 +82,7 @@ public class LibroServlet extends AbstractServlet {
 		
 		request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
 		
-		//request.getRequestDispatcher("manage.jsp").forward(request, response);
+		request.getRequestDispatcher("manage.jsp").forward(request, response);
 		
 	}
 
