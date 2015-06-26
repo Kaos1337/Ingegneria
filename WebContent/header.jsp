@@ -118,8 +118,7 @@ code {
                 <li><a href="#">Cerca libro</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">La tua libreria</li>
-                <% request.setAttribute("mode", "libreria"); %>
-                <li><jsp:forward page="MainServlet" >Gestisci</jsp:forward></li>
+                <li><a href="./manage.jsp">Gestisci</a></li>
               </ul>
             </li>
             

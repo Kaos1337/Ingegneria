@@ -13,6 +13,9 @@
 </div>
 <% }else{  %>
 
+<% request.setAttribute("mode", "libreria"); %>
+<jsp:forward page="MainServlet" ></jsp:forward>
+
 	<div class="container">
 
       <div class="jumbotron">
