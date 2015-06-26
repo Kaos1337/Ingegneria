@@ -27,60 +27,92 @@
         
 	        <form class="form-inline" action="MainServlet" method="POST">
 	        
-	        
-			<% 
-			al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
-			for(int i = 0; i < al.size(); i++){ 
-				Libro libro = (Libro) al.get(i);
-			%>
-			
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="selezione" value="<%= libro.getTitolo() %>"> Seleziona
-				</label>
-			</div>
-			
-			<div class="form-group">
-			    <label for="titolo">Titolo</label>
-				<%= libro.getTitolo() %>
-			</div>
+	        <button type="submit" class="btn btn-default" name="mode" value="elimina_libro">Elimina libro/i</button>
+			  <button type="submit" class="btn btn-default" name="mode" value="disponibile_libro">Rendi disponibile/i</button>
+			  <button type="submit" class="btn btn-default" name="mode" value="occupato_libro">Rendi occupato/i</button>
+			  <button type="submit" class="btn btn-default" name="mode" value="prenotato_libro">Rendi prenotato/i</button>
+			  <br><br>
 			  
-			<div class="form-group">
-			    <label for="autore">Autore</label>
-			    <%= libro.getAutore() %>
-			</div>
 			  
-			<div class="form-group">
-			    <label for="categoria">Prima Categoria</label>
-			    <%= libro.getCategoria() %>
-			</div>
+			  <table class="table table-striped">
 			  
-			<div class="form-group">
-			    <label for="categoria2">Seconda Categoria</label>
-				<%= libro.getCategoria2() %>
-			</div>
-			  
-			<div class="form-group">
-			    <label for="edizione">Edizione</label>
-			    <%= libro.getEdizione() %>
-			</div>
-			  
-			<div class="form-group">
-			    <label for="isbn">ISBN</label>
-				<%= libro.getIsbn() %>
-			</div>
-			  
-			<div class="form-group">
-				<label for="copertina">Copertina</label>
-				<%= libro.getCopertina() %>
-			</div>
-			
-			<%}%>
-			  
-			  <button type="submit" class="btn btn-default" name="mode" value=inserimento_libro>Aggiungi</button>
+			  		<tr>
+			  			<th>Selezione</th>
+			  			<th>Titolo</th>
+			  			<th>Autore</th>
+			  			<th>Categoria</th>
+			  			<th>Categoria2</th>
+			  			<th>Edizione</th>
+			  			<th>ISBN</th>
+			  			<th>Copertina</th>
+			  		</tr>
+			  		<% 
+					al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
+			  		for(int i = 0; i < al.size(); i++){ 
+						Libro libro = (Libro) al.get(i);
+					
+					%>
+			  		<tr>
+
+						<td>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="selezione" value="<%= libro.getTitolo() %>">
+							</label>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
+							<%= libro.getTitolo() %>
+						</div>
+						</td>
+						  
+						<td>
+						<div class="form-group">
+						    <%= libro.getAutore() %>
+						</div>
+						</td>
+						  
+						<td>
+						<div class="form-group">
+						    <%= libro.getCategoria() %>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
+							<%= libro.getCategoria2() %>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
+						    <%= libro.getEdizione() %>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
+							<%= libro.getIsbn() %>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
+							<%= libro.getCopertina() %>
+						</div>
+						</td>
+					
+					</tr>
+				
+				<% } %> <!-- ciclo libri -->
+				
+				</table>
+				  
 			</form>
 		
-		<% } %>
+		<% } %> <!-- se 0 libri -->
 
       </div> <!-- /jumbotron -->
 
