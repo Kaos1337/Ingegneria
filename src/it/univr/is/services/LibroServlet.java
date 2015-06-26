@@ -127,7 +127,15 @@ public class LibroServlet extends AbstractServlet {
 	}
 
 
-	
+
+	/**
+	 * Metodo per invio dati al Datasource relativi all'operazione
+	 * da effettuare per i titoli dell'utente
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void aggiornaLibri(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
