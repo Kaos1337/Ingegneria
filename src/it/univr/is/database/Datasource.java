@@ -110,6 +110,18 @@ public class Datasource {
 		return null;
 	}
 
+	/**
+	 * Metodo per aggiornare i titoli forniti del relativo utente
+	 * con l'operazione indicata
+	 * @param select
+	 * @param email
+	 * @param op
+	 */
+	public void updateLibri(String[] select, String email, int op) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

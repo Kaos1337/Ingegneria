@@ -51,11 +51,12 @@ public class LibroServlet extends AbstractServlet {
 			this.insertLibro(request,response);
 			break;
 			
-		case "cancella_libro":
-			this.cancellaLibri(request,response);
+		case "elimina_libro":
+		case "disponibile_libro":
+		case "prenotato_libro":
+		case "occupato_libro":
+			this.aggiornaLibri(request,response);
 			break;
-			
-		case "aggiorna_libro":
 			
 		case "ricerca_libro":
 			this.searchLibri(request,response);
@@ -83,11 +84,23 @@ public class LibroServlet extends AbstractServlet {
 		///////////// TEMP
 		//request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
 		libro.setTitolo("V per vendetta");
+		libro.setAutore("Darkaos");
+		libro.setCategoria("Gore");
+		libro.setCategoria2("Telegram");
+		libro.setCopertina("}:-)");
+		libro.setEdizione("1 Edizione");
+		libro.setIsbn("1234567890AAA");
 		ArrayList<Libro> al= new ArrayList<Libro>();
 		al.add(libro);
-		System.out.println("------------------"+libro.getTitolo());
+		libro.setTitolo("Merda d'artista");
+		al.add(libro);
+		libro.setTitolo("Mulino stanco");
+		al.add(libro);
+		libro.setTitolo("It's all ogre");
+		al.add(libro);
+		libro.setTitolo("Gregorio e grattacapi");
+		al.add(libro);
 		request.setAttribute("lista_libri", al);
-		System.out.println("------------------"+((ArrayList<Libro>)request.getAttribute("lista_libri")).get(0).getTitolo());
 		//////////////TEMP
 		
 		request.getRequestDispatcher("manage.jsp").forward(request, response);
@@ -115,29 +128,31 @@ public class LibroServlet extends AbstractServlet {
 
 
 	
-	private void cancellaLibri(HttpServletRequest request,
-			HttpServletResponse response) {
+	private void aggiornaLibri(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		
-		int size = Integer.parseInt(request.getParameter("size"));
-		ArrayList<String> listatitoli = new ArrayList<String>();
-		for (int i=1 ; i<=size ; i++ ) {
-			if(Boolean.getBoolean((request.getParameter("selected"+i))));
-				listatitoli.add(request.getParameter("titolo"+i));
+		String select[] = request.getParameterValues("selezione");
+		int op=-1;
+		String utente = ((Utente)request.getSession().getAttribute("utente")).getEmail();
+		
+		switch(request.getParameter("mode")){
+			case "disponibile_libro":op=0;break;
+			case "prenotato_libro":op=1;break;
+			case "occupato_libro":op=2;break;
+			case "elimina_libro":op=3;break;
+			default:
 		}
 		
+		//se è stato selezionato almeno un libro
+		if (select != null && select.length > 0) {
+			
+			ds.updateLibri(select,utente,op);
+			request.removeAttribute("select");
+		}
 		
-		//TODO passare una lista da jsp a servlet si può fare in due modi:
-		//
-		//- Soluzione che ho pensato: racchiudo la lista nella session 
-		//	(quindi è a tutti gli effetti un oggetto)
-		//	e poi nella servlet la rimuovo dalla sessione
-		//
-		//- Soluzione usata nell'esempio dei vini: nella request raccolgo 
-		//	dati indirettamente sulla lista, creando un numero
-		//  dinamico di parametri attraverso un ciclo e tenendone la grandezza;
-		//  
-		
-	}
+		request.setAttribute("lista_libri", ds.searchLibri(utente));
+		request.getRequestDispatcher("manage.jsp").forward(request, response);
+		}
 
 
 	/**
@@ -157,8 +172,8 @@ public class LibroServlet extends AbstractServlet {
 		
 		ds.insertLibro(libro);
 		
-		request.setAttribute("ListaLibri", ds.searchLibri(libro));
-		request.getRequestDispatcher("Libreria.jsp").forward(request, response);
+		request.setAttribute("lista_libri", ds.searchLibri(libro));
+		request.getRequestDispatcher("manage.jsp").forward(request, response);
 		
 	}
 		
