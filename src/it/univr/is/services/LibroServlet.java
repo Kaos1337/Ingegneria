@@ -56,7 +56,7 @@ public class LibroServlet extends AbstractServlet {
 			break;
 			
 		case "aggiorna_libro":
-			//TODO
+			
 		case "ricerca_libro":
 			this.searchLibri(request,response);
 			break;

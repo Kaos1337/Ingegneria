@@ -155,10 +155,15 @@ public class UtenteServlet extends AbstractServlet {
 		}
 				
 		param = request.getParameter("civico");
-		if(param==null || (new Integer(param)) instanceof Integer || param.length()>25) {
+		if(param==null || param.length()>25) {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
+		for (char c : param.toCharArray())
+			if ( (int) c < 48 || (int) c > 57){
+				reqValid=false;
+				error += "<li>civico</li>";
+			}
 				
 		param = request.getParameter("cap");
 		if(param==null || param.length()>25) {
@@ -300,10 +305,15 @@ public class UtenteServlet extends AbstractServlet {
 		}
 				
 		param = request.getParameter("civico");
-		if(param==null || (new Integer(param)) instanceof Integer || param.length()>25) {
+		if(param==null || param.length()>25) {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
+		for (char c : param.toCharArray())
+			if ( (int) c < 48 || (int) c > 57){
+				reqValid=false;
+				error += "<li>civico</li>";
+			}
 				
 		param = request.getParameter("cap");
 		if(param==null || param.length()>25) {
@@ -323,6 +333,8 @@ public class UtenteServlet extends AbstractServlet {
 			error += "<li>provincia</li>";
 		}
 		
+		error+="</ul>";
+		
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//se l'inserimento ha successo
@@ -334,7 +346,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//altrimenti 
 		else {
-			request.setAttribute("error", "Impossibile completare l'iscrizione");
+			request.setAttribute("error", error);
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
 		
