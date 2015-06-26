@@ -18,7 +18,8 @@
       <div class="jumbotron">
         <h2>Inserisci libro</h2>      
         
-        <% ArrayList<Libro> al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
+        <% ArrayList<Libro> al = new ArrayList<Libro>(); 
+        
         if(al.isEmpty() || al == null){
         %>
         Nessun libro presente.
@@ -27,7 +28,9 @@
 	        <form class="form-inline" action="MainServlet" method="POST">
 	        
 	        
-			<% for(int i = 0; i < al.size(); i++){ %>
+			<% 
+			al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
+			for(int i = 0; i < al.size(); i++){ %>
 			
 			<% Libro libro = (Libro) al.get(i);
 			String select[] = request.getParameterValues("selezione");
