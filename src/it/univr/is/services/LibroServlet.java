@@ -5,6 +5,8 @@ import it.univr.is.entity.Utente;
 import it.univr.is.support.EntityFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,6 +43,10 @@ public class LibroServlet extends AbstractServlet {
 		
 		switch(tipoInterrogazione){
 		
+		case "libreria":
+			this.searchLibreria(request,response);
+			break;
+		
 		case "inserimento_libro":
 			this.insertLibro(request,response);
 			break;
@@ -65,6 +71,23 @@ public class LibroServlet extends AbstractServlet {
 
 
 	/**
+	 * Metodo per invio dati al Datasource relativi all'utente loggato
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void searchLibreria(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
+		
+		//request.getRequestDispatcher("manage.jsp").forward(request, response);
+		
+	}
+
+
+	/**
 	 * Invia dati al Datasource per ottenere la lista di libri 
 	 * associata al filtro della request
 	 * @param request
@@ -77,14 +100,23 @@ public class LibroServlet extends AbstractServlet {
 		
 		libro = (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
 		
-		request.setAttribute("ListaLibri", ds.searchLibri(libro, request.getParameter("citta"),request.getParameter("provincia")));
+		request.setAttribute("lista_libri", ds.searchLibri(libro, request.getParameter("citta"),request.getParameter("provincia")));
 		request.getRequestDispatcher("Ricerca.jsp").forward(request, response);
 		
 	}
 
 
+	
 	private void cancellaLibri(HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		int size = Integer.parseInt(request.getParameter("size"));
+		ArrayList<String> listatitoli = new ArrayList<String>();
+		for (int i=1 ; i<=size ; i++ ) {
+			if(Boolean.getBoolean((request.getParameter("selected"+i))));
+				listatitoli.add(request.getParameter("titolo"+i));
+		}
+		
 		
 		//TODO passare una lista da jsp a servlet si può fare in due modi:
 		//

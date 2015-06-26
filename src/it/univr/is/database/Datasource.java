@@ -66,29 +66,39 @@ public class Datasource {
 	}
 
 	/**
-	 * Ritorna una lista di libri con campo di selezione false 
+	 * Ritorna una lista di libri
 	 * filtrata dai parametri non null del libro passato
 	 * @param libro
 	 * @return
 	 */
-	public ArrayList<LibroConSelezione> searchLibri(Libro libro) {
+	public ArrayList<Libro> searchLibri(Libro libro) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * Ritorna una lista di libri con campo di selezione fasle
+	 * Ritorna una lista di libri
 	 * filtrata dai parametri non null passati
 	 * @param libro
 	 * @param parameter
 	 * @param parameter2
 	 * @return 
 	 */
-	public ArrayList<LibroConSelezione> searchLibri(Libro libro, String citta, String provincia) {
+	public ArrayList<Libro> searchLibri(Libro libro, String citta, String provincia) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Ritorna la lista di libri dell'utente
+	 * @param libro
+	 * @return
+	 */
+	public ArrayList<Libro> searchLibri(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/**
 	 * Motodo per verifica credenziali di login email e psw.
 	 * Ritorna Utente null se nessuna corrispondenza
@@ -99,5 +109,7 @@ public class Datasource {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

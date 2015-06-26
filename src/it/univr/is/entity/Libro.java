@@ -14,7 +14,7 @@ public class Libro implements Entity{
 	private String autore ;
 	private String categoria ;
 	private String categoria2 ;
-	private boolean cancellato ;
+	private int cancellato ;
 	private String edizione ;
 	private String isbn ;
 	private String copertina ;
@@ -25,7 +25,7 @@ public class Libro implements Entity{
 		autore = null;
 		categoria = null;
 		categoria2 = null;
-		cancellato = false;
+		cancellato = -1;
 		edizione = null;
 		isbn = null;
 		copertina = null;
@@ -72,10 +72,10 @@ public class Libro implements Entity{
 	public void setCategoria2(String categoria2) {
 		this.categoria2 = categoria2;
 	}
-	public boolean isCancellato() {
+	public int isCancellato() {
 		return cancellato;
 	}
-	public void setCancellato(boolean cancellato) {
+	public void setCancellato(int cancellato) {
 		this.cancellato = cancellato;
 	}
 	public String getEdizione() {
