@@ -81,10 +81,39 @@ code {
   background-color: transparent;
 }
 
-.nav>li>form>a:focus, .nav>li>form>button:hover {
+/*.nav>li>form>a:focus, .nav>li>form>button:hover {
   text-decoration: none;
   background-color: #eee;
+}*/
+
+/* Per il bottone di gestione
+-------------------------------------------------- */
+.dropdown-menu>li>form>button {
+
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+  background:none!important;
+  border:none;
+  font: inherit;
+  width: 100%;
+  text-align: left;
 }
+
+.dropdown-menu>li>form>button:focus, .dropdown-menu>li>form>button:hover {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5!important;
+}
+
+/*.nav>li>form>a:focus, .nav>li>form>button:hover {
+  text-decoration: none;
+  background-color: #eee;
+}*/
 
 </style>
 
@@ -118,7 +147,7 @@ code {
                 <li><a href="#">Cerca libro</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">La tua libreria</li>
-                <li><a href="./manage.jsp">Gestisci</a></li>
+                <li><form action="MainServlet"><button type="submit" name="mode" value="libreria">Gestisci</button></form></li>
               </ul>
             </li>
             
