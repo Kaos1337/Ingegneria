@@ -28,8 +28,8 @@
 		    <input type="password" class="form-control" placeholder="Password" name="password" >
 		  </div>
 		  
-		  <a class="btn btn-primary" href="passrecover.jsp">Recupero password</a>
 		  <button type="submit" class="btn btn-default" name="mode" value="login">Login</button>
+		  <a class="btn btn-primary" href="passrecover.jsp">Recupero password</a>
 		</form>
 		
 		<% if(request.getAttribute("error") != null){ %>

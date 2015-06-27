@@ -93,7 +93,7 @@
 		<% }else{ %>
         
         <br><br>
-	        <form class="form-inline" action="MainServlet" method="POST">
+	        
 	        
 			  <table class="table table-striped">
 			  
@@ -116,53 +116,54 @@
 			  		<tr>
 
 						<td>
-						<div class="checkbox">
-							<label>
-								<input type="checkbox" name="selezione" value="<%= libroutente.getTitolo() %>">
-							</label>
-						</div>
+
+							<form action="prenota.jsp" method="POST">
+								<input type="hidden" name="selezione" value="QUESTOOOOO">
+							  <button type="submit" class="btn btn-default" name="mode" value="prenota_libro">Prenota</button>
+							</form>
+
 						</td>
 						
 						<td>
-						<div class="form-group">
+						
 							<%= libroutente.getTitolo() %>
-						</div>
+					
 						</td>
 						  
 						<td>
-						<div class="form-group">
+						
 						    <%= libroutente.getAutore() %>
-						</div>
+					
 						</td>
 						  
 						<td>
-						<div class="form-group">
+						
 						    <%= libroutente.getCategoria() %>
-						</div>
+						
 						</td>
 						
 						<td>
-						<div class="form-group">
+						
 							<%= libroutente.getCategoria2() %>
-						</div>
+						
 						</td>
 						
 						<td>
-						<div class="form-group">
+						
 						    <%= libroutente.getEdizione() %>
-						</div>
+						
 						</td>
 						
 						<td>
-						<div class="form-group">
+						
 							<%= libroutente.getIsbn() %>
-						</div>
+						
 						</td>
 						
 						<td>
-						<div class="form-group">
+						
 							<%= libroutente.getCopertina() %>
-						</div>
+						
 						</td>
 					
 					</tr>
@@ -171,7 +172,7 @@
 				
 				</table>
 				  
-			</form>
+
 		
 		<% } %> <!-- se 0 libri -->
 
