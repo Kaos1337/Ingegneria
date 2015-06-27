@@ -161,19 +161,24 @@ public class LibroServlet extends AbstractServlet {
 		libroutente.setIsbn("1234567890AAA");
 		libroutente.setCitta("Garda");
 		libroutente.setProvincia("Verona");
+		libroutente.setId(1211);
 		
 		al.add(libroutente);
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("Merda d'artista");
+		libroutente.setId(1212);
 		al.add(libroutente);
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("Mulino stanco");
+		libroutente.setId(1213);
 		al.add(libroutente);
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("It's all ogre");
+		libroutente.setId(1214);
 		al.add(libroutente);
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("Gregorio e grattacapi");
+		libroutente.setId(1215);
 		al.add(libroutente);
 		
 	///////// TEMP
@@ -265,7 +270,7 @@ public class LibroServlet extends AbstractServlet {
 		error+="</ul>";
 		
 		libro =  (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
-		libro.setUtente(((Utente) request.getAttribute("utente")).getEmail());
+		libro.setUtente(((Utente) request.getSession().getAttribute("utente")).getId());
 		
 		if (reqValid) {
 			ds.insertLibro(libro);
@@ -276,7 +281,7 @@ public class LibroServlet extends AbstractServlet {
 		
 		else{
 			request.setAttribute("error", error);
-			request.getRequestDispatcher("ucp.jsp").forward(request, response);
+			request.getRequestDispatcher("insertbook.jsp").forward(request, response);
 		
 		}
 	}

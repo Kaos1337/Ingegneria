@@ -125,6 +125,16 @@ public class Datasource {
 		
 	}
 
+	/**
+	 * Metodo che recupera i dati dell'utente
+	 * @param id
+	 * @return
+	 */
+	public Utente getUtente(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

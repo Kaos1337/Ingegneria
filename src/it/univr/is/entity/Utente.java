@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Utente implements Entity{
 	
+	private int id ;
 	private String email ;
 	private String nome ;
 	private String cognome ;
@@ -123,6 +124,14 @@ public class Utente implements Entity{
 
 	public void setRuolo(int ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -66,11 +66,34 @@ public class UtenteServlet extends AbstractServlet {
 			this.updateUtente(request,response);
 			break;
 			
+		case "contatta":
+			this.contattaUtente(request,response);
+			break;
+			
 		default :
 			request.setAttribute("error", "Valore non gestito: "+ tipoInterrogazione);
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		
 		}
+	}
+
+	/**
+	 * Metodo per recupero dati dell'utente da contattare
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void contattaUtente(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		utente = ds.getUtente(Integer.parseInt(request.getParameter("proprietario")));
+		
+		request.setAttribute("proprietario", utente);
+		request.getRequestDispatcher("reservedbook.jsp").forward(request, response);
+		
+		
 	}
 
 	/**
@@ -93,7 +116,7 @@ public class UtenteServlet extends AbstractServlet {
 		if(request.getParameter("email").contentEquals("test@email.com") && request.getParameter("password").contentEquals("password")){
 			
 			utente = new Utente();
-			
+			utente.setId(000);
 			utente.setEmail("test@email.com");
 			utente.setNome("Darkaos");
 			utente.setCognome("NevioDavide");
@@ -110,6 +133,8 @@ public class UtenteServlet extends AbstractServlet {
 			
 			utente.setPassword(null);
 			request.getSession().setAttribute("utente",utente );
+			request.getSession().setAttribute("id",utente.getId() );
+			
 			response.sendRedirect("index.jsp");
 				
 			}

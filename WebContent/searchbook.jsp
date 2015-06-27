@@ -115,7 +115,7 @@
 
 						<td>
 							<form action="prenota.jsp" method="POST">
-								<input type="hidden" name="selezione" value="<%= libroutente.getIdUtente() %>">
+								<input type="hidden" name="selezione" value="<%= libroutente.getUtente() %>">
 							  <button type="submit" class="btn btn-default" name="mode" value="prenota_libro">Prenota</button>
 							</form>
 						</td>

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LibroUtente extends Libro {
 
-	private String email ;
 	private String nome ;
 	private String cognome ;
 	private String citta ;
@@ -17,7 +16,6 @@ public class LibroUtente extends Libro {
 	
 	public LibroUtente(){
 		super();
-		email = null ;
 		nome = null ;
 		cognome = null ;
 		citta = null ;
@@ -34,17 +32,10 @@ public class LibroUtente extends Libro {
 		setIsbn(request.getParameter("isbn"));
 		setNome(request.getParameter("nome"));
 		setCognome(request.getParameter("cognome"));
-		setEmail(request.getParameter("email"));
 		setCitta(request.getParameter("citta"));
 		setProvincia(request.getParameter("provincia"));
 	}
 	
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
 	public String getNome() {
 		return nome;
