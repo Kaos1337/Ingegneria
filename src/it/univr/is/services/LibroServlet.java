@@ -81,8 +81,10 @@ public class LibroServlet extends AbstractServlet {
 	 */
 	private void searchLibreria(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		///////////// TEMP
+		
 		//request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
+		
+		///////////// TEMP
 		libro.setTitolo("V per vendetta");
 		libro.setAutore("Darkaos");
 		libro.setCategoria("Gore");
@@ -180,14 +182,54 @@ public class LibroServlet extends AbstractServlet {
 	private void insertLibro(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		boolean reqValid=true;
+		String error = "Dati non validi:/n<ul>";
+		
+		String param = request.getParameter("titolo");
+		if(param==null || param.length()>25) {
+			reqValid=false;
+			error += "<li>titolo</li>";}
+			
+		param = request.getParameter("autore");
+		if(param==null || param.length()<2 || param.length()>25) {
+			reqValid=false;
+			error += "<li>autore</li>";
+		}
+				
+		param = request.getParameter("categoria");
+		if(param==null ) {
+			reqValid=false;
+			error += "<li>categoria</li>";
+		}
+				
+		param = request.getParameter("edizione");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>edizione</li>";
+		}
+				
+		param = request.getParameter("isbn");
+		if(param==null || param.length()!=13) {
+			reqValid=false;
+			error += "<li>ISBN</li>";
+		}
+				
+		
 		libro =  (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
 		libro.setUtente(((Utente) request.getAttribute("utente")).getEmail());
 		
-		ds.insertLibro(libro);
+		if (reqValid) {
+			ds.insertLibro(libro);
 		
-		request.setAttribute("lista_libri", ds.searchLibri(libro));
-		request.getRequestDispatcher("manage.jsp").forward(request, response);
+			request.setAttribute("lista_libri", ds.searchLibri(libro));
+			request.getRequestDispatcher("manage.jsp").forward(request, response);
+		}
 		
+		else{
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("ucp.jsp").forward(request, response);
+		
+		}
 	}
 		
 	
