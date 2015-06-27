@@ -23,6 +23,8 @@ public abstract class EntityFactory {
 			return new UtenteFactory();
 		else if(string=="LIBRO")
 			return new LibroFactory();
+		else if(string=="LIBROUTENTE")
+			return new LibroUtenteFactory();
 		else
 			return new PrestitoFactory();
 	}

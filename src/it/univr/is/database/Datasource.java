@@ -3,6 +3,7 @@ package it.univr.is.database;
 import java.util.ArrayList;
 
 import it.univr.is.entity.Libro;
+import it.univr.is.entity.LibroUtente;
 import it.univr.is.entity.Utente;
 
 public class Datasource {
@@ -76,14 +77,17 @@ public class Datasource {
 	}
 
 	/**
-	 * Ritorna una lista di libri
-	 * filtrata dai parametri non null passati
+	 * Ritorna una lista di libriutente
+	 * filtrata dai parametri non null passati,
+	 * se il nome ha valore cerca sia nome che cognome
+	 * dei possibili utenti
 	 * @param libro
+	 * @param nome
 	 * @param parameter
 	 * @param parameter2
 	 * @return 
 	 */
-	public ArrayList<Libro> searchLibri(Libro libro, String citta, String provincia) {
+	public ArrayList<LibroUtente> searchLibri(Libro libro,String nome, String citta, String provincia) {
 		// TODO Auto-generated method stub
 		return null;
 	}

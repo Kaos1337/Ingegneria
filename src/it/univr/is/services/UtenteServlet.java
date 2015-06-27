@@ -159,11 +159,12 @@ public class UtenteServlet extends AbstractServlet {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
-		for (char c : param.toCharArray())
-			if ( (int) c < 48 || (int) c > 57){
-				reqValid=false;
-				error += "<li>civico</li>";
-			}
+		else 
+			for (char c : param.toCharArray())
+				if ( (int) c < 48 || (int) c > 57){
+					reqValid=false;
+					error += "<li>civico</li>";
+				}
 				
 		param = request.getParameter("cap");
 		if(param==null || param.length()>25) {
@@ -311,11 +312,12 @@ public class UtenteServlet extends AbstractServlet {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
-		for (char c : param.toCharArray())
-			if ( (int) c < 48 || (int) c > 57){
-				reqValid=false;
-				error += "<li>civico</li>";
-			}
+		else
+			for (char c : param.toCharArray())
+				if ( (int) c < 48 || (int) c > 57){
+					reqValid=false;
+					error += "<li>civico</li>";
+				}
 				
 		param = request.getParameter("cap");
 		if(param==null || param.length()>25) {
