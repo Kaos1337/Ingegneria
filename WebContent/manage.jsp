@@ -7,7 +7,7 @@
 <title>Gestisci libri</title>
 </head>
 	
-<% if(utente.getEmail() == null){ %>
+<% if(session.getAttribute("id") == null){ %>
 <div class="container">
 	<p class="bg-danger">Errore: Per vedere questa pagina bisogna essere loggati.</p>
 </div>

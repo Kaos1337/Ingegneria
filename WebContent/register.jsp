@@ -1,7 +1,7 @@
 <jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <jsp:include page="header.jsp" />
 
-<% if(utente.getEmail() != null){
+<% if(session.getAttribute("id") != null){
 	response.setStatus(response.SC_MOVED_TEMPORARILY);
 	response.setHeader("Location", "index.jsp");
 }%>

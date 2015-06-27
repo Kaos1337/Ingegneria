@@ -7,7 +7,7 @@
 <title>Gestisci libri</title>
 </head>
 	
-<% if(utente.getEmail() == null){ %>
+<% if(session.getAttribute("id") == null){ %>
 <div class="container">
 	<p class="bg-danger">Errore: Per vedere questa pagina bisogna essere loggati.</p>
 </div>
@@ -91,12 +91,11 @@
         %>
         Cerca un libro con il form qua sopra.
 		<% }else{ %>
-        
+
         <br><br>
-	        
-	        
+
 			  <table class="table table-striped">
-			  
+
 			  		<tr>
 			  			<th>Selezione</th>
 			  			<th>Titolo</th>
@@ -111,59 +110,42 @@
 					al = (ArrayList<LibroUtente>) request.getAttribute("lista_libri"); 
 			  		for(int i = 0; i < al.size(); i++){ 
 			  			LibroUtente libroutente = (LibroUtente) al.get(i);
-					
 					%>
 			  		<tr>
 
 						<td>
-
 							<form action="prenota.jsp" method="POST">
-								<input type="hidden" name="selezione" value="QUESTOOOOO">
+								<input type="hidden" name="selezione" value="<%= libroutente.getIdUtente() %>">
 							  <button type="submit" class="btn btn-default" name="mode" value="prenota_libro">Prenota</button>
 							</form>
-
 						</td>
 						
 						<td>
-						
 							<%= libroutente.getTitolo() %>
-					
 						</td>
 						  
 						<td>
-						
 						    <%= libroutente.getAutore() %>
-					
 						</td>
 						  
 						<td>
-						
 						    <%= libroutente.getCategoria() %>
-						
 						</td>
 						
 						<td>
-						
 							<%= libroutente.getCategoria2() %>
-						
 						</td>
 						
 						<td>
-						
 						    <%= libroutente.getEdizione() %>
-						
 						</td>
 						
 						<td>
-						
 							<%= libroutente.getIsbn() %>
-						
 						</td>
 						
 						<td>
-						
 							<%= libroutente.getCopertina() %>
-						
 						</td>
 					
 					</tr>
@@ -171,8 +153,6 @@
 				<% } %> <!-- ciclo libri -->
 				
 				</table>
-				  
-
 		
 		<% } %> <!-- se 0 libri -->
 
