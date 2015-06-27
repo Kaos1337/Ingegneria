@@ -183,6 +183,8 @@ public class UtenteServlet extends AbstractServlet {
 			error += "<li>provincia</li>";
 		}
 	
+		error+="</ul>";
+		
 		//raccolgo i dati nuovi dalla request
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
@@ -200,7 +202,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//altrimenti ricarica la pagina per immettere nuovi dati
 		else{
-		request.setAttribute("error", error+"</ul>");
+		request.setAttribute("error", error);
 		request.getRequestDispatcher("ucp.jsp").forward(request, response);
 		}
 		

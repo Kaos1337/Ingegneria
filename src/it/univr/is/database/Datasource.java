@@ -3,7 +3,6 @@ package it.univr.is.database;
 import java.util.ArrayList;
 
 import it.univr.is.entity.Libro;
-import it.univr.is.entity.LibroConSelezione;
 import it.univr.is.entity.Utente;
 
 public class Datasource {
