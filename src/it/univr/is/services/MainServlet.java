@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  * Determina le operazioni da eseguire in base al 
  * valore String del parametro "Mode" nella request;
  * valori supportati: {"iscrizione","login","logout","recupero_psw",
- * "recupero_newpsw","modifica_utente","libreria","inserimento_libro",
+ * "recupero_newpsw","modifica_utente","contatta_utente",
+ * "manda_messaggio","libreria","inserimento_libro",
  * "cancella_libro","aggiorna_libro","ricerca_libro",
  * "moderatore","statistiche"}
  * @author marco
@@ -49,6 +50,8 @@ public class MainServlet extends AbstractServlet {
 					case "recupero_psw":
 					case "recupero_newpsw":
 					case "modifica_utente":
+					case "contatta_utente":
+					case "manda_messaggio":
 						request.getRequestDispatcher("UtenteServlet").forward(request, response);
 						break;
 					case "libreria":
