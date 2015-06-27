@@ -30,12 +30,24 @@
 		  
 		<div class="form-group">
 		    <label for="categoria">Prima Categoria</label>
-		    <input type="text" class="form-control" name="categoria">
+		     <select class="form-control" name="categoria">
+				<option value="scienza">Scienza</option>
+				<option value="filosofia">Filosofia</option>
+				<option value="giallo">Giallo</option>
+				<option value="fantasy">Fantasy</option>
+				<option value="romanzo">Romanzo</option>
+			</select>
 		</div>
 		  
 		<div class="form-group">
 		    <label for="categoria2">Seconda Categoria</label>
-			<input type="text" class="form-control" name="categoria2">
+			 <select class="form-control" name="categoria2">
+				<option value="scienza">Scienza</option>
+				<option value="filosofia">Filosofia</option>
+				<option value="giallo">Giallo</option>
+				<option value="fantasy">Fantasy</option>
+				<option value="romanzo">Romanzo</option>
+			</select>
 		</div>
 		  
 		<div class="form-group">
