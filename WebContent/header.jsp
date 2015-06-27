@@ -144,7 +144,7 @@ code {
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="./insertbook.jsp">Inserisci libro</a></li>
-                <li><a href="#">Cerca libro</a></li>
+                <li><a href="./searchbook.jsp">Cerca libro</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">La tua libreria</li>
                 <li><form action="MainServlet"><button type="submit" name="mode" value="libreria">Gestisci</button></form></li>
