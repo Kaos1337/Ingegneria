@@ -27,7 +27,6 @@ public class UtenteServlet extends AbstractServlet {
      */
     public UtenteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -66,11 +65,48 @@ public class UtenteServlet extends AbstractServlet {
 			this.updateUtente(request,response);
 			break;
 			
+		case "contatta_utente":
+			this.contattaUtente(request,response);
+			break;
+			
+		case "manda_messaggio":
+			this.mandaMsg(request);
+			response.sendRedirect("searchbook.jsp");
+			break;
+			
 		default :
 			request.setAttribute("error", "Valore non gestito: "+ tipoInterrogazione);
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		
 		}
+	}
+
+	/**
+	 * Manda un messaggio traendo i dati necessari dalla request
+	 * @param request
+	 */
+	private void mandaMsg(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Metodo per recupero dati dell'utente da contattare
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void contattaUtente(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		utente = ds.getUtente(Integer.parseInt(request.getParameter("proprietario")));
+		
+		request.setAttribute("proprietario", utente);
+		request.getRequestDispatcher("reservebook.jsp").forward(request, response);
+		
+		
 	}
 
 	/**
@@ -93,7 +129,7 @@ public class UtenteServlet extends AbstractServlet {
 		if(request.getParameter("email").contentEquals("test@email.com") && request.getParameter("password").contentEquals("password")){
 			
 			utente = new Utente();
-			
+			utente.setId(000);
 			utente.setEmail("test@email.com");
 			utente.setNome("Darkaos");
 			utente.setCognome("NevioDavide");
@@ -110,6 +146,8 @@ public class UtenteServlet extends AbstractServlet {
 			
 			utente.setPassword(null);
 			request.getSession().setAttribute("utente",utente );
+			request.getSession().setAttribute("id",utente.getId() );
+			
 			response.sendRedirect("index.jsp");
 				
 			}
@@ -254,7 +292,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//se c'è riscontro eseguo effettive operazioni
 		if(!ds.checkMail(request.getParameter("email"))){//! da eliminare all'implementazione del datasource
-			//TODO invio mail
+			this.mandaMsg(request);
 		}
 			
 		//in ogni caso dico che la mail è stata inviata

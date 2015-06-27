@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Libro implements Entity{
 	
+	private int id ;
 	private String titolo ;
-	private String utente ;
+	private int utente ;
 	private String autore ;
 	private String categoria ;
 	private String categoria2 ;
@@ -20,8 +21,9 @@ public class Libro implements Entity{
 	private String copertina ;
 	
 	public Libro(){
+		id = -1;
 		titolo = null;
-		utente = null;
+		utente = -1;
 		autore = null;
 		categoria = null;
 		categoria2 = null;
@@ -48,10 +50,10 @@ public class Libro implements Entity{
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-	public String getUtente() {
+	public int getUtente() {
 		return utente;
 	}
-	public void setUtente(String utente) {
+	public void setUtente(int utente) {
 		this.utente = utente;
 	}
 	public String getAutore() {
@@ -95,6 +97,14 @@ public class Libro implements Entity{
 	}
 	public void setCopertina(String copertina) {
 		this.copertina = copertina;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -76,11 +76,6 @@
 		    <input type="text" class="form-control" name="provincia">
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="km">Km</label>
-		    <input type="text" class="form-control" name="km">
-		  </div>
-		  
 		  <button type="submit" class="btn btn-default" name="mode" value="ricerca_libro">Cerca</button>
 		</form>
 		
@@ -114,9 +109,9 @@
 			  		<tr>
 
 						<td>
-							<form action="prenota.jsp" method="POST">
-								<input type="hidden" name="selezione" value="<%= libroutente.getIdUtente() %>">
-							  <button type="submit" class="btn btn-default" name="mode" value="prenota_libro">Prenota</button>
+							<form action="MainServlet" method="POST">
+								<input type="hidden" name="proprietario" value="<%= libroutente.getUtente() %>">
+							  <button type="submit" class="btn btn-default" name="mode" value="contatta_utente">Prenota</button>
 							</form>
 						</td>
 						
