@@ -81,7 +81,7 @@
 		    <input type="text" class="form-control" name="km">
 		  </div>
 		  
-		  <button type="submit" class="btn btn-default" name="mode" value="cerca_libro">Cerca</button>
+		  <button type="submit" class="btn btn-default" name="mode" value="ricerca_libro">Cerca</button>
 		</form>
 		
 		
@@ -92,6 +92,7 @@
         Cerca un libro con il form qua sopra.
 		<% }else{ %>
         
+        <br><br>
 	        <form class="form-inline" action="MainServlet" method="POST">
 	        
 			  <table class="table table-striped">
