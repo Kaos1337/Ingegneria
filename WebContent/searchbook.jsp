@@ -1,7 +1,7 @@
 <jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <jsp:include page="header.jsp" />
 <%@page import="java.util.*"%>
-<%@page import="it.univr.is.entity.Libro"%>
+<%@page import="it.univr.is.entity.LibroUtente"%>
 
 <head>
 <title>Gestisci libri</title>
@@ -85,7 +85,7 @@
 		</form>
 		
 		
-		<% ArrayList<Libro> al = new ArrayList<Libro>(); 
+		<% ArrayList<LibroUtente> al = new ArrayList<LibroUtente>(); 
         
         if(request.getAttribute("lista_libri") == null){
         %>
@@ -107,9 +107,9 @@
 			  			<th>Copertina</th>
 			  		</tr>
 			  		<% 
-					al = (ArrayList<Libro>) request.getAttribute("lista_libri"); 
+					al = (ArrayList<LibroUtente>) request.getAttribute("lista_libri"); 
 			  		for(int i = 0; i < al.size(); i++){ 
-						Libro libro = (Libro) al.get(i);
+			  			LibroUtente libroutente = (LibroUtente) al.get(i);
 					
 					%>
 			  		<tr>
@@ -117,50 +117,50 @@
 						<td>
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" name="selezione" value="<%= libro.getTitolo() %>">
+								<input type="checkbox" name="selezione" value="<%= libroutente.getTitolo() %>">
 							</label>
 						</div>
 						</td>
 						
 						<td>
 						<div class="form-group">
-							<%= libro.getTitolo() %>
+							<%= libroutente.getTitolo() %>
 						</div>
 						</td>
 						  
 						<td>
 						<div class="form-group">
-						    <%= libro.getAutore() %>
+						    <%= libroutente.getAutore() %>
 						</div>
 						</td>
 						  
 						<td>
 						<div class="form-group">
-						    <%= libro.getCategoria() %>
+						    <%= libroutente.getCategoria() %>
 						</div>
 						</td>
 						
 						<td>
 						<div class="form-group">
-							<%= libro.getCategoria2() %>
+							<%= libroutente.getCategoria2() %>
 						</div>
 						</td>
 						
 						<td>
 						<div class="form-group">
-						    <%= libro.getEdizione() %>
+						    <%= libroutente.getEdizione() %>
 						</div>
 						</td>
 						
 						<td>
 						<div class="form-group">
-							<%= libro.getIsbn() %>
+							<%= libroutente.getIsbn() %>
 						</div>
 						</td>
 						
 						<td>
 						<div class="form-group">
-							<%= libro.getCopertina() %>
+							<%= libroutente.getCopertina() %>
 						</div>
 						</td>
 					
