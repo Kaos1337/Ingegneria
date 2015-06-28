@@ -4,6 +4,8 @@
 <head>
 <title>Statistiche</title>
 
+<% if(session.getAttribute("id") != null && utente.getRuolo() > 0){ %>
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 <script type="text/javascript">
@@ -38,9 +40,10 @@
       }
     </script>
     
+<% }  %>
 </head>
 
-<% if(session.getAttribute("id") == null && utente.getRuolo() > 0){ %>
+<% if(session.getAttribute("id") == null && utente.getRuolo() < 1){ %>
 <div class="container">
 	<p class="bg-danger">Errore: Per vedere questa pagina bisogna essere loggati come amministratori.</p>
 </div>

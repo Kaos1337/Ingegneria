@@ -151,7 +151,7 @@ code {
 	              </ul>
 	            </li>
             	<% if(utente.getRuolo() > 0){ %>
-            		<li><a href="./stats.jsp">Statistiche</a></li>
+            		<li><form action="MainServlet"><button type="submit" name="mode" value="statistiche">Statistiche</button></form></li>
             	<% } %>
             <% } %>
           </ul>
