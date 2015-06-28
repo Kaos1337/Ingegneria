@@ -64,6 +64,18 @@
 						
 						<td>
 						<div class="form-group">
+							<% if(libro.getStato() == 0){	%>
+							Disponibile
+							<% } else if(libro.getStato() == 1){ %>
+							In prestito
+							<% } else if(libro.getStato() == 2){ %>
+							Non Disponibile
+							<% } %>
+						</div>
+						</td>
+						
+						<td>
+						<div class="form-group">
 							<%= libro.getTitolo() %>
 						</div>
 						</td>
