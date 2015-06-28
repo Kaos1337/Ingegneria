@@ -70,8 +70,13 @@ public class UtenteServlet extends AbstractServlet {
 			break;
 			
 		case "manda_messaggio":
-			this.mandaMsg(request);
+			this.mandaMsg(request);//oggetto "utente" contiene dati destinatario 
 			response.sendRedirect("reservebook.jsp?info=La richiesta è stata inviata, attendi la risposta.");
+			break;
+			
+		case "contattaci":
+			this.mandaMsg(request);//param "reparto" contiene dipartimento indicato
+			response.sendRedirect("contactus.jsp?info=La richiesta è stata inviata, attendi la risposta.");
 			break;
 			
 		default :

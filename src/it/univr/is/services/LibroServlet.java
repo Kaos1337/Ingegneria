@@ -94,12 +94,15 @@ public class LibroServlet extends AbstractServlet {
 		libro.setCopertina("}:-)");
 		libro.setEdizione("1 Edizione");
 		libro.setIsbn("1234567890AAA");
+		libro.setStato(0);
 		ArrayList<Libro> al= new ArrayList<Libro>();
 		al.add(libro);
 		libro=new Libro();
+		libro.setStato(1);
 		libro.setTitolo("Merda d'artista");
 		al.add(libro);
 		libro=new Libro();
+		libro.setStato(2);
 		libro.setTitolo("Mulino stanco");
 		al.add(libro);
 		libro=new Libro();
