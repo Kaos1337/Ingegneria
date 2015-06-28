@@ -16,6 +16,11 @@
       <div class="jumbotron">
         <h2>Contatta l'utente per il libro</h2>
         
+        <% if(request.getAttribute("info") != null){ %>
+		<br><p class="bg-success"><%=request.getAttribute("info")%></p>
+		<% } else { %>
+		
+		
 		<form action="MainServlet" method="POST">
 		  <div class="form-group">
 		    <label for="oggetto">Oggetto</label>
@@ -29,6 +34,8 @@
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value="manda_messaggio">Invia</button>
 		</form>
+		
+		<% } %>
 
       </div> <!-- /jumbotron -->
 
