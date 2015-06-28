@@ -11,16 +11,25 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2013',  1000,      400],
-          ['2014',  1170,      460],
-          ['2015',  660,       1120],
-          ['2016',  1030,      540]
+          ['Data', 'Iscrizioni', 'Prestiti'],       
+          
+          <% String arrayBid[][] = {
+        		  { "2015/06/28", "2", "0"},
+        		  { "2015/06/27", "0", "1"},
+        		  { "2015/06/26", "3", "4"},
+        		  { "2015/06/25", "1", "2"},
+        		  { "2015/06/24", "5", "3"}
+        		};
+          
+			for(int i = 0; i < arrayBid.length; i++){ %>
+        	  	<%= "['" + arrayBid[i][0] + "'," + arrayBid[i][1] + "," + arrayBid[i][2] + "]," %>
+			<% } %>
+          
         ]);
 
         var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+          title: 'Statistiche',
+          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0}
         };
 
