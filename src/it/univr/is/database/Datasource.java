@@ -135,6 +135,33 @@ public class Datasource {
 		return null;
 	}
 
+	/**
+	 * Metodo che recupera i dati delle prenotazioni e iscrizioni
+	 * assolute e li immette in un array secondo il formato:
+	 * 	col.anno/mese	 n.iscritti		n.prenotazioni
+	 * {{ 2010/gennaio , .......... , ................},
+	 *  { 2010/febbraio , .......... , ...............},..}
+	 * @return arraybidimensionale o null se nessun dato
+	 */
+	public String[][] getStatAssolute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * Metodo che recupera i dati delle prenotazioni e iscrizioni
+	 * mensili e li immette in un array secondo il formato:
+	 * anno/mese/giorno	 n.iscritti		n.prenotazioni
+	 * {{ 2010/1/1 , .......... , ................},
+	 *  { 2010/1/2 , .......... , ...............},..}
+	 * @param trenta_giorni_da_oggi 
+	 * @return arraybidimensionale o null se nessun dato
+	 */
+	public String[][] getStatMensili(ArrayList<String> trenta_giorni_da_oggi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
