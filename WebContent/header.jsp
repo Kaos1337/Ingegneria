@@ -137,25 +137,27 @@ code {
             <!-- <li class="active"><a href="index.jsp">Home</a></li>  -->
             <li><a href="index.jsp">Home</a></li>
             
-            <% if(utente.getEmail() != null){ %>
-            <li><a href="./ucp.jsp">Pannello Utente</a></li>
-            
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="./insertbook.jsp">Inserisci libro</a></li>
-                <li><a href="./searchbook.jsp">Cerca libro</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">La tua libreria</li>
-                <li><form action="MainServlet"><button type="submit" name="mode" value="libreria">Gestisci</button></form></li>
-              </ul>
-            </li>
-            
+            <% if(session.getAttribute("id") != null){ %>
+	            <li><a href="./ucp.jsp">Pannello Utente</a></li>
+	            
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
+	              <ul class="dropdown-menu">
+	                <li><a href="./insertbook.jsp">Inserisci libro</a></li>
+	                <li><a href="./searchbook.jsp">Cerca libro</a></li>
+	                <li role="separator" class="divider"></li>
+	                <li class="dropdown-header">La tua libreria</li>
+	                <li><form action="MainServlet"><button type="submit" name="mode" value="libreria">Gestisci</button></form></li>
+	              </ul>
+	            </li>
+            	<% if(utente.getRuolo() > 0){ %>
+            		<li><a href="./stats.jsp">Statistiche</a></li>
+            	<% } %>
             <% } %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           
-          <% if(utente.getEmail() == null){ %>
+          <% if(session.getAttribute("id") == null){ %>
           
             <li><a href="./login.jsp">Login</a></li>
             <li><a href="./register.jsp">Registrati</a></li>
