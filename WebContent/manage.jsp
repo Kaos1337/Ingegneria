@@ -38,6 +38,7 @@
 			  
 			  		<tr>
 			  			<th>Selezione</th>
+			  			<th>Stato</th>
 			  			<th>Titolo</th>
 			  			<th>Autore</th>
 			  			<th>Categoria</th>
@@ -64,7 +65,7 @@
 						
 						<td>
 						<div class="form-group">
-							<% if(libro.getStato() == 0){	%>
+							<% if(libro.getStato() == 0){ %>
 							Disponibile
 							<% } else if(libro.getStato() == 1){ %>
 							In prestito
