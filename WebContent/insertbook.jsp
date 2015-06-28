@@ -25,7 +25,7 @@
 		  
 		<div class="form-group">
 		    <label for="autore">Autore</label>
-		    <input type="email" class="form-control" name="autore">
+		    <input type="text" class="form-control" name="autore">
 		</div>
 		  
 		<div class="form-group">
