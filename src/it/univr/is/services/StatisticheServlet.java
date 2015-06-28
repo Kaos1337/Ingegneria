@@ -64,6 +64,7 @@ public class StatisticheServlet extends AbstractServlet {
 		
 		ArrayList<String> trenta_giorni_da_oggi = this.getLast_30Days();
 		ArrayList<String> tutti_mesi = this.getAllMonthsFrom(2014,3);
+		
 		////////TEMP
 		
 		//request.setAttribute("dati_assoluti", ds.getStatAssolute());
@@ -131,13 +132,13 @@ public class StatisticheServlet extends AbstractServlet {
 		
 		ArrayList<String> dates = new ArrayList<String>();
 	
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM/dd");
         GregorianCalendar calendar = new GregorianCalendar(anno-1900,mese-1,1);
         GregorianCalendar  actual = new GregorianCalendar();
 
         while (calendar.before(actual)) {
                 
-                dates.add(sdf.format(calendar.getTime()));
+                dates.add(sdf.format(calendar.getTime()).split("/")[0]);
                 
                 calendar.add(Calendar.MONTH, 1);
         }
