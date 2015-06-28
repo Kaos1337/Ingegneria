@@ -1,5 +1,4 @@
-<jsp:useBean id="utente" scope="session"
-	class="it.univr.is.entity.Utente"></jsp:useBean>
+<jsp:useBean id="utente" scope="session" class="it.univr.is.entity.Utente"></jsp:useBean>
 <jsp:include page="header.jsp" />
 
 <head>
@@ -20,6 +19,24 @@
 
 
 		<form action="MainServlet" method="POST">
+			<div class="form-group">
+				<label for="nomecognome">Nome e Cognome</label>
+				<% if(utente.getNome() == null && utente.getCognome() == null){ %>
+					<input type="text" class="form-control" name="nomecognome" value="">
+				<% } else { %>
+					<input type="text" class="form-control" name="nomecognome" value="<%= utente.getNome() + " " + utente.getCognome() %>">
+				<% } %>
+			</div>
+			
+			<div class="form-group">
+				<label for="email">Email</label>
+				<% if(utente.getEmail() == null){ %>
+					<input type="text"	class="form-control" name="email" value="">
+				<% }else{ %>
+					<input type="text"	class="form-control" name="email" value="<%= utente.getEmail() %>">
+				<% } %>
+			</div>
+			
 			<div class="form-group">
 				<label for="oggetto">Oggetto</label> <input type="text"
 					class="form-control" name="oggetto">
