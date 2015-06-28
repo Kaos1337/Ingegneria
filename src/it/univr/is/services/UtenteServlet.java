@@ -143,6 +143,7 @@ public class UtenteServlet extends AbstractServlet {
 			utente.setCivico(10);
 			utente.setCap("37013");
 			utente.setVia("via da qui");
+			utente.setRuolo(1);
 		}
 		//////////////////////////////////TEMP
 		
@@ -229,6 +230,7 @@ public class UtenteServlet extends AbstractServlet {
 	
 		error+="</ul>";
 		
+		if(reqValid)
 		//raccolgo i dati nuovi dalla request
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
@@ -382,6 +384,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		error+="</ul>";
 		
+		if(reqValid)
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
 		//se l'inserimento ha successo
