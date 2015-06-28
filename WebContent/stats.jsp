@@ -15,13 +15,7 @@
         var data = google.visualization.arrayToDataTable([
           ['Data', 'Iscrizioni', 'Prestiti'],       
           
-          <% String arrayBid[][] = {
-        		  { "2015/06/28", "2", "0"},
-        		  { "2015/06/27", "0", "1"},
-        		  { "2015/06/26", "3", "4"},
-        		  { "2015/06/25", "1", "2"},
-        		  { "2015/06/24", "5", "3"}
-        		};
+          <% String[][] arrayBid = (String[][]) request.getAttribute("dati_mensili");
           
 			for(int i = 0; i < arrayBid.length; i++){ %>
         	  	<%= "['" + arrayBid[i][0] + "'," + arrayBid[i][1] + "," + arrayBid[i][2] + "]," %>
