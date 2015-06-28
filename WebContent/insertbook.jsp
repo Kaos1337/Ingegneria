@@ -42,6 +42,7 @@
 		<div class="form-group">
 		    <label for="categoria2">Seconda Categoria</label>
 			 <select class="form-control" name="categoria2">
+			 	<option value=""></option>
 				<option value="scienza">Scienza</option>
 				<option value="filosofia">Filosofia</option>
 				<option value="giallo">Giallo</option>

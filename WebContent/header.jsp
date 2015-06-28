@@ -130,7 +130,7 @@ code {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">La Libreria</a>
+          <a class="navbar-brand">La Libreria</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
