@@ -16,8 +16,8 @@
       <div class="jumbotron">
         <h2>Contatta l'utente per il libro</h2>
         
-        <% if(request.getAttribute("info") != null){ %>
-		<br><p class="bg-success"><%=request.getAttribute("info")%></p>
+        <% if(request.getParameter("info") != null){ %>
+		<br><p class="bg-success"><%=request.getParameter("info")%></p>
 		<% } else { %>
 		
 		

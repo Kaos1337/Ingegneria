@@ -71,7 +71,7 @@ public class UtenteServlet extends AbstractServlet {
 			
 		case "manda_messaggio":
 			this.mandaMsg(request);
-			response.sendRedirect("searchbook.jsp");
+			response.sendRedirect("reservebook.jsp?info=La richiesta è stata inviata, attendi la risposta.");
 			break;
 			
 		default :
@@ -86,7 +86,7 @@ public class UtenteServlet extends AbstractServlet {
 	 * @param request
 	 */
 	private void mandaMsg(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		// TODO Implementazione invio messaggio
 		
 	}
 
