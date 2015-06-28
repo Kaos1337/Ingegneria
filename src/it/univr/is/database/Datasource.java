@@ -43,12 +43,11 @@ public class Datasource {
 	}
 
 	/**
-	 *---------NON DEFINITIVA--------
 	 * Se la password attuale corrisponde all'utente attuale
 	 * posso aggiornare con i nuovi dati. Se tutto va a buon fine
 	 * ritorna true
-	 * @param newutente
-	 * @param actualutente
+	 * @param newutente oggetto utente con nuovi dati
+	 * @param actualutente oggetto utente con i dati passati
 	 * @return
 	 */
 	public boolean updateUtente(Utente newUtente, Utente actualUtente ) {
@@ -114,13 +113,13 @@ public class Datasource {
 	}
 
 	/**
-	 * Metodo per aggiornare i titoli forniti del relativo utente
-	 * con l'operazione indicata
+	 * Metodo per aggiornare i libri forniti 
+	 * con l'operazione indicata, se l'operazione è un prestito 
+	 * inserisce anche una tupla nella relativa tabella
 	 * @param select
-	 * @param email
 	 * @param op
 	 */
-	public void updateLibri(String[] select, String email, int op) {
+	public void updateLibri(String[] select, int op) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -139,11 +138,16 @@ public class Datasource {
 	 * Metodo che recupera i dati delle prenotazioni e iscrizioni
 	 * assolute e li immette in un array secondo il formato:
 	 * 	col.anno/mese	 n.iscritti		n.prenotazioni
-	 * {{ 2010/gennaio , .......... , ................},
-	 *  { 2010/febbraio , .......... , ...............},..}
-	 * @return arraybidimensionale o null se nessun dato
+	 * {{ 2010/1 , .......... , ................},
+	 *  { 2010/2 , .......... , ...............},..}
+	 *  
+	 * @return arraybidimensionale 
 	 */
 	public String[][] getStatAssolute() {
+	//  Nota: è necessario che esista per ogni giorno una riga,
+	//  		se non sono presenti risultati per un giorno
+	//  		porre una riga con valori numerici 0 nei conteggi
+			
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -154,10 +158,15 @@ public class Datasource {
 	 * anno/mese/giorno	 n.iscritti		n.prenotazioni
 	 * {{ 2010/1/1 , .......... , ................},
 	 *  { 2010/1/2 , .......... , ...............},..}
+	 *  
 	 * @param trenta_giorni_da_oggi 
-	 * @return arraybidimensionale o null se nessun dato
+	 * @return arraybidimensionale 
 	 */
 	public String[][] getStatMensili(ArrayList<String> trenta_giorni_da_oggi) {
+		//  Nota: è necessario che esista per ogni giorno una riga,
+		//  		se non sono presenti risultati per un giorno
+		//  		porre una riga con valori numerici 0 nei conteggi
+		//  
 		// TODO Auto-generated method stub
 		return null;
 	}

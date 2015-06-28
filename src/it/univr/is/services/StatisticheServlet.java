@@ -6,6 +6,7 @@ import it.univr.is.support.EntityFactory;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -61,8 +62,8 @@ public class StatisticheServlet extends AbstractServlet {
 	private void getDati(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<String> trenta_giorni_da_oggi = this.getDate();
-		
+		ArrayList<String> trenta_giorni_da_oggi = this.getLast_30Days();
+		ArrayList<String> tutti_mesi = this.getAllMonthsFrom(2014,3);
 		////////TEMP
 		
 		//request.setAttribute("dati_assoluti", ds.getStatAssolute());
@@ -78,19 +79,32 @@ public class StatisticheServlet extends AbstractServlet {
 								{"2013/1/8",  "4",   "16"},
 								{"2013/1/9",  "4",   "7"},
 								{"2013/1/10",  "10",   "30"}};
-								
+					
+		String[][] assoluti = {{"2013/1/1",  "100",   "40"},
+								{"2013/2/2",  "100",   "400"},
+								{"2013/3/3",  "10",   "50"},
+								{"2013/4/4",  "5",   "5"},
+								{"2013/5/5",  "5",   "5"},
+								{"2013/6/6",  "90",   "200"},
+								{"2013/7/7",  "70",   "30"},
+								{"2013/8/8",  "40",   "60"},
+								{"2013/9/9",  "40",   "70"},
+								{"2013/10/10",  "100",   "300"}};
 
-        //request.setAttribute("dati_assoluti", assoluti);
+        request.setAttribute("dati_assoluti", assoluti);
         request.setAttribute("dati_mensili", mensili);
-        		
-		
 		////////TEMP
+        
 		request.getRequestDispatcher("stats.jsp").forward(request, response);
 	
 		
 	}
 	
-	private static ArrayList<String> getDate(){
+	/**
+	 * Metodo per determinare gli ultimi 30 giorni
+	 * @return ArrayList di stringhe ultimi 30 giorni
+	 */
+	private ArrayList<String> getLast_30Days(){
 	    GregorianCalendar cal = new GregorianCalendar();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 	    ArrayList<String> dates = new ArrayList<String>();
@@ -109,6 +123,37 @@ public class StatisticheServlet extends AbstractServlet {
 
 	}
 	
+	/**
+	 * Metodo per determinare i mesi passati
+	 * @return ArrayList di stringhe dei mesi
+	 */
+	private ArrayList<String> getAllMonthsFrom(int anno, int mese){
+		
+		ArrayList<String> dates = new ArrayList<String>();
 	
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        GregorianCalendar calendar = new GregorianCalendar(anno-1900,mese-1,1);
+
+       
+        
+           
+           Date date=calendar.getTime();
+
+            while (date.before(new Date())) {
+                
+                // dt = sdf.format(calendar.getTime()); // dt is now the new date
+                date = calendar.getTime();
+
+                dates.add(sdf.format(date));
+                
+                calendar.add(Calendar.MONTH, 1);
+            }
+            
+            return dates;
+
+        
+        
+
+	}
 	
 }

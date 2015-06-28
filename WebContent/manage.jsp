@@ -58,7 +58,7 @@
 						<td>
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" name="selezione" value="<%= libro.getTitolo() %>">
+								<input type="checkbox" name="selezione" value="<%= libro.getId() %>">
 							</label>
 						</div>
 						</td>

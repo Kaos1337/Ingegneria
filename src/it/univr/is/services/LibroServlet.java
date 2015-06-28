@@ -217,7 +217,7 @@ public class LibroServlet extends AbstractServlet {
 		//se è stato selezionato almeno un libro
 		if (select != null && select.length > 0) {
 			
-			ds.updateLibri(select,utente,op);
+			ds.updateLibri(select,op);
 			request.removeAttribute("select");
 		}
 		
