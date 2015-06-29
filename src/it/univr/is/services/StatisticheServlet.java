@@ -67,7 +67,7 @@ public class StatisticheServlet extends AbstractServlet {
 		
 		////////TEMP
 		
-		//request.setAttribute("dati_assoluti", ds.getStatAssolute());
+		//request.setAttribute("dati_assoluti", ds.getStatAssolute(tutti_mesi));
 		//request.setAttribute("dati_mensili", ds.getStatMensili(trenta_giorni_da_oggi););
 		
 		String[][] mensili = {{"2013/1/1",  "10",   "4"},
