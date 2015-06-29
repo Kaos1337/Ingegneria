@@ -56,8 +56,10 @@ public class MainServlet extends AbstractServlet {
 						break;
 					case "libreria":
 					case "inserimento_libro":
-					case "cancella_libro":
-					case "aggiorna_libro":
+					case "elimina_libro":
+					case "disponibile_libro":
+					case "prenotato_libro":
+					case "occupato_libro":
 					case "ricerca_libro":
 						request.getRequestDispatcher("LibroServlet").forward(request, response);
 						break;
@@ -74,6 +76,7 @@ public class MainServlet extends AbstractServlet {
 					}
 					
 				} 
+				
 				
 				// se Mode non settata
 				else {
