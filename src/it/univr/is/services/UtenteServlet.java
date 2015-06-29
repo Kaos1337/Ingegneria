@@ -182,28 +182,28 @@ public class UtenteServlet extends AbstractServlet {
 		String error = "Dati non validi:/n<ul>";
 			
 		String param = request.getParameter("email");
-		if(param==null || !param.contains("@") || param.length()>25) {
+		if(param==null || !param.contains("@") || param.length()>40) {
 			reqValid=false;
 			error += "<li>email</li>";}
 			
 		param = request.getParameter("password");
-		if(param==null || param.length()<4 || param.length()>25) {
+		if(param==null || param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
 				
 		param = request.getParameter("via");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>20) {
 			reqValid=false;
 			error += "<li>via</li>";
 		}
 				
 		param = request.getParameter("civico");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>3) {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
-		else 
+		else
 			for (char c : param.toCharArray())
 				if ( (int) c < 48 || (int) c > 57){
 					reqValid=false;
@@ -211,29 +211,30 @@ public class UtenteServlet extends AbstractServlet {
 				}
 				
 		param = request.getParameter("cap");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()!=5) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
 				
 		param = request.getParameter("citta");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>20) {
 			reqValid=false;
 			error += "<li>citta</li>";
 		}
 				
 		param = request.getParameter("provincia");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()!=2) {
 			reqValid=false;
 			error += "<li>provincia</li>";
 		}
-	
+		
 		error+="</ul>";
 		
-		if(reqValid)
+		if(reqValid){
 		//raccolgo i dati nuovi dalla request
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
-		
+		error = "Perfavore controlla di aver inserito correttamente la tua password attuale";
+		}
 		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
 		//Nota: chi fa controllo su corrispondenza con psw attuale? Qui ho considerato servlet,
 		//se è conservata nella sessione può essere fatta su client?
@@ -267,13 +268,14 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		
 		String param = request.getParameter("password");
-		if(param==null || param.length()<4 || param.length()>25) reqValid=false;
+		if(param==null || param.length()<4 || param.length()>20) reqValid=false;
 		
 		
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
 		
-		//se la sostituzione ha successo
-		if(!ds.updatePswl(utente) && reqValid){//! da eliminare all'implementazione del datasource
+		//se password accettata
+		if(reqValid){
+			ds.updatePswl(utente);
 			request.setAttribute("info", "Ora puoi effettuare il login");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
@@ -324,36 +326,36 @@ public class UtenteServlet extends AbstractServlet {
 		String error = "Dati non validi:/n<ul>";
 		
 		String param = request.getParameter("nome");
-		if(param==null || param.length()<2 || param.length()>25) {
+		if(param==null || param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>nome</li>";
 		}
 		
 		param = request.getParameter("cognome");
-		if(param==null || param.length()<4 || param.length()>25) {
+		if(param==null || param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>cognome</li>";
 		}
 		
 		param = request.getParameter("email");
-		if(param==null || !param.contains("@") || param.length()>25) {
+		if(param==null || !param.contains("@") || param.length()>40) {
 			reqValid=false;
 			error += "<li>email</li>";}
 			
 		param = request.getParameter("password");
-		if(param==null || param.length()<4 || param.length()>25) {
+		if(param==null || param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
 				
 		param = request.getParameter("via");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>20) {
 			reqValid=false;
 			error += "<li>via</li>";
 		}
 				
 		param = request.getParameter("civico");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>3) {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
@@ -365,27 +367,29 @@ public class UtenteServlet extends AbstractServlet {
 				}
 				
 		param = request.getParameter("cap");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()!=5) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
 				
 		param = request.getParameter("citta");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>20) {
 			reqValid=false;
 			error += "<li>citta</li>";
 		}
 				
 		param = request.getParameter("provincia");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()!=2) {
 			reqValid=false;
 			error += "<li>provincia</li>";
 		}
 		
 		error+="</ul>";
 		
-		if(reqValid)
+		if(reqValid){
 		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
+		error = "Mail già in uso, è necessario usare una mail differente.";
+		}
 		
 		//se l'inserimento ha successo
 		if(!ds.checkAndSubscribe(utente) && reqValid){//! da eliminare all'implementazione del datasource

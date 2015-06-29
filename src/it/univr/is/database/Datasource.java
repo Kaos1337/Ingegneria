@@ -32,14 +32,14 @@ public class Datasource {
 	}
 
 	/**
-	 * Effettua update della password dell'utente e
-	 * se l'operazione ha successo ritorna true
+	 * Effettua update della password dell'utente
+	 * 
 	 * @param utente
 	 * @return
 	 */
-	public boolean updatePswl(Utente utente) {
+	public void updatePswl(Utente utente) {
 		// TODO Auto-generated method stub
-		return false;
+		// LASCIA STARE, METODO MAI USATO NEL PROTOTIPO
 	}
 
 	/**

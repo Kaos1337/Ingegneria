@@ -242,12 +242,12 @@ public class LibroServlet extends AbstractServlet {
 		String error = "Dati non validi:/n<ul>";
 		
 		String param = request.getParameter("titolo");
-		if(param==null || param.length()>25) {
+		if(param==null || param.length()>40) {
 			reqValid=false;
 			error += "<li>titolo</li>";}
 			
 		param = request.getParameter("autore");
-		if(param==null || param.length()<2 || param.length()>25) {
+		if(param==null || param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>autore</li>";
 		}
@@ -259,13 +259,13 @@ public class LibroServlet extends AbstractServlet {
 		}
 				
 		param = request.getParameter("edizione");
-		if(param==null) {
+		if(param!=null &&  (param.length()>10)) {
 			reqValid=false;
 			error += "<li>edizione</li>";
 		}
 				
 		param = request.getParameter("isbn");
-		if(param==null || param.length()!=13) {
+		if(param!=null && param.length()!=13) {
 			reqValid=false;
 			error += "<li>ISBN</li>";
 		}
