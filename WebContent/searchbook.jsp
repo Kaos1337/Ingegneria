@@ -19,18 +19,18 @@
         <h2>Cerca libro</h2>
 		
         <form action="MainServlet" method="POST">
-		  <div class="form-group">
+		  <div class="form-group" >
 		    <label for="titolo">Titolo</label>
-		    <input type="text" class="form-control" name="titolo">
+		    <input type="text" class="form-control" name="titolo" data-toggle="tooltip" data-placement="right" title="Questo è il titolo del libro">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="autore">Autore</label>
+		    <label for="autore">Autore</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="autore">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="categoria">Prima Categoria</label>
+		    <label for="categoria">Prima Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="popover" data-placement="right" title="Prima Categoria" data-content="Questo è la prima categoria del libro."></span>
 		    <select class="form-control" name="categoria">
 		    	<option value=""></option>
 				<option value="scienza">Scienza</option>
