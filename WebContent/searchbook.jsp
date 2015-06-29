@@ -21,7 +21,7 @@
         <form action="MainServlet" method="POST">
 		  <div class="form-group" >
 		    <label for="titolo">Titolo</label>
-		    <input type="text" class="form-control" name="titolo" data-toggle="tooltip" data-placement="right" title="Questo è il titolo del libro">
+		    <input type="text" class="form-control" name="titolo">
 		  </div>
 		  
 		  <div class="form-group">
@@ -30,7 +30,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="categoria">Prima Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="popover" data-placement="right" title="Prima Categoria" data-content="Questo è la prima categoria del libro."></span>
+		    <label for="categoria">Prima Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <select class="form-control" name="categoria">
 		    	<option value=""></option>
 				<option value="scienza">Scienza</option>
@@ -42,7 +42,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="categoria2">Seconda Categoria</label>
+		    <label for="categoria2">Seconda Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <select class="form-control" name="categoria2">
 		    	<option value=""></option>
 				<option value="scienza">Scienza</option>
@@ -54,27 +54,27 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="edizione">Edizione</label>
+		    <label for="edizione">Edizione</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="edizione">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="isbn">ISBN</label>
+		    <label for="isbn">ISBN</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="isbn">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="nome">Nome utente</label>
+		    <label for="nome">Nome utente</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="nome">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="citta">Città</label>
+		    <label for="citta">Città</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="citta">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="provincia">Provincia</label>
+		    <label for="provincia">Provincia</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="provincia">
 		  </div>
 		  
