@@ -20,17 +20,17 @@
 		
         <form action="MainServlet" method="POST">
 		  <div class="form-group" >
-		    <label for="titolo">Titolo</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="titolo">Titolo</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire il titolo del libro per la ricerca"></span>
 		    <input type="text" class="form-control" name="titolo">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="autore">Autore</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="autore">Autore</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire l'autore per la ricerca"></span>
 		    <input type="text" class="form-control" name="autore">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="categoria">Prima Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="categoria">Prima Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire una categoria per la ricerca"></span>
 		    <select class="form-control" name="categoria">
 		    	<option value=""></option>
 				<option value="scienza">Scienza</option>
@@ -42,7 +42,7 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="categoria2">Seconda Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="categoria2">Seconda Categoria</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire un'altra categoria per la ricerca"></span>
 		    <select class="form-control" name="categoria2">
 		    	<option value=""></option>
 				<option value="scienza">Scienza</option>
@@ -54,27 +54,27 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="edizione">Edizione</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="edizione">Edizione</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire l'edizione da ricercare"></span>
 		    <input type="text" class="form-control" name="edizione">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="isbn">ISBN</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="isbn">ISBN</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire l'ISBN da ricercare"></span>
 		    <input type="text" class="form-control" name="isbn">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="nome">Nome utente</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="nome">Nome utente</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire il nome di un utente da ricercare"></span>
 		    <input type="text" class="form-control" name="nome">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="citta">Città</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="citta">Città</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire la città dove cercare il libro"></span>
 		    <input type="text" class="form-control" name="citta">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="provincia">Provincia</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
+		    <label for="provincia">Provincia</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Inserire la provincia dove cercare il libro"></span>
 		    <input type="text" class="form-control" name="provincia">
 		  </div>
 		  
