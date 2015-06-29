@@ -20,7 +20,7 @@
 
 		<form action="MainServlet" method="POST">
 			<div class="form-group">
-				<label for="nomecognome">Nome e Cognome</label>
+				<label for="nomecognome">Nome e Cognome</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare nome e cognome"></span>
 				<% if(utente.getNome() == null && utente.getCognome() == null){ %>
 					<input type="text" class="form-control" name="nomecognome" value="">
 				<% } else { %>
@@ -29,7 +29,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="email">Email</label>
+				<label for="email">Email</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare la mail a cui contattarti"></span>
 				<% if(utente.getEmail() == null){ %>
 					<input type="text"	class="form-control" name="email" value="">
 				<% }else{ %>
@@ -38,18 +38,19 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="oggetto">Oggetto</label> <input type="text"
-					class="form-control" name="oggetto">
+				<label for="oggetto">Oggetto</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Dare un titolo al problema"></span>
+					<input type="text" class="form-control" name="oggetto">
 			</div>
 
 			<div class="form-group">
-				<label for="reparto">Reparto</label> <select class="form-control" name="reparto">
+				<label for="reparto">Reparto</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="-Tecnico per quanto riguarda malfunzionamenti. -Amministrativo per quanto riguarda i contenuti."></span>
+				<select class="form-control" name="reparto">
 					<option value="tecnico">Tecnico</option>
 					<option value="amministrativo">Amministrativo</option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="oggetto">Messaggio</label>
+				<label for="oggetto">Messaggio</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare dettagliatamente il problema"></span>
 				<textarea class="form-control" rows="6" name="messaggio"></textarea>
 			</div>
 

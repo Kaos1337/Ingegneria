@@ -173,7 +173,7 @@ code {
             
           <% }else{  %>
 
-			<li><a href="#">Ciao <%=utente.getNome()%>!</a></li>
+			<li><a href="./ucp.jsp">Ciao <%=utente.getNome()%>!</a></li>
 			<li><form action="MainServlet"><button type="submit" name="mode" value="logout">Logout</button></form></li>
 			
   
