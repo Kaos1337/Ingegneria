@@ -20,7 +20,7 @@
 		
         <form action="MainServlet" method="POST">
 		  <div class="form-group" >
-		    <label for="titolo">Titolo</label>
+		    <label for="titolo">Titolo</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Questo è l'autore del libro"></span>
 		    <input type="text" class="form-control" name="titolo">
 		  </div>
 		  
