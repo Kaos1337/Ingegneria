@@ -141,9 +141,10 @@ public class Datasource {
 	 * {{ 2010/1 , .......... , ................},
 	 *  { 2010/2 , .......... , ...............},..}
 	 *  
-	 * @return arraybidimensionale 
+	 * @param tutti_mesi  ArrayList di stringhe formato: aaaa-mm
+	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi][3]
 	 */
-	public String[][] getStatAssolute() {
+	public String[][] getStatAssolute(ArrayList<String> tutti_mesi) {
 	//  Nota: è necessario che esista per ogni giorno una riga,
 	//  		se non sono presenti risultati per un giorno
 	//  		porre una riga con valori numerici 0 nei conteggi
@@ -159,8 +160,8 @@ public class Datasource {
 	 * {{ 2010/1/1 , .......... , ................},
 	 *  { 2010/1/2 , .......... , ...............},..}
 	 *  
-	 * @param trenta_giorni_da_oggi 
-	 * @return arraybidimensionale 
+	 * @param trenta_giorni_da_oggi ArrayList di stringhe formato: aaaa-mm-gg
+	 * @return arraybidimensionale di dimensioni [lunghezza trenta_giorni_da_oggi][3]
 	 */
 	public String[][] getStatMensili(ArrayList<String> trenta_giorni_da_oggi) {
 		//  Nota: è necessario che esista per ogni giorno una riga,
