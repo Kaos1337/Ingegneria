@@ -21,6 +21,10 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+<!-- intro.js -->
+<script src="http://usablica.github.io/intro.js/intro.js"></script>
+<link href="http://usablica.github.io/intro.js/introjs.css" rel="stylesheet">
+
 <script type="text/javascript">
 
 $( document ).ready(function(){
@@ -142,7 +146,7 @@ code {
           <a class="navbar-brand">La Libreria</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav" data-step="40" data-intro="Questo è il menu principale, da qua potrai navigare in tutte le pagine del sito.">
             <!-- <li class="active"><a href="index.jsp">Home</a></li>  -->
             <li><a href="index.jsp">Home</a></li>
             
@@ -164,7 +168,7 @@ code {
             	<% } %>
             <% } %>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" data-step="45" data-intro="Da qua gestisce il login dell'account.">
           
           <% if(session.getAttribute("id") == null){ %>
           
