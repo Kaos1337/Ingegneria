@@ -96,16 +96,7 @@ $( document ).ready(function(){
 	$('[data-toggle="popover"]').popover();
 	
 	$("#help").click(function (e) {
-		//e.stopPropagation();
-		//$('a.dropdown-toggle').dropdown('toggle');
-		//introJs().start();
 		startIntro();
-	});
-	
-	$('.introjs-button').click(function (e) {
-		console.log("introjs-button premuto");
-		e.stopPropagation();
-		//$('a.dropdown-toggle').dropdown('toggle');
 	});
 	
 });
