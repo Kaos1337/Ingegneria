@@ -113,7 +113,10 @@
 						
 						<td>
 						<div class="form-group">
-							<%= libro.getCopertina() %>
+							<%if(libro.getCopertina() == null); 
+							else{%>
+							<img src="<%= libro.getCopertina() %>" />
+							<%} %>
 						</div>
 						</td>
 					

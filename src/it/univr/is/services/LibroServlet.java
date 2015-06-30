@@ -99,6 +99,7 @@ public class LibroServlet extends AbstractServlet {
 		libro=new Libro();
 		libro.setStato(1);
 		libro.setTitolo("Merda d'artista");
+		libro.setCopertina("img/cop/cop_2.jpg");
 		al.add(libro);
 		libro=new Libro();
 		libro.setStato(2);
@@ -169,6 +170,7 @@ public class LibroServlet extends AbstractServlet {
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("Merda d'artista");
 		libroutente.setId(1212);
+		libroutente.setCopertina("img/cop/cop_2.jpg");
 		al.add(libroutente);
 		libroutente=new LibroUtente();
 		libroutente.setTitolo("Mulino stanco");

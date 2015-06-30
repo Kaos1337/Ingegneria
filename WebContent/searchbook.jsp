@@ -142,7 +142,10 @@
 						</td>
 						
 						<td>
-							<%= libroutente.getCopertina() %>
+							<%if(libroutente.getCopertina() == null); 
+							else{%>
+							<img src="<%= libroutente.getCopertina() %>" />
+							<%} %>
 						</td>
 					
 					</tr>
