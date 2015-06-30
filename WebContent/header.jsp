@@ -27,9 +27,87 @@
 
 <script type="text/javascript">
 
+
+  
 $( document ).ready(function(){
+	
+	function startIntro(){
+	    var intro = introJs();
+	      intro.setOptions({
+	        steps: [
+	          {
+	            element: "#data-step1",
+	            intro: "Questo è il menu principale, da qua potrai navigare in tutte le pagine del sito.",
+	            position: 'bottom'
+	          },
+	          {
+	            element: '#data-step2',
+	            intro: "Da qua potrai andare alla home page.",
+	            position: 'bottom'
+	          },
+	          {
+		        element: "#data-step3",
+		        intro: "Da qua potrai accedere al tuo pannello utente.",
+		        position: 'bottom'
+		      },
+		      {
+		        element: "#data-step4",
+		        intro: "Questa voce porta ad un sottomenu per i libri.",
+		        position: 'right'
+		      },
+		      {
+		        element: "#data-step5",
+		        intro: "Da qua potrai andare alla pagina per inserire un libro.",
+		        position: 'right'
+		      },
+		      {
+		        element: "#data-step6",
+		        intro: "Da qua potrai andare alla pagina per cercare un libro.",
+		        position: 'right'
+		      },
+		      {
+		        element: "#data-step7",
+		        intro: "Da qua potrai andare nella pagina di gestione dei tuoi libri.",
+		        position: 'right'
+		      },
+		      {
+		        element: "#data-step8",
+		        intro: "In questa sezione del menu puoi gestire lo stato di login del tuo account.",
+		        position: 'left'
+		      },
+		      
+	        ]
+	      });
+
+	      intro.onbeforechange(function(element) {
+	        if (this._currentStep === 3 ||
+	        	this._currentStep === 4 ||
+	        	this._currentStep === 5 ||
+	        	this._currentStep === 6) {
+	          setTimeout(function() {
+	            $(".dropdown").addClass("open");
+	          });
+	        }
+	      });
+	      intro.setOption('showProgress', true).start();
+	  };
+	  
 	$('[data-toggle="tooltip"]').tooltip();
 	$('[data-toggle="popover"]').popover();
+	
+	$("#help").click(function (e) {
+		//e.stopPropagation();
+		//$('a.dropdown-toggle').dropdown('toggle');
+		//introJs().start();
+		startIntro();
+	});
+	
+	$('.introjs-button').click(function (e) {
+		console.log("introjs-button premuto");
+		e.stopPropagation();
+		//$('a.dropdown-toggle').dropdown('toggle');
+	});
+	
 });
 
 </script>
@@ -146,29 +224,30 @@ code {
           <a class="navbar-brand">La Libreria</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav" data-step="40" data-intro="Questo è il menu principale, da qua potrai navigare in tutte le pagine del sito.">
+          <ul class="nav navbar-nav" id="data-step1">
             <!-- <li class="active"><a href="index.jsp">Home</a></li>  -->
-            <li><a href="index.jsp">Home</a></li>
+            <li><a href="index.jsp" id="data-step2">Home</a></li>
             
             <% if(session.getAttribute("id") != null){ %>
-	            <li><a href="./ucp.jsp">Pannello Utente</a></li>
+	            <li><a href="./ucp.jsp" id="data-step3">Pannello Utente</a></li>
 	            
-	            <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
+	            <li class="dropdown" id="data-step4">
+	              <a href="#" id="menu_libri" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libri <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
-	                <li><a href="./insertbook.jsp">Inserisci libro</a></li>
-	                <li><a href="./searchbook.jsp">Cerca libro</a></li>
+	                <li><a href="./insertbook.jsp" id="data-step5">Inserisci libro</a></li>
+	                <li><a href="./searchbook.jsp" id="data-step6">Cerca libro</a></li>
 	                <li role="separator" class="divider"></li>
-	                <li class="dropdown-header">La tua libreria</li>
-	                <li><form action="MainServlet"><button type="submit" name="mode" value="libreria">Gestisci</button></form></li>
+	                <li class="dropdown-header" >La tua libreria</li>
+	                <li><form action="MainServlet"><button id="data-step7" type="submit" name="mode" value="libreria">Gestisci</button></form></li>
 	              </ul>
 	            </li>
             	<% if(utente.getRuolo() > 0){ %>
             		<li><form action="MainServlet"><button type="submit" name="mode" value="statistiche">Statistiche</button></form></li>
             	<% } %>
+            	<li><a><span id="help" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></li>
             <% } %>
           </ul>
-          <ul class="nav navbar-nav navbar-right" data-step="45" data-intro="Da qua gestisce il login dell'account.">
+          <ul class="nav navbar-nav navbar-right" id="data-step8">
           
           <% if(session.getAttribute("id") == null){ %>
           
