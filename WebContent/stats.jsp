@@ -24,7 +24,7 @@
         ]);
 
         var options = {
-          title: 'Statistiche',
+          title: 'Statistiche Ultimi 30g',
           hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0}
         };
@@ -32,7 +32,33 @@
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
-    </script>
+</script>
+
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Data', 'Iscrizioni', 'Prestiti'],       
+          
+          <% String[][] arrayBid2 = (String[][]) request.getAttribute("dati_assoluti");
+          
+			for(int i = 0; i < arrayBid2.length; i++){ %>
+        	  	<%= "['" + arrayBid2[i][0] + "'," + arrayBid2[i][1] + "," + arrayBid2[i][2] + "]," %>
+			<% } %>
+          
+        ]);
+
+        var options = {
+          title: 'Statistiche Globali',
+          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+      }
+</script>
     
 <% }  %>
 </head>
@@ -47,7 +73,9 @@
 
       <div class="jumbotron">
         
-        <div id="chart_div" style="width: 900px; height: 500px;"></div>
+        <div id="chart_div" style="width: 900px; height: 500px; margin: auto;"></div>
+        <br>
+        <div id="chart_div2" style="width: 900px; height: 500px; margin: auto;"></div>
 
       </div> <!-- /jumbotron -->
 
