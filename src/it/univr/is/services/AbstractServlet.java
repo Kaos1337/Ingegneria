@@ -1,6 +1,8 @@
 package it.univr.is.services;
 
 import it.univr.is.database.Datasource;
+import it.univr.is.entity.Entity;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -19,7 +21,7 @@ abstract public class AbstractServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected Datasource ds = new Datasource();
-	
+	protected Entity bean ;
     /**
      * @see HttpServlet#HttpServlet()
      */

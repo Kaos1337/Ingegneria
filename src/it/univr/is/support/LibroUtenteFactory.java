@@ -1,9 +1,10 @@
 package it.univr.is.support;
 
 import it.univr.is.entity.Entity;
-import it.univr.is.entity.Libro;
+import it.univr.is.entity.LibroUtente;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Factory di entità LibroUtente
@@ -17,7 +18,13 @@ public class LibroUtenteFactory extends EntityFactory {
 	 */
 	@Override
 	public Entity makeElement(HttpServletRequest request) {
-		return new Libro(request);
+		return new LibroUtente(request);
+	}
+
+	@Override
+	public Entity makeElement(HttpSession session) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

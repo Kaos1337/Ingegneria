@@ -1,15 +1,15 @@
 package it.univr.is.entity;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Bean per elemento tabella Utente
  * @author marco
  *
  */
-public class Utente implements Entity{
+public class Utente extends Entity{
 	
-	private int id ;
 	private String email ;
 	private String nome ;
 	private String cognome ;
@@ -22,6 +22,7 @@ public class Utente implements Entity{
 	private int ruolo ;
 	
 	public Utente(){
+		this.setId(-1);
 		email = null ;
 		nome = null ;
 		cognome = null ;
@@ -45,6 +46,18 @@ public class Utente implements Entity{
 		setCap(request.getParameter("cap"));
 		setCitta(request.getParameter("citta"));
 		setProvincia(request.getParameter("provincia"));
+	}
+
+	public Utente(HttpSession session) {
+		this();
+		setNome((String)session.getAttribute("nome"));
+		setCognome((String)session.getAttribute("cognome"));
+		setEmail((String)session.getAttribute("email"));
+		setVia((String)session.getAttribute("via"));
+		if(session.getAttribute("civico")!=null) setCivico((int) session.getAttribute("civico"));
+		setCap((String)session.getAttribute("cap"));
+		setCitta((String)session.getAttribute("citta"));
+		setProvincia((String)session.getAttribute("provincia"));
 	}
 
 	public String getEmail() {
@@ -124,14 +137,6 @@ public class Utente implements Entity{
 
 	public void setRuolo(int ruolo) {
 		this.ruolo = ruolo;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 }

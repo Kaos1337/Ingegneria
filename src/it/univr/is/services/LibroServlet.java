@@ -3,7 +3,7 @@ package it.univr.is.services;
 import it.univr.is.entity.Entity;
 import it.univr.is.entity.Libro;
 import it.univr.is.entity.LibroUtente;
-import it.univr.is.entity.Utente;
+import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
 import java.io.IOException;
@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/LibroServlet")
 public class LibroServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
-       
-	Libro libro = new Libro();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,7 +44,7 @@ public class LibroServlet extends AbstractServlet {
 		switch(tipoInterrogazione){
 		
 		case "libreria":
-			this.searchLibreria(request,response);
+			this.getLibreria(request,response);
 			break;
 		
 		case "inserimento_libro":
@@ -81,12 +79,13 @@ public class LibroServlet extends AbstractServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void searchLibreria(HttpServletRequest request,
+	private void getLibreria(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		//request.setAttribute("lista_libri", ds.searchLibri(((Utente) request.getSession().getAttribute("utente")).getEmail()));
+		request.setAttribute("lista_libri", ds.searchLibri((int) request.getSession().getAttribute("id")));
 		
 		///////////// TEMP
+		Libro libro = new Libro();
 		libro.setTitolo("V per vendetta");
 		libro.setAutore("Darkaos");
 		libro.setCategoria("Gore");
@@ -132,11 +131,11 @@ public class LibroServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		String citta=request.getParameter("citta");
-		String provincia= request.getParameter("provincia").trim();
-		String nominativo=request.getParameter("nome");
+		String provincia= request.getParameter("provincia");
+		String nominativo=request.getParameter("nome").trim();
 		
 		
-		libro = (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
+		bean = (Libro) EntityFactory.getFactory(Constant.LIBRO).makeElement(request);
 		
 		ArrayList<Entity> al = new ArrayList<Entity>();
 		
@@ -148,7 +147,7 @@ public class LibroServlet extends AbstractServlet {
 			if(i>-1) 
 				substring = nominativo.substring(0, i-1);
 			
-			al.addAll(ds.searchLibri(libro, substring, citta, provincia));
+			al.addAll(ds.searchLibri(bean, substring, citta, provincia));
 			
 			nominativo=nominativo.substring(i);
 		}
@@ -204,7 +203,7 @@ public class LibroServlet extends AbstractServlet {
 		
 		String select[] = request.getParameterValues("selezione");
 		int op=-1;
-		String utente = ((Utente)request.getSession().getAttribute("utente")).getEmail();
+	
 		
 		switch(request.getParameter("mode")){
 			case "disponibile_libro":op=0;break;
@@ -215,13 +214,13 @@ public class LibroServlet extends AbstractServlet {
 		}
 		
 		//se è stato selezionato almeno un libro
-		if (select != null && select.length > 0) {
+		if (select != null && select.length > 0 && op!=-1) {
 			
 			ds.updateLibri(select,op);
 			request.removeAttribute("select");
 		}
 		
-		request.setAttribute("lista_libri", ds.searchLibri(utente));
+		request.setAttribute("lista_libri", ds.searchLibri( (int) request.getSession().getAttribute("id")));
 		request.getRequestDispatcher("manage.jsp").forward(request, response);
 		}
 
@@ -272,13 +271,12 @@ public class LibroServlet extends AbstractServlet {
 				
 		error+="</ul>";
 		
-		libro =  (Libro) EntityFactory.getFactory("LIBRO").makeElement(request);
-		libro.setUtente(((Utente) request.getSession().getAttribute("utente")).getId());
+		
 		
 		if (reqValid) {
-			ds.insertLibro(libro);
-		
-			request.setAttribute("lista_libri", ds.searchLibri(libro));
+			ds.insertLibro(EntityFactory.getFactory("LIBRO").makeElement(request), EntityFactory.getFactory("UTENTE").makeElement(request.getSession()));
+			
+			request.setAttribute("lista_libri", ds.searchLibri((int) request.getSession().getAttribute("id")));
 			request.getRequestDispatcher("manage.jsp").forward(request, response);
 		}
 		

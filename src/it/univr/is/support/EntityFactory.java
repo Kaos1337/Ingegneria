@@ -1,10 +1,9 @@
 package it.univr.is.support;
 
 import it.univr.is.entity.Entity;
-import it.univr.is.entity.Libro;
-import it.univr.is.entity.Utente;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Classe di interfaccia delle factory
@@ -14,19 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class EntityFactory {
 
 	/**
-	 * Ritorna la factory per l'entità fornita
+	 * Ritorna la factory per l'entità richiesta
+	 * Ritorna null se non esiste la factory rispettiva
 	 * @param string
 	 * @return
 	 */
 	public static EntityFactory getFactory(String string){
-		if (string=="UTENTE")
+		if (string==Constant.UTENTE)
 			return new UtenteFactory();
-		else if(string=="LIBRO")
+		else if(string==Constant.LIBRO)
 			return new LibroFactory();
-		else if(string=="LIBROUTENTE")
+		else if(string==Constant.LIBROUTENTE)
 			return new LibroUtenteFactory();
-		else
+		else if(string==Constant.PRESTITO)
 			return new PrestitoFactory();
+		else
+			return null;
 	}
 	
 	/**
@@ -35,4 +37,12 @@ public abstract class EntityFactory {
 	 * @return
 	 */
 	abstract public Entity makeElement(HttpServletRequest request);
+
+	/**
+	 * Implementato nei figli per ottenere un'istanza di un'entità
+	 * @param session
+	 * @return
+	 */
+	abstract public Entity makeElement(HttpSession session);
+		
 }

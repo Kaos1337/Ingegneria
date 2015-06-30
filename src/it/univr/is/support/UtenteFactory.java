@@ -4,6 +4,7 @@ import it.univr.is.entity.Entity;
 import it.univr.is.entity.Utente;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Factory di entità Utente
@@ -19,6 +20,15 @@ public class UtenteFactory extends EntityFactory {
 	@Override
 	public Entity makeElement(HttpServletRequest request) {
 		return new Utente(request);
+	}
+
+	/**
+	 * crea un'istanza di Utente
+	 */
+	@Override
+	public Entity makeElement(HttpSession session) {
+		return new Utente(session);
+		
 	}
 
 }

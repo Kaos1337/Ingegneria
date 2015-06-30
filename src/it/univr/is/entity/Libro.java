@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author marco
  *
  */
-public class Libro implements Entity{
+public class Libro extends Entity{
 	
-	private int id ;
+
 	private String titolo ;
 	private int utente ;
 	private String autore ;
@@ -21,7 +21,7 @@ public class Libro implements Entity{
 	private String copertina ;
 	
 	public Libro(){
-		id = -1;
+		this.setId(-1);
 		titolo = null;
 		utente = -1;
 		autore = null;
@@ -97,14 +97,6 @@ public class Libro implements Entity{
 	}
 	public void setCopertina(String copertina) {
 		this.copertina = copertina;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 }

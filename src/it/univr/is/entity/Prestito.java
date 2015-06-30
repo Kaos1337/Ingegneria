@@ -8,17 +8,13 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 
-public class Prestito implements Entity{
+public class Prestito extends Entity{
 	
-	private String titolo ;
-	private String utente ;
 	private String datai ;
 	private String dataf ;
 	
 	public Prestito(){
-		
-		titolo = null ;
-		utente = null ;
+		this.setId(-1);
 		datai = null ;
 		dataf = null ;
 	
@@ -26,22 +22,6 @@ public class Prestito implements Entity{
 	
 	public Prestito(HttpServletRequest request) {
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getTitolo() {
-		return titolo;
-	}
-	
-	public void setTitolo(String titolo) {
-		this.titolo = titolo;
-	}
-	
-	public String getUtente() {
-		return utente;
-	}
-	
-	public void setUtente(String utente) {
-		this.utente = utente;
 	}
 
 	public String getDatai() {

@@ -2,6 +2,7 @@ package it.univr.is.database;
 
 import java.util.ArrayList;
 
+import it.univr.is.entity.Entity;
 import it.univr.is.entity.Libro;
 import it.univr.is.entity.LibroUtente;
 import it.univr.is.entity.Utente;
@@ -12,10 +13,10 @@ public class Datasource {
 	 * Effettua (nella stessa connessione) un controllo sull'esistenza
 	 * della mail e quindi se è assente effettua l'inserimento
 	 * dei dati dell'utente. Se l'iscrizione ha successo ritorna true
-	 * @param utente
+	 * @param utente bean Utente con dati iscrizione
 	 * @return
 	 */
-	public boolean checkAndSubscribe(Utente utente) {
+	public boolean checkAndSubscribe(Entity utente) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -37,7 +38,7 @@ public class Datasource {
 	 * @param utente
 	 * @return
 	 */
-	public void updatePswl(Utente utente) {
+	public void updatePswl(Entity utente) {
 		// TODO Auto-generated method stub
 		// LASCIA STARE, METODO MAI USATO NEL PROTOTIPO
 	}
@@ -46,39 +47,32 @@ public class Datasource {
 	 * Se la password attuale corrisponde all'utente attuale
 	 * posso aggiornare con i nuovi dati. Se tutto va a buon fine
 	 * ritorna true
-	 * @param newutente oggetto utente con nuovi dati
-	 * @param actualutente oggetto utente con i dati passati
+	 * @param newUtente bean Utente con nuovi dati (quando non null)
+	 * @param utenteAttuale bean Utente con dati attuali senza password
+	 * @param pswAttuale psw da verificare
 	 * @return
 	 */
-	public boolean updateUtente(Utente newUtente, Utente actualUtente ) {
+	 
+	public boolean updateUtente(Entity newUtente, Entity utenteAttuale, String pswAttuale ) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	/**
 	 * Inserisce il libro nel database
-	 * @param libro
+	 * @param libro bean Libro con dati da inserire
+	 * @param utente bean Utente del proprietario, fornisce id e mail
 	 */
-	public void insertLibro(Libro libro) {
+	public void insertLibro(Entity libro, Entity utente) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * Ritorna una lista di libri
-	 * filtrata dai parametri non null del libro passato
-	 * @param libro
-	 * @return
-	 */
-	public ArrayList<Libro> searchLibri(Libro libro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * Ritorna una lista di libriutente
 	 * filtrata dai parametri non null passati,
-	 * se il nome ha valore cerca sia nome che cognome
+	 * se il nome ha valore cerca sia tra nome che cognome
 	 * dei possibili utenti
 	 * @param libro
 	 * @param nome
@@ -86,28 +80,29 @@ public class Datasource {
 	 * @param parameter2
 	 * @return 
 	 */
-	public ArrayList<LibroUtente> searchLibri(Libro libro,String nome, String citta, String provincia) {
+	public ArrayList<LibroUtente> searchLibri(Entity libro,String nome, String citta, String provincia) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * Ritorna la lista di libri dell'utente
-	 * @param libro
+	 * @param id
 	 * @return
 	 */
-	public ArrayList<Libro> searchLibri(String email) {
+	public ArrayList<Libro> searchLibri(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	/**
-	 * Motodo per verifica credenziali di login email e psw.
+	 * Motodo per verifica credenziali di login, nel nostro 
+	 * caso verifica email e psw.
 	 * Ritorna Utente null se nessuna corrispondenza
-	 * @param utente
-	 * @return Utente loggato
+	 * @param utente Bean Utente
+	 * @return Utente loggato ma con campo psw=null
 	 */
-	public Utente login(Utente utente) {
+	public Utente login(Entity utente) {
 		// TODO Auto-generated method stub
 		return null;
 	}

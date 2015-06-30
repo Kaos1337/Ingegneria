@@ -1,6 +1,8 @@
 package it.univr.is.services;
 
+import it.univr.is.entity.Entity;
 import it.univr.is.entity.Utente;
+import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
 import java.io.IOException;
@@ -19,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/UtenteServlet")
 public class UtenteServlet extends AbstractServlet {
 	private static final long serialVersionUID = 1L;
-       
-	private Utente utente = new Utente();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -105,10 +105,7 @@ public class UtenteServlet extends AbstractServlet {
 	private void contattaUtente(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		utente = ds.getUtente(Integer.parseInt(request.getParameter("proprietario")));
-		
-		request.setAttribute("proprietario", utente);
+		request.setAttribute("proprietario", ds.getUtente(Integer.parseInt(request.getParameter("proprietario"))));
 		request.getRequestDispatcher("reservebook.jsp").forward(request, response);
 		
 		
@@ -124,16 +121,14 @@ public class UtenteServlet extends AbstractServlet {
 	 */
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
-		
-		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
-		
 		//verifico validità credenziali
-		utente = ds.login(utente);
+		bean = ds.login(EntityFactory.getFactory(Constant.UTENTE).makeElement(request));
 		
 		//////////////////////////////////TEMP per Login
+		Utente utente = new Utente();
 		if(request.getParameter("email").contentEquals("test@email.com") && request.getParameter("password").contentEquals("password")){
 			
-			utente = new Utente();
+		
 			utente.setId(000);
 			utente.setEmail("test@email.com");
 			utente.setNome("Darkaos");
@@ -148,11 +143,10 @@ public class UtenteServlet extends AbstractServlet {
 		//////////////////////////////////TEMP
 		
 		//se c'è riscontro delle credenziali
-		if(utente!=null){
+		if(bean==null){//!= all'implementazione datasource
 			
-			utente.setPassword(null);
-			request.getSession().setAttribute("utente",utente );
-			request.getSession().setAttribute("id",utente.getId() );
+			request.getSession().setAttribute("utente",utente/*bean*/ );
+			request.getSession().setAttribute("id",utente.getId()/*bean.getId()*/ );
 			
 			response.sendRedirect("index.jsp");
 				
@@ -232,17 +226,16 @@ public class UtenteServlet extends AbstractServlet {
 		
 		if(reqValid){
 		//raccolgo i dati nuovi dalla request
-		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
+		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
 		error = "Perfavore controlla di aver inserito correttamente la tua password attuale";
 		}
+		
 		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
-		//Nota: chi fa controllo su corrispondenza con psw attuale? Qui ho considerato servlet,
-		//se è conservata nella sessione può essere fatta su client?
-		Utente utente_attuale = (Utente) request.getSession().getAttribute("utente");
-		utente_attuale.setPassword((String) request.getAttribute("password_attuale"));
+		 
 		
 		//se l'aggiornamento ha successo
-		if(!ds.updateUtente(utente, utente_attuale) && reqValid){//! da eliminare all'implementazione del datasource
+		if(!ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale")) && reqValid){//! da eliminare all'implementazione del datasource
+			request.getSession().invalidate();
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 		}
@@ -271,11 +264,9 @@ public class UtenteServlet extends AbstractServlet {
 		if(param==null || param.length()<4 || param.length()>20) reqValid=false;
 		
 		
-		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
-		
 		//se password accettata
 		if(reqValid){
-			ds.updatePswl(utente);
+			ds.updatePswl(EntityFactory.getFactory(Constant.UTENTE).makeElement(request));
 			request.setAttribute("info", "Ora puoi effettuare il login");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
@@ -387,13 +378,12 @@ public class UtenteServlet extends AbstractServlet {
 		error+="</ul>";
 		
 		if(reqValid){
-		utente =  (Utente) EntityFactory.getFactory("UTENTE").makeElement(request);
+		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
 		error = "Mail già in uso, è necessario usare una mail differente.";
 		}
 		
 		//se l'inserimento ha successo
-		if(!ds.checkAndSubscribe(utente) && reqValid){//! da eliminare all'implementazione del datasource
-			request.getSession().setAttribute("utente", utente);
+		if(!ds.checkAndSubscribe(bean) && reqValid){//! da eliminare all'implementazione del datasource
 			response.sendRedirect("index.jsp");
 		
 		}
