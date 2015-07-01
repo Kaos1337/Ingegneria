@@ -17,15 +17,15 @@ public class Datasource {
 	private String dbusr = "useringe";
 	private String dbpswd = "c2En";
 
-	/*private String dbdriver = "org.postgresql.Driver";
+	private String driver = "org.postgresql.Driver";
 
 	public Datasource() {
 		try {
-			Class.forName(dbdriver);
-		} catch (ClassNotFoundException e) {
+			Class.forName(driver);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	/**
 	 * Esegue la query passata come parametro. Verranno rimpiazzati tutti i '?'
@@ -96,7 +96,6 @@ public class Datasource {
 	 * @return
 	 */
 	public boolean checkAndSubscribe(Entity utente) {
-		// TODO Auto-generated method stub
 		Utente usr = checkAndCastUtente(utente);
 		String query = "SELECT u.email FROM utente u where u.email=?";
 		boolean nuovoUtente = false;
@@ -112,27 +111,18 @@ public class Datasource {
 			rs = pstmt.executeQuery();
 			// la mail non era presente, iscrivo l'utente
 			if (rs.getString(1) == null) {
-				query = "SELECT MAX(id) from utente";
+				query = "INSERT INTO utente VALUES(?,?,?,?,?,?,?,?,?,current_date,0)";
 				pstmt = con.prepareStatement(query);
 				pstmt.clearParameters();
-				rs = pstmt.executeQuery();
-
-				query = "INSERT INTO utente VALUES(?,?,?,?,?,?,?,?,?,?,current_date,0)";
-				pstmt = con.prepareStatement(query);
-				pstmt.clearParameters();
-
-				pstmt.setInt(1, rs.getInt(1)); // se non c'è nessun utente il
-												// getInt ritorna 0
-
-				pstmt.setString(2, usr.getEmail());
-				pstmt.setString(3, usr.getNome());
-				pstmt.setString(4, usr.getCognome());
-				pstmt.setString(5, usr.getPassword());
-				pstmt.setString(6, usr.getVia());
-				pstmt.setInt(7, usr.getCivico());
-				pstmt.setString(8, usr.getCap());
-				pstmt.setString(9, usr.getCitta());
-				pstmt.setString(10, usr.getProvincia());
+				pstmt.setString(1, usr.getEmail());
+				pstmt.setString(2, usr.getNome());
+				pstmt.setString(3, usr.getCognome());
+				pstmt.setString(4, usr.getPassword());
+				pstmt.setString(5, usr.getVia());
+				pstmt.setInt(6, usr.getCivico());
+				pstmt.setString(7, usr.getCap());
+				pstmt.setString(8, usr.getCitta());
+				pstmt.setString(9, usr.getProvincia());
 				pstmt.executeQuery();
 				nuovoUtente = true;
 			}
@@ -158,8 +148,28 @@ public class Datasource {
 	 * @return
 	 */
 	public boolean checkMail(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "SELECT u.email FROM utente u where u.email=?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean presente = false;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			presente = rs.getString(1) != null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return presente;
 	}
 
 	/**
@@ -169,8 +179,8 @@ public class Datasource {
 	 * @return
 	 */
 	public void updatePswl(Entity utente) {
-		// TODO Auto-generated method stub
-		// LASCIA STARE, METODO MAI USATO NEL PROTOTIPO
+		// NON UTILIZZATO NEL PROTOTIPO
+		return;
 	}
 
 	/**
@@ -185,7 +195,6 @@ public class Datasource {
 	 *            psw da verificare
 	 * @return
 	 */
-
 	public boolean updateUtente(Entity newUtente, Entity utenteAttuale,
 			String pswAttuale) {
 		// TODO Auto-generated method stub
