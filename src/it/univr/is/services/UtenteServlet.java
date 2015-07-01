@@ -379,7 +379,7 @@ public class UtenteServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		//se c'è riscontro eseguo effettive operazioni
-		if(!ds.checkMail(request.getParameter("email"))){//! da eliminare all'implementazione del datasource
+		if(ds.checkMail(request.getParameter("email"))){
 			this.mandaMsg(request);
 		}
 			
