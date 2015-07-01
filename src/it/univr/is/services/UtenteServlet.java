@@ -468,19 +468,26 @@ public class UtenteServlet extends AbstractServlet {
 		if(reqValid){
 		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
 		error = "Mail già in uso, è necessario usare una mail differente.";
+		
+			//se l'inserimento ha successo
+			if(ds.checkAndSubscribe(bean)){
+				response.sendRedirect("index.jsp");
+			
+			}
+			
+			//altrimenti 
+			else {
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+			}
 		}
-		
-		//se l'inserimento ha successo
-		if(ds.checkAndSubscribe(bean) && reqValid){
-			response.sendRedirect("index.jsp");
-		
-		}
-		
-		//altrimenti 
 		else {
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
+			
+		
+		
 		
 	}
 	
