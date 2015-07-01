@@ -70,12 +70,11 @@ public class UtenteServlet extends AbstractServlet {
 			break;
 			
 		case "manda_messaggio":
-			this.mandaMsg(request);//oggetto "utente" contiene dati destinatario 
-			response.sendRedirect("reservebook.jsp?info=La richiesta è stata inviata, attendi la risposta.");
+			this.inviaMsg(request,response);
 			break;
 			
 		case "contattaci":
-			this.mandaMsg(request);//param "reparto" contiene dipartimento indicato
+			this.contact(request,response);//param "reparto" contiene dipartimento indicato
 			response.sendRedirect("contactus.jsp?info=La richiesta è stata inviata, attendi la risposta.");
 			break;
 			
@@ -85,13 +84,109 @@ public class UtenteServlet extends AbstractServlet {
 		
 		}
 	}
-
+	
 	/**
 	 * Manda un messaggio traendo i dati necessari dalla request
 	 * @param request
 	 */
 	private void mandaMsg(HttpServletRequest request) {
 		// TODO Implementazione invio messaggio
+		
+	}
+	
+	/**
+	 * Metodo per controllo campi e risposta all'invio di messaggi
+	 * con destinatari il dipartimento
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void contact(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		boolean reqValid = true;
+		String error = "Perfavore completa i campi:/n<ul>";
+		
+		String param = request.getParameter("messaggio");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>messaggio</li>";}
+			
+		param = request.getParameter("oggetto");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>oggetto</li>";
+		}
+		
+		param = request.getParameter("nomecognome");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>nome e cognome</li>";}
+		
+		param = request.getParameter("email");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>email</li>";}
+		
+		error+="</ul>";
+		
+		if (reqValid){
+			this.mandaMsg(request);
+			response.sendRedirect("contactus.jsp?info=La richiesta è stata inviata, attendi la risposta.");
+		}
+		
+		else {
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("contactus.jsp").forward(request, response);
+			
+		}
+		
+	}
+
+	/**
+	 * Metodo per controllo campi e risposta all'invio di messaggi
+	 * con destinatari altri utenti
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void inviaMsg(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		boolean reqValid = true;
+		String error = "Perfavore completa i campi:/n<ul>";
+		
+		String param = request.getParameter("messaggio");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>messaggio</li>";}
+			
+		param = request.getParameter("oggetto");
+		if(param==null) {
+			reqValid=false;
+			error += "<li>oggetto</li>";
+		}
+		
+		error+="</ul>";
+		
+		if (reqValid){
+			this.mandaMsg(request);
+			response.sendRedirect("reservebook.jsp?info=La richiesta è stata inviata, attendi la risposta.");
+		}
+		
+		else {
+			request.setAttribute("error", error);
+			request.getRequestDispatcher("reservebook.jsp").forward(request, response);
+			
+		}
+			
+			
+		
+		
+		
+	
 		
 	}
 
@@ -383,7 +478,7 @@ public class UtenteServlet extends AbstractServlet {
 		}
 		
 		//se l'inserimento ha successo
-		if(!ds.checkAndSubscribe(bean) && reqValid){//! da eliminare all'implementazione del datasource
+		if(ds.checkAndSubscribe(bean) && reqValid){
 			response.sendRedirect("index.jsp");
 		
 		}
