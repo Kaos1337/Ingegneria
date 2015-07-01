@@ -56,6 +56,10 @@
 
 			<button type="submit" class="btn btn-default" name="mode" value="contattaci">Invia</button>
 		</form>
+		
+			<% if(request.getAttribute("error") != null){ %>
+			<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+			<% } %>
 
 		<% } %>
 

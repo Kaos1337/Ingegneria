@@ -69,6 +69,10 @@
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value=inserimento_libro>Aggiungi</button>
 		</form>
+		
+		<% if(request.getAttribute("error") != null){ %>
+		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+		<% } %>
 
       </div> <!-- /jumbotron -->
 

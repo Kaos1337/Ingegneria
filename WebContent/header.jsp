@@ -88,6 +88,13 @@ $( document ).ready(function(){
 	            $(".dropdown").addClass("open");
 	          });
 	        }
+	        
+	        if (this._currentStep === 7) {
+		          setTimeout(function() {
+		            $(".dropdown").removeClass("open");
+		          });
+		    }
+	        
 	      });
 	      intro.setOption('showProgress', true).start();
 	  };
