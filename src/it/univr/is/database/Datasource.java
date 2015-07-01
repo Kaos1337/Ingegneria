@@ -33,7 +33,7 @@ public class Datasource {
 	 * @param query
 	 *            stringa della query
 	 * */
-	@SuppressWarnings("unused")
+	/*@SuppressWarnings("unused")
 	private ResultSet executeQuery(String query, ArrayList<ParametroSQL> param)
 			throws WrongParamNumberSQLException {
 		int n = 0;
@@ -70,7 +70,7 @@ public class Datasource {
 		}
 
 		return rs;
-	}
+	}*/
 
 	/**
 	 * Effettua un cast da Entity a Utente. Se non va a buon fine ritorna null.
@@ -126,7 +126,7 @@ public class Datasource {
 				pstmt.setString(7, usr.getCap());
 				pstmt.setString(8, usr.getCitta());
 				pstmt.setString(9, usr.getProvincia());
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 			}
 
 		} catch (Exception e) {
@@ -234,7 +234,7 @@ public class Datasource {
 					pstmt.setString(7, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
 					pstmt.setString(8, nuovo.getCitta() == null ? attuale.getCitta() : nuovo.getCitta());
 					pstmt.setString(9, nuovo.getProvincia()== null ? attuale.getProvincia() : nuovo.getProvincia());
-					pstmt.executeQuery();
+					pstmt.executeUpdate();
 				}
 			} else buonFine = false; // non dovrebbe mai accadere, non trova l'id
 
