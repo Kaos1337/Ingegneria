@@ -321,12 +321,12 @@ public class Datasource {
 				loggato.setNome(rs.getString(3));
 				loggato.setCognome(rs.getString(4));
 				loggato.setPassword(null); // password a null
-				loggato.setVia(rs.getString(5));
-				loggato.setCivico(rs.getInt(6));
-				loggato.setCap(rs.getString(7));
-				loggato.setCitta(rs.getString(8));
-				loggato.setProvincia(rs.getString(9));
-				loggato.setRuolo(rs.getInt(10));
+				loggato.setVia(rs.getString(6));
+				loggato.setCivico(rs.getInt(7));
+				loggato.setCap(rs.getString(8));
+				loggato.setCitta(rs.getString(9));
+				loggato.setProvincia(rs.getString(10));
+				loggato.setRuolo(rs.getInt(11));
 			}
 			
 		} catch (Exception e) {
