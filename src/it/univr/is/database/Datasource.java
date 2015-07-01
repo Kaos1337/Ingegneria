@@ -16,8 +16,7 @@ public class Datasource {
 	private String dburl = "jdbc:postgresql://marretta.it:5432/dbinge";
 	private String dbusr = "useringe";
 	private String dbpswd = "c2En";
-
-	private String driver = "org.postgresql.Driver";
+    private String driver = "org.postgresql.Driver";
 
 	public Datasource() {
 		try {
@@ -26,7 +25,7 @@ public class Datasource {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * Esegue la query passata come parametro. Verranno rimpiazzati tutti i '?'
 	 * dai i parametri nell'array list
@@ -98,7 +97,7 @@ public class Datasource {
 	public boolean checkAndSubscribe(Entity utente) {
 		Utente usr = checkAndCastUtente(utente);
 		String query = "SELECT u.email FROM utente u where u.email=?";
-		boolean nuovoUtente = false;
+		boolean nuovoUtente = true;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -110,8 +109,12 @@ public class Datasource {
 			pstmt.setString(1, usr.getEmail());
 			rs = pstmt.executeQuery();
 			// la mail non era presente, iscrivo l'utente
-			if (rs.getString(1) == null) {
-				query = "INSERT INTO utente VALUES(?,?,?,?,?,?,?,?,?,current_date,0)";
+			while(rs.next()){
+				nuovoUtente = false;
+			}
+			if (nuovoUtente) {
+				query = "INSERT INTO utente(email,nome,cognome,password,via,civico,cap,citta,provincia,dataisc) "
+						+ "VALUES(?,?,?,?,?,?,?,?,?,current_date)";
 				pstmt = con.prepareStatement(query);
 				pstmt.clearParameters();
 				pstmt.setString(1, usr.getEmail());
@@ -124,7 +127,6 @@ public class Datasource {
 				pstmt.setString(8, usr.getCitta());
 				pstmt.setString(9, usr.getProvincia());
 				pstmt.executeQuery();
-				nuovoUtente = true;
 			}
 
 		} catch (Exception e) {

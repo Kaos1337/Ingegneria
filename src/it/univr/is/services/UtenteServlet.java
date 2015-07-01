@@ -105,7 +105,7 @@ public class UtenteServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		boolean reqValid = true;
-		String error = "Perfavore completa i campi:/n<ul>";
+		String error = "Perfavore completa i campi:<ul>";
 		
 		String param = request.getParameter("messaggio");
 		if(param==null) {
@@ -155,7 +155,7 @@ public class UtenteServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		boolean reqValid = true;
-		String error = "Perfavore completa i campi:/n<ul>";
+		String error = "Perfavore completa i campi:<ul>";
 		
 		String param = request.getParameter("messaggio");
 		if(param==null) {
@@ -179,13 +179,7 @@ public class UtenteServlet extends AbstractServlet {
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("reservebook.jsp").forward(request, response);
 			
-		}
-			
-			
-		
-		
-		
-	
+		}	
 		
 	}
 
@@ -267,7 +261,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//controllo validità dati
 		boolean reqValid = true;
-		String error = "Dati non validi:/n<ul>";
+		String error = "Dati non validi:<ul>";
 			
 		String param = request.getParameter("email");
 		if(param==null || !param.contains("@") || param.length()>40) {
@@ -408,7 +402,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		//controllo validità dati
 		boolean reqValid = true;
-		String error = "Dati non validi:/n<ul>";
+		String error = "Dati non validi:<ul>";
 		
 		String param = request.getParameter("nome");
 		if(param==null || param.length()<2 || param.length()>20) {
@@ -474,19 +468,26 @@ public class UtenteServlet extends AbstractServlet {
 		if(reqValid){
 		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
 		error = "Mail già in uso, è necessario usare una mail differente.";
+		
+			//se l'inserimento ha successo
+			if(ds.checkAndSubscribe(bean)){
+				response.sendRedirect("index.jsp");
+			
+			}
+			
+			//altrimenti 
+			else {
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+			}
 		}
-		
-		//se l'inserimento ha successo
-		if(ds.checkAndSubscribe(bean) && reqValid){
-			response.sendRedirect("index.jsp");
-		
-		}
-		
-		//altrimenti 
 		else {
 			request.setAttribute("error", error);
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
+			
+		
+		
 		
 	}
 	
