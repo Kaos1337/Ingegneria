@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 public class Utente extends Entity{
 	
 	private String email ;
+	private String dataisc ;
 	private String nome ;
 	private String cognome ;
 	private String password ;
@@ -24,6 +25,7 @@ public class Utente extends Entity{
 	public Utente(){
 		this.setId(-1);
 		email = null ;
+		dataisc = null ;
 		nome = null ;
 		cognome = null ;
 		password = null ;
@@ -50,14 +52,20 @@ public class Utente extends Entity{
 
 	public Utente(HttpSession session) {
 		this();
-		setNome((String)session.getAttribute("nome"));
-		setCognome((String)session.getAttribute("cognome"));
-		setEmail((String)session.getAttribute("email"));
-		setVia((String)session.getAttribute("via"));
-		if(session.getAttribute("civico")!=null) setCivico((int) session.getAttribute("civico"));
-		setCap((String)session.getAttribute("cap"));
-		setCitta((String)session.getAttribute("citta"));
-		setProvincia((String)session.getAttribute("provincia"));
+		Utente u = (Utente) session.getAttribute("utente");
+		
+		setId(u.getId());
+		email = u.getEmail() ;
+		dataisc = u.getDataisc() ;
+		nome = u.getNome() ;
+		cognome = u.getCognome() ;
+		password = u.getPassword() ;
+		via = u.getVia() ;
+		civico = u.getCivico() ;
+		cap = u.getCap() ;
+		citta = u.getCitta() ;
+		provincia = u.getProvincia() ;
+		ruolo = u.getRuolo() ;
 	}
 
 	public String getEmail() {
@@ -137,6 +145,14 @@ public class Utente extends Entity{
 
 	public void setRuolo(int ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public String getDataisc() {
+		return dataisc;
+	}
+
+	public void setDataisc(String dataisc) {
+		this.dataisc = dataisc;
 	}
 
 }

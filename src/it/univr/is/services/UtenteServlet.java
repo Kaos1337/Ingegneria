@@ -74,8 +74,7 @@ public class UtenteServlet extends AbstractServlet {
 			break;
 			
 		case "contattaci":
-			this.contact(request,response);//param "reparto" contiene dipartimento indicato
-			response.sendRedirect("contactus.jsp?info=La richiesta è stata inviata, attendi la risposta.");
+			this.contact(request,response);
 			break;
 			
 		default :
@@ -132,7 +131,7 @@ public class UtenteServlet extends AbstractServlet {
 		error+="</ul>";
 		
 		if (reqValid){
-			this.mandaMsg(request);
+			this.mandaMsg(request);//param "reparto" contiene dipartimento indicato
 			response.sendRedirect("contactus.jsp?info=La richiesta è stata inviata, attendi la risposta.");
 		}
 		
