@@ -17,15 +17,16 @@ public class Datasource {
 	private String dbusr = "useringe";
 	private String dbpswd = "c2En";
 
-	/*private String dbdriver = "org.postgresql.Driver";
+	private String dbdriver = "org.postgresql.Driver";
 
-	public Datasource() {
-		try {
-			Class.forName(dbdriver);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}*/
+	public Datasource(){
+			try {
+				Class.forName(dbdriver);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
 
 	/**
 	 * Esegue la query passata come parametro. Verranno rimpiazzati tutti i '?'

@@ -240,7 +240,7 @@ public class LibroServlet extends AbstractServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		boolean reqValid=true;
-		String error = "Dati non validi:/n<ul>";
+		String error = "Dati non validi:<ul>";
 		
 		String param = request.getParameter("titolo");
 		if(param==null || param.length()>40) {
