@@ -326,7 +326,8 @@ public class Datasource {
 				loggato.setCap(rs.getString(8));
 				loggato.setCitta(rs.getString(9));
 				loggato.setProvincia(rs.getString(10));
-				loggato.setRuolo(rs.getInt(11));
+				loggato.setDataisc(rs.getString(11));
+				loggato.setRuolo(rs.getInt(12));
 			}
 			
 		} catch (Exception e) {
