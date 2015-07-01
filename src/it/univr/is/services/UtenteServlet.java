@@ -210,7 +210,6 @@ public class UtenteServlet extends AbstractServlet {
 		//verifico validità credenziali
 		bean = ds.login(EntityFactory.getFactory(Constant.UTENTE).makeElement(request));
 		
-		
 		//se c'è riscontro delle credenziali
 		if(bean!=null){
 			
@@ -250,13 +249,13 @@ public class UtenteServlet extends AbstractServlet {
 			error += "<li>email</li>";}
 			
 		param = request.getParameter("password");
-		if(param!=null && (param.length()<4 || param.length()>20)) {
+		if(!param.equals("") && (param.length()<4 || param.length()>20)) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
 		
 		param=request.getParameter("password_attuale");		
-		if(param==null || param.length()<4 || param.length()>20) {
+		if(param.equals("") || param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>password attuale</li>";
 		}
@@ -299,6 +298,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		error+="</ul>";
 		
+		
 		if(reqValid){
 		//raccolgo i dati nuovi dalla request
 		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
@@ -316,10 +316,10 @@ public class UtenteServlet extends AbstractServlet {
 			request.getRequestDispatcher("ucp.jsp").forward(request, response);
 			}
 		}
-		else
+		else {
 			request.setAttribute("error",error);
 			request.getRequestDispatcher("ucp.jsp").forward(request, response);
-		
+		}
 		
 	}
 

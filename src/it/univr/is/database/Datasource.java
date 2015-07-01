@@ -228,7 +228,7 @@ public class Datasource {
 					pstmt.setString(1, nuovo.getEmail() == null ? attuale.getEmail() : nuovo.getEmail());
 					pstmt.setString(2, nuovo.getNome()== null ? attuale.getNome() : nuovo.getNome());
 					pstmt.setString(3, nuovo.getCognome()== null ? attuale.getCognome() : nuovo.getCognome());
-					pstmt.setString(4, nuovo.getPassword()== null ? attuale.getPassword() : nuovo.getPassword());
+					pstmt.setString(4, nuovo.getPassword().equals("") ? attuale.getPassword() : nuovo.getPassword());
 					pstmt.setString(5, nuovo.getVia()== null ? attuale.getVia() : nuovo.getVia());
 					pstmt.setInt(6, nuovo.getCivico() <= 0 ? attuale.getCivico() : nuovo.getCivico());
 					pstmt.setString(7, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
@@ -247,7 +247,6 @@ public class Datasource {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(buonFine);
 		return buonFine;
 	}
 
