@@ -13,7 +13,7 @@
 	<div class="container">
 
       <div class="jumbotron">
-        <h2>Hmmm</h2>
+        <h2>Registrazione</h2>
         
         <form action="MainServlet" method="POST">
 		  <div class="form-group">
