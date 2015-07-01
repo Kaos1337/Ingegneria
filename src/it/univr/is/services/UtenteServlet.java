@@ -212,29 +212,12 @@ public class UtenteServlet extends AbstractServlet {
 		//verifico validità credenziali
 		bean = ds.login(EntityFactory.getFactory(Constant.UTENTE).makeElement(request));
 		
-		//////////////////////////////////TEMP per Login
-		Utente utente = new Utente();
-		if(request.getParameter("email").contentEquals("test@email.com") && request.getParameter("password").contentEquals("password")){
-			
-		
-			utente.setId(000);
-			utente.setEmail("test@email.com");
-			utente.setNome("Darkaos");
-			utente.setCognome("NevioDavide");
-			utente.setProvincia("Verona");
-			utente.setCitta("cita");
-			utente.setCivico(10);
-			utente.setCap("37013");
-			utente.setVia("via da qui");
-			utente.setRuolo(1);
-		}
-		//////////////////////////////////TEMP
 		
 		//se c'è riscontro delle credenziali
-		if(bean==null){//!= all'implementazione datasource
+		if(bean!=null){
 			
-			request.getSession().setAttribute("utente",utente/*bean*/ );
-			request.getSession().setAttribute("id",utente.getId()/*bean.getId()*/ );
+			request.getSession().setAttribute("utente", bean );
+			request.getSession().setAttribute("id", bean.getId() );
 			
 			response.sendRedirect("index.jsp");
 				
