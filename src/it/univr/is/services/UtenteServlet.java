@@ -1,7 +1,5 @@
 package it.univr.is.services;
 
-import it.univr.is.entity.Entity;
-import it.univr.is.entity.Utente;
 import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
@@ -305,7 +303,7 @@ public class UtenteServlet extends AbstractServlet {
 		 
 		
 		//se l'aggiornamento ha successo
-		if(!ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale")) && reqValid){//! da eliminare all'implementazione del datasource
+		if(ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale")) && reqValid){
 			request.getSession().invalidate();
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
