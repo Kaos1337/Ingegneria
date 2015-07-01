@@ -28,14 +28,19 @@
 		  </div>
 		  
 		   <div class="form-group">
-		    <label for="oggetto">Messaggio</label>
+		    <label for="messaggio">Messaggio</label>
 		    <textarea class="form-control" rows="6" name="messaggio"></textarea>
 		  </div>
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value="manda_messaggio">Invia</button>
 		</form>
 		
+			<% if(request.getAttribute("error") != null){ %>
+			<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+			<% } %>
+		
 		<% } %>
+		
 
       </div> <!-- /jumbotron -->
 
