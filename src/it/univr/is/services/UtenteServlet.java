@@ -245,24 +245,30 @@ public class UtenteServlet extends AbstractServlet {
 		String error = "Dati non validi:<ul>";
 			
 		String param = request.getParameter("email");
-		if(param==null || !param.contains("@") || param.length()>40) {
+		if(param!=null && (!param.contains("@") || param.length()>40)) {
 			reqValid=false;
 			error += "<li>email</li>";}
 			
 		param = request.getParameter("password");
-		if(param==null || param.length()<4 || param.length()>20) {
+		if(param!=null && (param.length()<4 || param.length()>20)) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
-				
+		
+		param=request.getParameter("password_attuale");		
+		if(param==null || param.length()<4 || param.length()>20) {
+			reqValid=false;
+			error += "<li>password attuale</li>";
+		}
+		
 		param = request.getParameter("via");
-		if(param==null || param.length()>20) {
+		if(param!=null && param.length()>20) {
 			reqValid=false;
 			error += "<li>via</li>";
 		}
 				
 		param = request.getParameter("civico");
-		if(param==null || param.length()>3) {
+		if(param!=null && param.length()>3) {
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
@@ -274,19 +280,19 @@ public class UtenteServlet extends AbstractServlet {
 				}
 				
 		param = request.getParameter("cap");
-		if(param==null || param.length()!=5) {
+		if(param!=null && param.length()!=5) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
 				
 		param = request.getParameter("citta");
-		if(param==null || param.length()>20) {
+		if(param!=null && param.length()>20) {
 			reqValid=false;
 			error += "<li>citta</li>";
 		}
 				
 		param = request.getParameter("provincia");
-		if(param==null || param.length()!=2) {
+		if(param!=null && param.length()!=2) {
 			reqValid=false;
 			error += "<li>provincia</li>";
 		}
@@ -296,24 +302,24 @@ public class UtenteServlet extends AbstractServlet {
 		if(reqValid){
 		//raccolgo i dati nuovi dalla request
 		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
-		error = "Perfavore controlla di aver inserito correttamente la tua password attuale";
-		}
 		
-		//raccolgo dati attuali dalla sessione (e psw da campo immesso nella request)
-		 
-		
-		//se l'aggiornamento ha successo
-		if(ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale")) && reqValid){
-			request.getSession().invalidate();
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			//se l'aggiornamento ha successo
+			if(ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale"))){
+				request.getSession().invalidate();
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+				
+			}
 			
+			//altrimenti ricarica la pagina per immettere nuovi dati
+			else{
+			request.setAttribute("error","Perfavore controlla di aver inserito correttamente la tua password attuale");
+			request.getRequestDispatcher("ucp.jsp").forward(request, response);
+			}
 		}
+		else
+			request.setAttribute("error",error);
+			request.getRequestDispatcher("ucp.jsp").forward(request, response);
 		
-		//altrimenti ricarica la pagina per immettere nuovi dati
-		else{
-		request.setAttribute("error", error);
-		request.getRequestDispatcher("ucp.jsp").forward(request, response);
-		}
 		
 	}
 
@@ -448,8 +454,7 @@ public class UtenteServlet extends AbstractServlet {
 		
 		if(reqValid){
 		bean = EntityFactory.getFactory(Constant.UTENTE).makeElement(request);
-		error = "Mail già in uso, è necessario usare una mail differente.";
-		
+
 			//se l'inserimento ha successo
 			if(ds.checkAndSubscribe(bean)){
 				response.sendRedirect("index.jsp");
@@ -458,7 +463,7 @@ public class UtenteServlet extends AbstractServlet {
 			
 			//altrimenti 
 			else {
-				request.setAttribute("error", error);
+				request.setAttribute("error", "Mail già in uso, è necessario usare una mail differente.");
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 			}
 		}
