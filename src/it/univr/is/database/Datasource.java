@@ -109,7 +109,7 @@ public class Datasource {
 			pstmt.setString(1, usr.getEmail());
 			rs = pstmt.executeQuery();
 			// la mail non era presente, iscrivo l'utente
-			while(rs.next()){
+			if(rs.next()){
 				nuovoUtente = false;
 			}
 			if (nuovoUtente) {
@@ -154,14 +154,16 @@ public class Datasource {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		boolean presente = false;
+		boolean presente = true;
 		try {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			pstmt = con.prepareStatement(query);
 			pstmt.clearParameters();
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
-			presente = rs.getString(1) != null;
+			if(rs.next())
+				presente = false;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -197,10 +199,55 @@ public class Datasource {
 	 *            psw da verificare
 	 * @return
 	 */
-	public boolean updateUtente(Entity newUtente, Entity utenteAttuale,
-			String pswAttuale) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateUtente(Entity newUtente, Entity utenteAttuale, String pswAttuale) {
+		Utente attuale = checkAndCastUtente(utenteAttuale);
+		Utente nuovo = checkAndCastUtente(newUtente);
+		boolean buonFine = true;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			// controllo la password
+			String query = "select password from utente u where u.id=?";
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setInt(1, attuale.getId());
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+				String psw = rs.getString(1);
+				if(! psw.equals(pswAttuale)) // le password sono diverse, non posso aggiornare
+					buonFine = false;
+				else {
+					attuale.setPassword(pswAttuale);
+					query = "UPDATE utente SET email=?, nome=?, cognome=?, password=?, via=?, civico=?, cap=?, citta=?, "
+							+ "provincia=? WHERE id="+utenteAttuale.getId();
+					pstmt = con.prepareStatement(query);
+					pstmt.clearParameters();
+					// aggiorno tutti i campi, se quelli nuovi sono a null prendo i valori attuali
+					pstmt.setString(1, nuovo.getEmail() == null ? attuale.getEmail() : nuovo.getEmail());
+					pstmt.setString(2, nuovo.getNome()== null ? attuale.getNome() : nuovo.getNome());
+					pstmt.setString(3, nuovo.getCognome()== null ? attuale.getCognome() : nuovo.getCognome());
+					pstmt.setString(4, nuovo.getPassword()== null ? attuale.getPassword() : nuovo.getPassword());
+					pstmt.setString(5, nuovo.getVia()== null ? attuale.getVia() : nuovo.getVia());
+					pstmt.setInt(6, nuovo.getCivico() <= 0 ? attuale.getCivico() : nuovo.getCivico());
+					pstmt.setString(7, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
+					pstmt.setString(8, nuovo.getCitta() == null ? attuale.getCitta() : nuovo.getCitta());
+					pstmt.setString(9, nuovo.getProvincia()== null ? attuale.getProvincia() : nuovo.getProvincia());
+					pstmt.executeQuery();
+				}
+			} else buonFine = false; // non dovrebbe mai accadere, non trova l'id
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return buonFine;
 	}
 
 	/**
