@@ -299,8 +299,47 @@ public class Datasource {
 	 * @return Utente loggato ma con campo psw=null
 	 */
 	public Utente login(Entity utente) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "select * from utente where email=? and password=?";
+		
+		Utente login = checkAndCastUtente(utente);
+		Utente loggato = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setString(1, login.getEmail());
+			pstmt.setString(2, login.getPassword());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()){
+				loggato = new Utente();
+				loggato.setId(rs.getInt(1));
+				loggato.setEmail(rs.getString(2));
+				loggato.setNome(rs.getString(3));
+				loggato.setCognome(rs.getString(4));
+				loggato.setPassword(null); // password a null
+				loggato.setVia(rs.getString(5));
+				loggato.setCivico(rs.getInt(6));
+				loggato.setCap(rs.getString(7));
+				loggato.setCitta(rs.getString(8));
+				loggato.setProvincia(rs.getString(9));
+				loggato.setRuolo(rs.getInt(10));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return loggato;
 	}
 
 	/**
