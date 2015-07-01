@@ -20,12 +20,12 @@
 		  
 		<div class="form-group">
 		    <label for="titolo">Titolo</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Specificare il titolo del libro. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="titolo">
+		    <input type="text" class="form-control" name="titolo" value="<%=request.getParameter("titolo")%>">
 		</div>
 		  
 		<div class="form-group">
 		    <label for="autore">Autore</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Specificare l'autore del libro. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="autore">
+		    <input type="text" class="form-control" name="autore" value="<%=request.getParameter("autore")%>">
 		</div>
 		  
 		<div class="form-group">
@@ -53,12 +53,12 @@
 		  
 		<div class="form-group">
 		    <label for="edizione">Edizione</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Specificare edizione del libro"></span>
-		    <input type="text" class="form-control" name="edizione">
+		    <input type="text" class="form-control" name="edizione" value="<%=request.getParameter("edizione")%>">
 		</div>
 		  
 		<div class="form-group">
 		    <label for="isbn">ISBN</label> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Specificare l'ISBN del libro"></span>
-			<input type="text" class="form-control" name="isbn">
+			<input type="text" class="form-control" name="isbn" value="<%=request.getParameter("isbn")%>">
 		</div>
 		  
 		<div class="form-group">

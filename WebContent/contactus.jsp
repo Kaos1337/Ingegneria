@@ -51,7 +51,7 @@
 			</div>
 			<div class="form-group">
 				<label for="oggetto">Messaggio</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare dettagliatamente il problema"></span>
-				<textarea class="form-control" rows="6" name="messaggio"></textarea>
+				<textarea class="form-control" rows="6" name="messaggio" value="<%= request.getParameter("message") %>"></textarea>
 			</div>
 
 			<button type="submit" class="btn btn-default" name="mode" value="contattaci">Invia</button>

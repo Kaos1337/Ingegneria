@@ -24,12 +24,12 @@
 		<form action="MainServlet" method="POST">
 		  <div class="form-group">
 		    <label for="oggetto">Oggetto</label>
-		    <input type="text" class="form-control" name="oggetto">
+		    <input type="text" class="form-control" name="oggetto" value="<%= request.getParameter("oggetto") %>">
 		  </div>
 		  
 		   <div class="form-group">
 		    <label for="messaggio">Messaggio</label>
-		    <textarea class="form-control" rows="6" name="messaggio"></textarea>
+		    <textarea class="form-control" rows="6" name="messaggio" value="<%= request.getParameter("messaggio") %>"></textarea>
 		  </div>
 		  
 		  <button type="submit" class="btn btn-default" name="mode" value="manda_messaggio">Invia</button>
