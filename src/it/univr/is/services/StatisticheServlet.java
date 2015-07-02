@@ -87,9 +87,9 @@ public class StatisticheServlet extends AbstractServlet {
 								{"2013/7",  "70",   "30"},
 								{"2013/8",  "40",   "60"},
 								{"2013/9",  "40",   "70"},
-								{"2013/10",  "100",   "300"}};*/
+								{"2013/10",  "100",   "300"}};
 
-        //request.setAttribute("dati_assoluti", assoluti);
+        request.setAttribute("dati_assoluti", assoluti);*/
         request.setAttribute("dati_mensili", mensili);
 		////////TEMP
         
