@@ -16,7 +16,7 @@ public class Datasource {
 	private String dburl = "jdbc:postgresql://marretta.it:5432/dbinge";
 	private String dbusr = "useringe";
 	private String dbpswd = "c2En";
-    private String driver = "org.postgresql.Driver";
+	private String driver = "org.postgresql.Driver";
 
 	public Datasource() {
 		try {
@@ -25,52 +25,6 @@ public class Datasource {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * Esegue la query passata come parametro. Verranno rimpiazzati tutti i '?'
-	 * dai i parametri nell'array list
-	 * 
-	 * @param query
-	 *            stringa della query
-	 * */
-	/*@SuppressWarnings("unused")
-	private ResultSet executeQuery(String query, ArrayList<ParametroSQL> param)
-			throws WrongParamNumberSQLException {
-		int n = 0;
-		for (int i = 0; i < query.length(); i++)
-			if (query.charAt(i) == '?')
-				n++;
-		if (param.size() != n)
-			throw new WrongParamNumberSQLException(n, param.size());
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
-			pstmt = con.prepareStatement(query);
-			pstmt.clearParameters();
-
-			for (int i = 0; i < param.size(); i++)
-				if (param.get(i).isString()) // se il parametro è una stringa
-					pstmt.setString(i, param.get(i).getStringValue());
-				else
-					// altrimenti è un intero
-					pstmt.setInt(i, param.get(i).getIntValue());
-
-			rs = pstmt.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		return rs;
-	}*/
 
 	/**
 	 * Effettua un cast da Entity a Utente. Se non va a buon fine ritorna null.
@@ -86,9 +40,21 @@ public class Datasource {
 	}
 
 	/**
-	 * Effettua (nella stessa connessione) un controllo sull'esistenza della
-	 * mail e quindi se è assente effettua l'inserimento dei dati dell'utente.
-	 * Se l'iscrizione ha successo ritorna true
+	 * Effettua un cast da Entity a Libro. Se non va a buon fine ritorna null.
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	private static Libro checkAndCastLibro(Entity entity) {
+		if (entity instanceof Libro)
+			return (Libro) entity;
+		else
+			return null;
+	}
+
+	/**
+	 * Effettua (nella stessa connessione) un controllo sull'esistenza della mail e quindi se è assente
+	 * effettua l'inserimento dei dati dell'utente. Se l'iscrizione ha successo ritorna true
 	 * 
 	 * @param utente
 	 *            bean Utente con dati iscrizione
@@ -109,7 +75,7 @@ public class Datasource {
 			pstmt.setString(1, usr.getEmail());
 			rs = pstmt.executeQuery();
 			// la mail non era presente, iscrivo l'utente
-			if(rs.next()){
+			if (rs.next()) {
 				nuovoUtente = false;
 			}
 			if (nuovoUtente) {
@@ -125,7 +91,7 @@ public class Datasource {
 				pstmt.setInt(6, usr.getCivico());
 				pstmt.setString(7, usr.getCap());
 				pstmt.setString(8, usr.getCitta());
-				pstmt.setString(9, usr.getProvincia());
+				pstmt.setString(9, usr.getProvincia().toUpperCase());
 				pstmt.executeUpdate();
 			}
 
@@ -143,8 +109,7 @@ public class Datasource {
 	}
 
 	/**
-	 * Effettua un controllo sull'esistenza della mail e se positivo ritorna
-	 * true
+	 * Effettua un controllo sull'esistenza della mail e se positivo ritorna true
 	 * 
 	 * @param email
 	 * @return
@@ -161,7 +126,7 @@ public class Datasource {
 			pstmt.clearParameters();
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				presente = false;
 
 		} catch (Exception e) {
@@ -188,8 +153,8 @@ public class Datasource {
 	}
 
 	/**
-	 * Se la password attuale corrisponde all'utente attuale posso aggiornare
-	 * con i nuovi dati. Se tutto va a buon fine ritorna true
+	 * Se la password attuale corrisponde all'utente attuale posso aggiornare con i nuovi dati. Se tutto va a
+	 * buon fine ritorna true
 	 * 
 	 * @param newUtente
 	 *            bean Utente con nuovi dati (quando non null)
@@ -214,29 +179,32 @@ public class Datasource {
 			pstmt.clearParameters();
 			pstmt.setInt(1, attuale.getId());
 			rs = pstmt.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				String psw = rs.getString(1);
-				if(! psw.equals(pswAttuale)) // le password sono diverse, non posso aggiornare
+				if (!psw.equals(pswAttuale)) // le password sono diverse, non posso aggiornare
 					buonFine = false;
 				else {
 					attuale.setPassword(pswAttuale);
 					query = "UPDATE utente SET email=?, nome=?, cognome=?, password=?, via=?, civico=?, cap=?, citta=?, "
-							+ "provincia=? WHERE id="+utenteAttuale.getId();
+							+ "provincia=? WHERE id=" + utenteAttuale.getId();
 					pstmt = con.prepareStatement(query);
 					pstmt.clearParameters();
 					// aggiorno tutti i campi, se quelli nuovi sono a null prendo i valori attuali
 					pstmt.setString(1, nuovo.getEmail() == null ? attuale.getEmail() : nuovo.getEmail());
-					pstmt.setString(2, nuovo.getNome()== null ? attuale.getNome() : nuovo.getNome());
-					pstmt.setString(3, nuovo.getCognome()== null ? attuale.getCognome() : nuovo.getCognome());
-					pstmt.setString(4, nuovo.getPassword().equals("") ? attuale.getPassword() : nuovo.getPassword());
-					pstmt.setString(5, nuovo.getVia()== null ? attuale.getVia() : nuovo.getVia());
+					pstmt.setString(2, nuovo.getNome() == null ? attuale.getNome() : nuovo.getNome());
+					pstmt.setString(3, nuovo.getCognome() == null ? attuale.getCognome() : nuovo.getCognome());
+					pstmt.setString(4,
+							nuovo.getPassword().equals("") ? attuale.getPassword() : nuovo.getPassword());
+					pstmt.setString(5, nuovo.getVia() == null ? attuale.getVia() : nuovo.getVia());
 					pstmt.setInt(6, nuovo.getCivico() <= 0 ? attuale.getCivico() : nuovo.getCivico());
 					pstmt.setString(7, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
 					pstmt.setString(8, nuovo.getCitta() == null ? attuale.getCitta() : nuovo.getCitta());
-					pstmt.setString(9, nuovo.getProvincia()== null ? attuale.getProvincia() : nuovo.getProvincia());
+					pstmt.setString(9,
+							nuovo.getProvincia() == null ? attuale.getProvincia() : nuovo.getProvincia());
 					pstmt.executeUpdate();
 				}
-			} else buonFine = false; // non dovrebbe mai accadere, non trova l'id
+			} else
+				buonFine = false; // non dovrebbe mai accadere, non trova l'id
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -258,14 +226,46 @@ public class Datasource {
 	 * @param utente
 	 *            bean Utente del proprietario, fornisce id e mail
 	 */
-	public void insertLibro(Entity libro, Entity utente) {
-		// TODO Auto-generated method stub
+	public void insertLibro(Entity libro, Entity utente) {// TODO --------------------
+		Libro l = checkAndCastLibro(libro);
+		Utente u = checkAndCastUtente(utente);
+
+		String query = "INSERT INTO libro(titolo, utente, autore, "
+				+ "categoria, categoria2, stato, edizione, isbn, copertina) "
+				+ "VALUES(?,?,?,?,?,0,?,?,?)";
+		//disponibile, prenotato, non disponibile(non in prestito), eliminato
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+
+			pstmt.setString(1, l.getTitolo());
+			pstmt.setInt(2, u.getId());
+			pstmt.setString(3, l.getAutore());
+			pstmt.setString(4, l.getCategoria());
+			pstmt.setString(5, l.getCategoria2());
+			pstmt.setString(6, l.getEdizione());
+			pstmt.setString(7, l.getIsbn());
+			pstmt.setString(8, l.getCopertina());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
 	/**
-	 * Ritorna una lista di libriutente filtrata dai parametri non null passati,
-	 * se il nome ha valore cerca sia tra nome che cognome dei possibili utenti
+	 * Ritorna una lista di libriutente filtrata dai parametri non null passati, se il nome ha valore cerca
+	 * sia tra nome che cognome dei possibili utenti
 	 * 
 	 * @param libro
 	 * @param nome
@@ -273,9 +273,9 @@ public class Datasource {
 	 * @param parameter2
 	 * @return
 	 */
-	public ArrayList<LibroUtente> searchLibri(Entity libro, String nome,
-			String citta, String provincia) {
+	public ArrayList<LibroUtente> searchLibri(Entity libro, String nome, String citta, String provincia) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -286,13 +286,47 @@ public class Datasource {
 	 * @return
 	 */
 	public ArrayList<Libro> searchLibri(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT * FROM libro l WHERE l.utente=?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Libro> result = new ArrayList<Libro>();
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				Libro libro = new Libro();
+				libro.setId(rs.getInt(1));
+				libro.setTitolo(rs.getString(2));
+				libro.setUtente(rs.getInt(3));
+				libro.setAutore(rs.getString(4));
+				libro.setCategoria(rs.getString(5));
+				libro.setCategoria2(rs.getString(6));
+				libro.setStato(rs.getInt(7));
+				libro.setEdizione(rs.getString(8));
+				libro.setIsbn(rs.getString(9));
+				libro.setCopertina(rs.getString(10));
+				result.add(libro);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 	/**
-	 * Motodo per verifica credenziali di login, nel nostro caso verifica email
-	 * e psw. Ritorna Utente null se nessuna corrispondenza
+	 * Motodo per verifica credenziali di login, nel nostro caso verifica email e psw. Ritorna Utente null se
+	 * nessuna corrispondenza
 	 * 
 	 * @param utente
 	 *            Bean Utente
@@ -300,7 +334,7 @@ public class Datasource {
 	 */
 	public Utente login(Entity utente) {
 		String query = "select * from utente where email=? and password=?";
-		
+
 		Utente login = checkAndCastUtente(utente);
 		Utente loggato = null;
 		Connection con = null;
@@ -313,8 +347,8 @@ public class Datasource {
 			pstmt.setString(1, login.getEmail());
 			pstmt.setString(2, login.getPassword());
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
+
+			if (rs.next()) {
 				loggato = new Utente();
 				loggato.setId(rs.getInt(1));
 				loggato.setEmail(rs.getString(2));
@@ -329,7 +363,7 @@ public class Datasource {
 				loggato.setDataisc(rs.getString(11));
 				loggato.setRuolo(rs.getInt(12));
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -344,9 +378,8 @@ public class Datasource {
 	}
 
 	/**
-	 * Metodo per aggiornare i libri forniti con l'operazione indicata, se
-	 * l'operazione è un prestito inserisce anche una tupla nella relativa
-	 * tabella
+	 * Metodo per aggiornare i libri forniti con l'operazione indicata, se l'operazione è un prestito
+	 * inserisce anche una tupla nella relativa tabella
 	 * 
 	 * @param select
 	 * @param op
@@ -368,9 +401,8 @@ public class Datasource {
 	}
 
 	/**
-	 * Metodo che recupera i dati delle prenotazioni e iscrizioni assolute e li
-	 * immette in un array secondo il formato: col.anno/mese n.iscritti
-	 * n.prenotazioni {{ 2010/1 , .......... , ................}, { 2010/2 ,
+	 * Metodo che recupera i dati delle prenotazioni e iscrizioni assolute e li immette in un array secondo il
+	 * formato: col.anno/mese n.iscritti n.prenotazioni {{ 2010/1 , .......... , ................}, { 2010/2 ,
 	 * .......... , ...............},..}
 	 * 
 	 * @param tutti_mesi
@@ -387,22 +419,25 @@ public class Datasource {
 	}
 
 	/**
-	 * Metodo che recupera i dati delle prenotazioni e iscrizioni mensili e li
-	 * immette in un array secondo il formato: anno/mese/giorno n.iscritti
-	 * n.prenotazioni {{ 2010/1/1 , .......... , ................}, { 2010/1/2 ,
-	 * .......... , ...............},..}
+	 * Metodo che recupera i dati delle prenotazioni e iscrizioni mensili e li immette in un array secondo il
+	 * formato: anno/mese/giorno n.iscritti n.prenotazioni
+	 * {{ 2010/1/1 , .......... , ................},
+	 * {2010/1/2 , .......... , ...............},..}
 	 * 
 	 * @param trenta_giorni_da_oggi
 	 *            ArrayList di stringhe formato: aaaa-mm-gg
-	 * @return arraybidimensionale di dimensioni [lunghezza
-	 *         trenta_giorni_da_oggi][3]
+	 * @return arraybidimensionale di dimensioni [lunghezza trenta_giorni_da_oggi][3]
 	 */
 	public String[][] getStatMensili(ArrayList<String> trenta_giorni_da_oggi) {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		//
-		// TODO Auto-generated method stub
+		// TODO
+		String query = "SELECT dataisc from utente u where current_date-u.dataisc<=30";
+		query = "SELECT datai FROM prestito p WHERE current_date-p.datai<=30";
+		//SELECT count(*) from utente u where current_date-u.dataisc<=30;
+
+		
 		return null;
 	}
 
