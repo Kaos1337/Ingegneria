@@ -275,7 +275,7 @@ public class Datasource {
 	 */
 	public ArrayList<LibroUtente> searchLibri(Entity libro, String nome, String citta, String provincia) {
 		Libro l = checkAndCastLibro(libro);
-		String query = "SELECT l.id, l.titolo, l.utente, l.autore, l.categoria,"
+		String query = "SELECT DISTINCT l.id, l.titolo, l.utente, l.autore, l.categoria,"
 				+ " l.categoria2, l.stato, l.edizione, l.isbn, l.copertina,"
 				+ " u.nome, u.cognome, u.citta, u.provincia"
 				+ " FROM libro l JOIN utente u on l.utente = u.id "
@@ -283,7 +283,7 @@ public class Datasource {
 				+ "and l.titolo ILIKE ? and l.autore ILIKE ? and l.categoria ILIKE? and l.categoria2 ILIKE ?"
 				+ " and l.edizione ILIKE ? and l.isbn ILIKE ?";
 		String qnome = " and (u.nome ILIKE ? or u.cognome ILIKE ?)";
-		String[] nomi = nome.split(" ");
+		String[] nomi = nome == null ? new String[]{} : nome.split(" ");
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -299,14 +299,14 @@ public class Datasource {
 			pstmt.clearParameters();
 			
 			int n = 1;
-			pstmt.setString(n++, "%" + citta + "%");
-			pstmt.setString(n++, provincia.toUpperCase());
-			pstmt.setString(n++, "%" + l.getTitolo() + "%");
-			pstmt.setString(n++, "%" + l.getAutore() + "%");
-			pstmt.setString(n++, "%" + l.getCategoria() + "%");
-			pstmt.setString(n++, "%" + l.getCategoria2() + "%");
-			pstmt.setString(n++, "%" + l.getEdizione() + "%");
-			pstmt.setString(n++, "%" + l.getIsbn() + "%");
+			pstmt.setString(n++, citta == null ? "%" : "%" + citta + "%");
+			pstmt.setString(n++, provincia == null ? "%" : provincia.toUpperCase());
+			pstmt.setString(n++, l.getTitolo() == null ? "%" : "%" + l.getTitolo() + "%");
+			pstmt.setString(n++, l.getAutore() == null ? "%" : "%" + l.getAutore() + "%");
+			pstmt.setString(n++, l.getCategoria() == null ? "%" : "%" + l.getCategoria() + "%");
+			pstmt.setString(n++, l.getCategoria2() == null ? "%" : "%" + l.getCategoria2() + "%");
+			pstmt.setString(n++, l.getEdizione() == null ? "%" : "%" + l.getEdizione() + "%");
+			pstmt.setString(n++, l.getIsbn() == null ? "%" : "%" + l.getIsbn() + "%");
 			
 			for(int i = 0; i < nomi.length; i++){
 				pstmt.setString(n++, nomi[i]);
