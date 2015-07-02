@@ -1,6 +1,5 @@
 package it.univr.is.services;
 
-import it.univr.is.entity.Entity;
 import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
