@@ -226,7 +226,7 @@ public class Datasource {
 	 * @param utente
 	 *            bean Utente del proprietario, fornisce id e mail
 	 */
-	public void insertLibro(Entity libro, Entity utente) {// TODO --------------------
+	public void insertLibro(Entity libro, Entity utente) {
 		Libro l = checkAndCastLibro(libro);
 		Utente u = checkAndCastUtente(utente);
 
@@ -265,18 +265,86 @@ public class Datasource {
 
 	/**
 	 * Ritorna una lista di libriutente filtrata dai parametri non null passati, se il nome ha valore cerca
-	 * sia tra nome che cognome dei possibili utenti
+	 * sia tra nome che cognome dei possibili utenti. I libri devono essere disponibili.
 	 * 
 	 * @param libro
-	 * @param nome
-	 * @param parameter
-	 * @param parameter2
+	 * @param nome nome del proprietario (da splittare)
+	 * @param citta citta del proprietario
+	 * @param provincia provincia del proprietario
 	 * @return
 	 */
 	public ArrayList<LibroUtente> searchLibri(Entity libro, String nome, String citta, String provincia) {
-		// TODO Auto-generated method stub
+		Libro l = checkAndCastLibro(libro);
+		String query = "SELECT l.id, l.titolo, l.utente, l.autore, l.categoria,"
+				+ " l.categoria2, l.stato, l.edizione, l.isbn, l.copertina,"
+				+ " u.nome, u.cognome, u.citta, u.provincia"
+				+ " FROM libro l JOIN utente u on l.utente = u.id "
+				+ "WHERE u.citta ILIKE ? and u.provincia ILIKE ? "
+				+ "and l.titolo ILIKE ? and l.autore ILIKE ? and l.categoria ILIKE? and l.categoria2 ILIKE ?"
+				+ " and l.edizione ILIKE ? and l.isbn ILIKE ?";
+		String qnome = " and (u.nome ILIKE ? or u.cognome ILIKE ?)";
+		String[] nomi = nome.split(" ");
 		
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<LibroUtente> result = new ArrayList<LibroUtente>();
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			
+			for(int i = 0; i < nomi.length; i++)
+				query += qnome;
+
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			
+			int n = 1;
+			pstmt.setString(n++, "%" + citta + "%");
+			pstmt.setString(n++, provincia.toUpperCase());
+			pstmt.setString(n++, "%" + l.getTitolo() + "%");
+			pstmt.setString(n++, "%" + l.getAutore() + "%");
+			pstmt.setString(n++, "%" + l.getCategoria() + "%");
+			pstmt.setString(n++, "%" + l.getCategoria2() + "%");
+			pstmt.setString(n++, "%" + l.getEdizione() + "%");
+			pstmt.setString(n++, "%" + l.getIsbn() + "%");
+			
+			for(int i = 0; i < nomi.length; i++){
+				pstmt.setString(n++, nomi[i]);
+				pstmt.setString(n++, nomi[i]);
+			}
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				LibroUtente li = new LibroUtente();
+				n = 1;
+				li.setId(rs.getInt(n++));
+				li.setTitolo(rs.getString(n++));
+				li.setUtente(rs.getInt(n++));
+				li.setAutore(rs.getString(n++));
+				li.setCategoria(rs.getString(n++));
+				li.setCategoria2(rs.getString(n++));
+				li.setStato(rs.getInt(n++));
+				li.setEdizione(rs.getString(n++));
+				li.setIsbn(rs.getString(n++));
+				li.setCopertina(rs.getString(n++));
+				li.setNome(rs.getString(n++));
+				li.setCognome(rs.getString(n++));
+				li.setCitta(rs.getString(n++));
+				li.setProvincia(rs.getString(n++));
+				result.add(li);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
 	}
 
 	/**
