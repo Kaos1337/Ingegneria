@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import it.univr.is.entity.Entity;
@@ -563,14 +564,57 @@ public class Datasource {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		for(int i = 0; i < tuttiMesi.size(); i++){
-			String fineMese = tuttiMesi.get(i)+"-"+nGiorniMese(tuttiMesi.get(i));
-			String inizioMese = tuttiMesi.get(i)+"-01";
-			String query = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese + "' and u.dataisc<='" + fineMese + "'";
-			System.out.println(query);
-		}
+		String[] numeroIscritti = new String[tuttiMesi.size()];
+		String[] numeroPrenotazioni = new String[tuttiMesi.size()];
 		
-		return null;
+		String[] mesi = new String[tuttiMesi.size()];
+		for(int i = 0; i < mesi.length; i++)
+			mesi[i] = tuttiMesi.get(i);
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String query1 = "SELECT count(*) FROM utente u WHERE u.dataisc>=? and u.dataisc<=?";
+			String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>=? and p.dataf<=?";
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			for(int i = 0; i < tuttiMesi.size(); i++){
+				String fineMese = tuttiMesi.get(i)+"-"+nGiorniMese(tuttiMesi.get(i));
+				String inizioMese = tuttiMesi.get(i)+"-01";
+				
+				/*
+
+				pstmt = con.prepareStatement(query1);
+				pstmt.clearParameters();
+				pstmt.setDate(1, java.sql.Date.valueOf(inizioMese));
+				pstmt.setDate(2, java.sql.Date.valueOf(fineMese));
+				System.out.println(pstmt);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) // magari 0, ma comunque sempre vero
+					numeroIscritti[i] = rs.getString(1);
+				
+				pstmt = con.prepareStatement(query2);
+				pstmt.clearParameters();
+				pstmt.setDate(1, java.sql.Date.valueOf(inizioMese));
+				pstmt.setDate(2, java.sql.Date.valueOf(fineMese));
+				System.out.println(pstmt);
+				rs = pstmt.executeQuery();*/
+	
+				if(rs.next()) // magari 0, ma comunque sempre vero
+					numeroPrenotazioni[i] = rs.getString(1);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return new String[][] {mesi, numeroIscritti, numeroPrenotazioni};
 	}
 /*
 	public static void main(String[] args){
