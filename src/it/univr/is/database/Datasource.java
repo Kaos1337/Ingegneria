@@ -373,6 +373,8 @@ public class Datasource {
 			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
+				if(rs.getInt(7) == 3) // libro eliminato
+					continue;
 				Libro libro = new Libro();
 				libro.setId(rs.getInt(1));
 				libro.setTitolo(rs.getString(2));
@@ -460,22 +462,50 @@ public class Datasource {
 	 * @param op operazione da eseguire
 	 */
 	public void updateLibri(String[] select, int op) {
-		String query = "UPDATE libro SET stato=" + op + " WHERE id=?";
+		String query;
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
-			pstmt = con.prepareStatement(query);
+			
+			//disponibile, prenotato, non disponibile(non in prestito), eliminato
 			
 			for(int i = 0; i < select.length; i++){
+				// controllo lo stato attuale del libro, se era prenotato
+				// aggiungo la data di fine del prestito
+				
+				// se è stato prenotato due volte lo stesso libro, l'utente si è sbagliato
+				if(op != 1){
+					query = "SELECT l.stato FROM libro l WHERE l.id=?";
+					pstmt = con.prepareStatement(query);
+					pstmt.clearParameters();
+					pstmt.setInt(1, Integer.parseInt(select[i]));
+					rs = pstmt.executeQuery();
+					if(rs.next()){
+						if(rs.getInt(1) == 1){ // era prenotato!
+							// aggiungo la data di fine prestito
+							query = "UPDATE prestito SET dataf=current_date WHERE dataf is NULL and id_libro="+select[i];
+							pstmt = con.prepareStatement(query);
+							pstmt.clearParameters();
+							pstmt.executeUpdate();
+							System.out.println(query);
+						}
+					}
+				} else { // aggiungo una prenotazione se prima non era prenotato
+					query = "INSERT INTO prestito (id_libro, datai) VALUES(?, current_date)";
+					pstmt = con.prepareStatement(query);
+					pstmt.clearParameters();
+					pstmt.setInt(1, Integer.parseInt(select[i]));
+					pstmt.executeUpdate();
+				}
+				
+				// cambio infine lo stato del libro
+				query = "UPDATE libro SET stato=" + op + " WHERE id=" + select[i];
+				pstmt = con.prepareStatement(query);
 				pstmt.clearParameters();
-				pstmt.setInt(1, Integer.parseInt(select[i]));
 				pstmt.executeUpdate();
-			}
-			
-			if(op==1){
-				String qq;// aggiungi tupla nei prestiti TODO
 			}
 
 		} catch (Exception e) {
