@@ -1,8 +1,11 @@
 package it.univr.is.services;
 
+import it.univr.is.entity.Entity;
+import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -94,6 +97,7 @@ public class LibroServlet extends AbstractServlet {
 	private void searchLibri(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		bean = EntityFactory.getFactory(Constant.LIBRO).makeElement(request);
 		String citta=request.getParameter("citta");
 		String provincia= request.getParameter("provincia");
 		String nome=request.getParameter("nome").trim();
