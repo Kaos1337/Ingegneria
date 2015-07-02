@@ -1,14 +1,8 @@
 package it.univr.is.services;
 
-import it.univr.is.entity.Entity;
-import it.univr.is.entity.Libro;
-import it.univr.is.entity.LibroUtente;
-import it.univr.is.support.Constant;
 import it.univr.is.support.EntityFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -102,60 +96,10 @@ public class LibroServlet extends AbstractServlet {
 		
 		String citta=request.getParameter("citta");
 		String provincia= request.getParameter("provincia");
-		String nominativo=request.getParameter("nome").trim();
+		String nome=request.getParameter("nome").trim();
 		
-		
-		bean = (Libro) EntityFactory.getFactory(Constant.LIBRO).makeElement(request);
-		
-		ArrayList<Entity> al = new ArrayList<Entity>();
-		
-		int i;
-		String substring="";
-		while(!nominativo.isEmpty()) {
-			i = nominativo.indexOf(" ");
-			
-			if(i>-1) 
-				substring = nominativo.substring(0, i-1);
-			
-			al.addAll(ds.searchLibri(bean, substring, citta, provincia));
-			
-			nominativo=nominativo.substring(i);
-		}
-		
-	///////////// TEMP
-		LibroUtente libroutente = new LibroUtente();
-		libroutente.setTitolo("V per vendetta");
-		libroutente.setAutore("Darkaos");
-		libroutente.setCategoria("Gore");
-		libroutente.setCategoria2("Telegram");
-		libroutente.setCopertina("}:-)");
-		libroutente.setEdizione("1 Edizione");
-		libroutente.setIsbn("1234567890AAA");
-		libroutente.setCitta("Garda");
-		libroutente.setProvincia("Verona");
-		libroutente.setId(1211);
-		
-		al.add(libroutente);
-		libroutente=new LibroUtente();
-		libroutente.setTitolo("Merda d'artista");
-		libroutente.setId(1212);
-		libroutente.setCopertina("img/cop/cop_2.jpg");
-		al.add(libroutente);
-		libroutente=new LibroUtente();
-		libroutente.setTitolo("Mulino stanco");
-		libroutente.setId(1213);
-		al.add(libroutente);
-		libroutente=new LibroUtente();
-		libroutente.setTitolo("It's all ogre");
-		libroutente.setId(1214);
-		al.add(libroutente);
-		libroutente=new LibroUtente();
-		libroutente.setTitolo("Gregorio e grattacapi");
-		libroutente.setId(1215);
-		al.add(libroutente);
-		
-	///////// TEMP
-		request.setAttribute("lista_libri", al);
+	
+		request.setAttribute("lista_libri", ds.searchLibri(bean, nome, citta, provincia));
 		request.getRequestDispatcher("searchbook.jsp").forward(request, response);	
 	}
 
