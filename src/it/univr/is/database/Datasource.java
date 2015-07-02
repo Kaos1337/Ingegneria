@@ -461,6 +461,7 @@ public class Datasource {
 	 * @param select contiene gli id dei libri
 	 * @param statoNuovo operazione da eseguire
 	 */
+	@SuppressWarnings("resource")
 	public void updateLibri(String[] select, int statoNuovo) {
 		String query;		
 		int statoPrecedente = 0;
@@ -559,16 +560,20 @@ public class Datasource {
 	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi][3]
 	 */
 	public String[][] getStatAssolute(ArrayList<String> tuttiMesi) {
-		// TODO http://www.w3schools.com/sql/sql_dates.asp
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		String[] numeroIscritti = new String[tuttiMesi.size()];
-		String[] numeroPrenotazioni = new String[tuttiMesi.size()];
+
+		class Tripla {
+			public String l;
+			public String c;
+			public String r;
+			public String[] toArray(){
+				return new String[]{l, c, r};
+			}
+		}
 		
-		String[] mesi = new String[tuttiMesi.size()];
-		for(int i = 0; i < mesi.length; i++)
-			mesi[i] = tuttiMesi.get(i);
+		String[][] res = new String[tuttiMesi.size()][];
 		
 		System.out.println(tuttiMesi.get(0));
 		Connection con = null;
@@ -578,6 +583,10 @@ public class Datasource {
 			
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for(int i = 0; i < tuttiMesi.size(); i++){
+				
+				Tripla t = new Tripla();
+				t.l = tuttiMesi.get(i);
+				
 				String fineMese = tuttiMesi.get(i)+"-"+nGiorniMese(tuttiMesi.get(i));
 				String inizioMese = tuttiMesi.get(i)+"-01";
 				
@@ -585,20 +594,22 @@ public class Datasource {
 
 				String query1 = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese + "' and u.dataisc<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query1);
-				//System.out.println(pstmt);
+				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					numeroIscritti[i] = rs.getString(1);
+					t.c = rs.getString(1);
 				
 				
 				String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>='" + inizioMese + "' and p.dataf<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query2);
-				//System.out.println(pstmt);
+				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 	
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					numeroPrenotazioni[i] = rs.getString(1);
+					t.r = rs.getString(1);
+				
+				res[i] = t.toArray();
 			}
 
 		} catch (Exception e) {
@@ -610,15 +621,9 @@ public class Datasource {
 				e.printStackTrace();
 			}
 		}
-		return new String[][] {mesi, numeroIscritti, numeroPrenotazioni};
+		return res;
 	}
-/*
-	public static void main(String[] args){
-		ArrayList<String> tuttiMesi = new ArrayList<String>();
-		tuttiMesi.add("2015-07");
-		new Datasource().getStatAssolute(tuttiMesi);
-	}
-*/	
+
 	/**
 	 * Metodo che recupera i dati delle prenotazioni e iscrizioni mensili e li immette in un array secondo il
 	 * formato: anno/mese/giorno n.iscritti n.prenotazioni
@@ -629,17 +634,64 @@ public class Datasource {
 	 *            ArrayList di stringhe formato: aaaa-mm-gg
 	 * @return arraybidimensionale di dimensioni [lunghezza trenta_giorni_da_oggi][3]
 	 */
-	public String[][] getStatMensili(ArrayList<String> trenta_giorni_da_oggi) {
+	public String[][] getStatMensili(ArrayList<String> trentaGiorni) {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		// TODO
-		/*String query = "SELECT dataisc from utente u where current_date-u.dataisc<=30";
-		query = "SELECT datai FROM prestito p WHERE current_date-p.datai<=30";*/
-		//SELECT count(*) from utente u where current_date-u.dataisc<=30;
-
 		
-		return null;
+		class Tripla {
+			public String l;
+			public String c;
+			public String r;
+			public String[] toArray(){
+				return new String[]{l, c, r};
+			}
+		}
+		
+		String[][] res = new String[trentaGiorni.size()][];
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			for(int i = 0; i < trentaGiorni.size(); i++){
+				Tripla t = new Tripla();
+				t.l = trentaGiorni.get(i);
+				
+				String query1 = "select count(*) from utente where dataisc='" + t.l + "'";
+				pstmt = con.prepareStatement(query1);
+				System.out.println(pstmt);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) // magari 0, ma comunque sempre vero
+					t.c = rs.getString(1);
+				
+				String query2 = "select count(*) from prestito where datai='" + t.l + "'";
+				pstmt = con.prepareStatement(query2);
+				System.out.println(pstmt);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) // magari 0, ma comunque sempre vero
+					t.r = rs.getString(1);
+				
+				res[i] = t.toArray();
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return res;
 	}
 
 }
