@@ -95,12 +95,11 @@
 
 			  		<tr>
 			  			<th>Selezione</th>
+			  			<th>Copertina</th>
 			  			<th>Titolo</th>
-			  			<th>Prima Categoria</th>
-			  			<th>Seconda Categoria</th>
+			  			<th>Categoria/e</th>
 			  			<th>Edizione</th>
 			  			<th>ISBN</th>
-			  			<th>Copertina</th>
 			  			<th>Utente</th>
 			  		</tr>
 			  		<% 
@@ -118,16 +117,20 @@
 						</td>
 						
 						<td>
+							<%if(libroutente.getCopertina() == null); 
+							else{%>
+							<img src="<%= libroutente.getCopertina() %>" />
+							<%} %>
+						</td>
+						
+						<td>
 							<%= libroutente.getTitolo() %><br>
 							(<%= libroutente.getAutore() %>)
 						</td>
 						  
 						<td>
-						    <%= libroutente.getCategoria() %>
-						</td>
-						
-						<td>
-							<%= libroutente.getCategoria2() %>
+						    <%= libroutente.getCategoria() %><br>
+						    <%= libroutente.getCategoria2() %>
 						</td>
 						
 						<td>
@@ -136,13 +139,6 @@
 						
 						<td>
 							<%= libroutente.getIsbn() %>
-						</td>
-						
-						<td>
-							<%if(libroutente.getCopertina() == null); 
-							else{%>
-							<img src="<%= libroutente.getCopertina() %>" />
-							<%} %>
 						</td>
 						
 						<td>
