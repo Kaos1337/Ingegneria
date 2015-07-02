@@ -280,10 +280,10 @@ public class Datasource {
 				+ " u.nome, u.cognome, u.citta, u.provincia"
 				+ " FROM libro l JOIN utente u on l.utente = u.id "
 				+ "WHERE u.citta ILIKE ? and u.provincia ILIKE ? "
-				+ "and l.titolo ILIKE ? and l.autore ILIKE ? and l.categoria ILIKE? and l.categoria2 ILIKE ?"
+				+ "and l.titolo ILIKE ? and l.autore ILIKE ? and l.categoria ILIKE ? and l.categoria2 ILIKE ?"
 				+ " and l.edizione ILIKE ? and l.isbn ILIKE ?";
 		String qnome = " and (u.nome ILIKE ? or u.cognome ILIKE ?)";
-		String[] nomi = nome == null ? new String[]{} : nome.split(" ");
+		String[] nomi = nome.equals("") ? new String[]{} : nome.split(" ");
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -299,19 +299,21 @@ public class Datasource {
 			pstmt.clearParameters();
 			
 			int n = 1;
-			pstmt.setString(n++, citta == null ? "%" : "%" + citta + "%");
-			pstmt.setString(n++, provincia == null ? "%" : provincia.toUpperCase());
-			pstmt.setString(n++, l.getTitolo() == null ? "%" : "%" + l.getTitolo() + "%");
-			pstmt.setString(n++, l.getAutore() == null ? "%" : "%" + l.getAutore() + "%");
-			pstmt.setString(n++, l.getCategoria() == null ? "%" : "%" + l.getCategoria() + "%");
-			pstmt.setString(n++, l.getCategoria2() == null ? "%" : "%" + l.getCategoria2() + "%");
-			pstmt.setString(n++, l.getEdizione() == null ? "%" : "%" + l.getEdizione() + "%");
-			pstmt.setString(n++, l.getIsbn() == null ? "%" : "%" + l.getIsbn() + "%");
+			pstmt.setString(n++, citta.equals("") ? "%" : "%" + citta + "%");
+			pstmt.setString(n++, provincia.equals("") ? "%" : provincia.toUpperCase());
+			pstmt.setString(n++, l.getTitolo().equals("") ? "%" : "%" + l.getTitolo() + "%");
+			pstmt.setString(n++, l.getAutore().equals("") ? "%" : "%" + l.getAutore() + "%");
+			pstmt.setString(n++, l.getCategoria().equals("") ? "%" : "%" + l.getCategoria() + "%");
+			pstmt.setString(n++, l.getCategoria2().equals("") ? "%" : "%" + l.getCategoria2() + "%");
+			pstmt.setString(n++, l.getEdizione().equals("") ? "%" : "%" + l.getEdizione() + "%");
+			pstmt.setString(n++, l.getIsbn().equals("") ? "%" : "%" + l.getIsbn() + "%");
 			
 			for(int i = 0; i < nomi.length; i++){
 				pstmt.setString(n++, nomi[i]);
 				pstmt.setString(n++, nomi[i]);
 			}
+			
+			System.out.println(pstmt);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()){
