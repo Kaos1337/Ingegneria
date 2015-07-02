@@ -275,7 +275,7 @@ public class Datasource {
 	 */
 	public ArrayList<LibroUtente> searchLibri(Entity libro, String nome, String citta, String provincia) {
 		Libro l = checkAndCastLibro(libro);
-		String query = "SELECT DISTINCT l.id, l.titolo, l.utente, l.autore, l.categoria,"
+		String query = "SELECT DISTINCT l.stato, l.id, l.titolo, l.utente, l.autore, l.categoria,"
 				+ " l.categoria2, l.stato, l.edizione, l.isbn, l.copertina,"
 				+ " u.nome, u.cognome, u.citta, u.provincia"
 				+ " FROM libro l JOIN utente u on l.utente = u.id "
@@ -284,7 +284,7 @@ public class Datasource {
 				+ " and l.edizione ILIKE ? and l.isbn ILIKE ?";
 		String qnome = " and (u.nome ILIKE ? or u.cognome ILIKE ?)";
 		String[] nomi = nome.equals("") ? new String[]{} : nome.split(" ");
-		
+		int n;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -298,7 +298,7 @@ public class Datasource {
 			pstmt = con.prepareStatement(query);
 			pstmt.clearParameters();
 			
-			int n = 1;
+			n = 1;
 			pstmt.setString(n++, citta.equals("") ? "%" : "%" + citta + "%");
 			pstmt.setString(n++, provincia.equals("") ? "%" : provincia.toUpperCase());
 			pstmt.setString(n++, l.getTitolo().equals("") ? "%" : "%" + l.getTitolo() + "%");
@@ -313,12 +313,14 @@ public class Datasource {
 				pstmt.setString(n++, nomi[i]);
 			}
 			
-			System.out.println(pstmt);
+			//System.out.println(pstmt);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				LibroUtente li = new LibroUtente();
 				n = 1;
+				if(rs.getInt(n++) != 0) // il libro non è dispobibile
+					continue;
 				li.setId(rs.getInt(n++));
 				li.setTitolo(rs.getString(n++));
 				li.setUtente(rs.getInt(n++));
