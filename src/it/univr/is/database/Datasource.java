@@ -487,23 +487,19 @@ public class Datasource {
 				if(rs.next())// sempre vero
 					statoPrecedente = rs.getInt(1);
 
-				if(statoNuovo != 1){ // non deve essere prenotato
-					if(statoPrecedente == 1){ // era prenotato!
-						// aggiungo la data di fine prestito
-						query = "UPDATE prestito SET dataf=current_date WHERE dataf is NULL and id_libro="+select[i];
-						pstmt = con.prepareStatement(query);
-						pstmt.clearParameters();
-						pstmt.executeUpdate();
-					}
-				} else {
-					// aggiungo una prenotazione se prima non era prenotato
-					if(statoPrecedente != 1){
-						query = "INSERT INTO prestito (id_libro, datai) VALUES(?, current_date)";
-						pstmt = con.prepareStatement(query);
-						pstmt.clearParameters();
-						pstmt.setInt(1, Integer.parseInt(select[i]));
-						pstmt.executeUpdate();
-					}
+				// ora è prenotato e il suo stato cambia
+				if(statoNuovo != statoPrecedente && statoPrecedente == 1){
+					// aggiungo la data di fine prestito
+					query = "UPDATE prestito SET dataf=current_date WHERE dataf is NULL and id_libro="+select[i];
+					pstmt = con.prepareStatement(query);
+					pstmt.clearParameters();
+					pstmt.executeUpdate();
+				} else if(statoPrecedente != 1 && statoNuovo == 1){
+					// il libro diventa prenotato
+					query = "INSERT INTO prestito (id_libro, datai) VALUES(" + select[i] + ", current_date)";
+					pstmt = con.prepareStatement(query);
+					pstmt.clearParameters();
+					pstmt.executeUpdate();
 				}
 				
 				// cambio infine lo stato del libro
