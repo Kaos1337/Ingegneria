@@ -148,7 +148,7 @@ public class Datasource {
 	 * @return
 	 */
 	public void updatePswl(Entity utente) {
-		// NON UTILIZZATO NEL PROTOTIPO
+		// TODO NON UTILIZZATO NEL PROTOTIPO
 		return;
 	}
 
@@ -284,6 +284,7 @@ public class Datasource {
 				+ " and l.edizione ILIKE ? and l.isbn ILIKE ?";
 		String qnome = " and (u.nome ILIKE ? or u.cognome ILIKE ?)";
 		String[] nomi = nome.equals("") ? new String[]{} : nome.split(" ");
+		
 		int n;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -294,6 +295,8 @@ public class Datasource {
 			
 			for(int i = 0; i < nomi.length; i++)
 				query += qnome;
+			
+			query += " order by l.titolo";
 
 			pstmt = con.prepareStatement(query);
 			pstmt.clearParameters();
@@ -453,12 +456,34 @@ public class Datasource {
 	 * Metodo per aggiornare i libri forniti con l'operazione indicata, se l'operazione è un prestito
 	 * inserisce anche una tupla nella relativa tabella
 	 * 
-	 * @param select
-	 * @param op
+	 * @param select contiene gli id dei libri
+	 * @param op operazione da eseguire
 	 */
 	public void updateLibri(String[] select, int op) {
-		// TODO Auto-generated method stub
+		String query = "UPDATE libro SET stato=" + op + " WHERE id=?";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i < select.length; i++){
+				pstmt.clearParameters();
+				pstmt.setInt(1, Integer.parseInt(select[i]));
+				pstmt.executeUpdate();
+			}
+			
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -468,7 +493,8 @@ public class Datasource {
 	 * @return
 	 */
 	public Utente getUtente(int id) {
-		// TODO Auto-generated method stub
+		// TODO String query = "SELECT * FROM utente u WHERE u.id=?";
+		// NON UTILIZZATO NEL PROTOTIPO
 		return null;
 	}
 
@@ -505,8 +531,8 @@ public class Datasource {
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
 		// TODO
-		String query = "SELECT dataisc from utente u where current_date-u.dataisc<=30";
-		query = "SELECT datai FROM prestito p WHERE current_date-p.datai<=30";
+		/*String query = "SELECT dataisc from utente u where current_date-u.dataisc<=30";
+		query = "SELECT datai FROM prestito p WHERE current_date-p.datai<=30";*/
 		//SELECT count(*) from utente u where current_date-u.dataisc<=30;
 
 		
