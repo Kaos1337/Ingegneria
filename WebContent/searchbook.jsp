@@ -96,12 +96,12 @@
 			  		<tr>
 			  			<th>Selezione</th>
 			  			<th>Titolo</th>
-			  			<th>Autore</th>
-			  			<th>Categoria</th>
-			  			<th>Categoria2</th>
+			  			<th>Prima Categoria</th>
+			  			<th>Seconda Categoria</th>
 			  			<th>Edizione</th>
 			  			<th>ISBN</th>
 			  			<th>Copertina</th>
+			  			<th>Utente</th>
 			  		</tr>
 			  		<% 
 					al = (ArrayList<LibroUtente>) request.getAttribute("lista_libri"); 
@@ -118,11 +118,8 @@
 						</td>
 						
 						<td>
-							<%= libroutente.getTitolo() %>
-						</td>
-						  
-						<td>
-						    <%= libroutente.getAutore() %>
+							<%= libroutente.getTitolo() %><br>
+							(<%= libroutente.getAutore() %>)
 						</td>
 						  
 						<td>
@@ -146,6 +143,11 @@
 							else{%>
 							<img src="<%= libroutente.getCopertina() %>" />
 							<%} %>
+						</td>
+						
+						<td>
+							<%= libroutente.getNome() + " " + libroutente.getCognome() %><br>
+							<%= libroutente.getCitta() %> (<%= libroutente.getProvincia() %>)
 						</td>
 					
 					</tr>
