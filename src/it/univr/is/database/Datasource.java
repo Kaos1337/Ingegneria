@@ -361,7 +361,7 @@ public class Datasource {
 	 * @return
 	 */
 	public ArrayList<Libro> searchLibri(int id) {
-		String query = "SELECT * FROM libro l WHERE l.utente=?";
+		String query = "SELECT * FROM libro l WHERE l.utente=? ORDER BY l.titolo";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -474,6 +474,9 @@ public class Datasource {
 				pstmt.executeUpdate();
 			}
 			
+			if(op==1){
+				String qq;// aggiungi tupla nei prestiti TODO
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -498,24 +501,53 @@ public class Datasource {
 		return null;
 	}
 
+	private int nGiorniMese(String aaaamm){
+		String[] ma = aaaamm.split("-");
+		
+		int anno = Integer.parseInt(ma[0]);
+		int mese = Integer.parseInt(ma[1]);
+		
+		if(mese == 10 || mese == 4 || mese == 6 || mese == 9)
+			return 30;
+		if (mese==2)
+			return (anno % 400 == 0 || (anno % 100 != 0 && anno % 4 == 0)) ? 29 : 28;
+		return 31;
+	}
+	
 	/**
 	 * Metodo che recupera i dati delle prenotazioni e iscrizioni assolute e li immette in un array secondo il
-	 * formato: col.anno/mese n.iscritti n.prenotazioni {{ 2010/1 , .......... , ................}, { 2010/2 ,
-	 * .......... , ...............},..}
+	 * formato:
+	 * col.anno/mese n.iscritti n.prenotazioni
+	 * {
+	 *   { 2010-01 , n_iscritti_2010-01 , n_prenotazioni_2010-01},
+	 *   { 2010-02 , .......... , ...............},
+	 * ..}
 	 * 
 	 * @param tutti_mesi
 	 *            ArrayList di stringhe formato: aaaa-mm
 	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi][3]
 	 */
-	public String[][] getStatAssolute(ArrayList<String> tutti_mesi) {
+	public String[][] getStatAssolute(ArrayList<String> tuttiMesi) {
+		// TODO
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-
-		// TODO Auto-generated method stub
+		for(int i = 0; i < tuttiMesi.size(); i++){
+			String fineMese = tuttiMesi.get(i)+"-"+nGiorniMese(tuttiMesi.get(i));
+			String inizioMese = tuttiMesi.get(i)+"-01";
+			String query = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese + "' and u.dataisc<='" + fineMese + "'";
+			System.out.println(query);
+		}
+		
 		return null;
 	}
-
+/*
+	public static void main(String[] args){
+		ArrayList<String> tuttiMesi = new ArrayList<String>();
+		tuttiMesi.add("2015-07");
+		new Datasource().getStatAssolute(tuttiMesi);
+	}
+*/	
 	/**
 	 * Metodo che recupera i dati delle prenotazioni e iscrizioni mensili e li immette in un array secondo il
 	 * formato: anno/mese/giorno n.iscritti n.prenotazioni
