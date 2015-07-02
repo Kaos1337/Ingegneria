@@ -96,7 +96,7 @@ public class LibroServlet extends AbstractServlet {
 	 */
 	private void searchLibri(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		bean = EntityFactory.getFactory(Constant.LIBRO).makeElement(request);
 		String citta=request.getParameter("citta");
 		String provincia= request.getParameter("provincia");
@@ -120,7 +120,7 @@ public class LibroServlet extends AbstractServlet {
 	private void aggiornaLibri(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String select[] = request.getParameterValues("selezione");
+		String[] select = request.getParameterValues("selezione");
 		int op=-1;
 	
 		

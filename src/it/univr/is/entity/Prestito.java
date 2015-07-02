@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Prestito extends Entity{
 	
+	private int id_libro;
 	private String datai ;
 	private String dataf ;
 	
 	public Prestito(){
 		this.setId(-1);
+		id_libro = -1 ;
 		datai = null ;
 		dataf = null ;
 	
@@ -38,6 +40,14 @@ public class Prestito extends Entity{
 
 	public void setDataf(String dataf) {
 		this.dataf = dataf;
+	}
+
+	public int getId_libro() {
+		return id_libro;
+	}
+
+	public void setId_libro(int id_libro) {
+		this.id_libro = id_libro;
 	}
 
 }

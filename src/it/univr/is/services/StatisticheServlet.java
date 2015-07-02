@@ -64,7 +64,7 @@ public class StatisticheServlet extends AbstractServlet {
 		
 		////////TEMP
 		
-		//request.setAttribute("dati_assoluti", ds.getStatAssolute(tutti_mesi));
+		request.setAttribute("dati_assoluti", ds.getStatAssolute(tutti_mesi));
 		//request.setAttribute("dati_mensili", ds.getStatMensili(trenta_giorni_da_oggi););
 		
 		String[][] mensili = {{"2013/1/1",  "10",   "4"},
@@ -78,7 +78,7 @@ public class StatisticheServlet extends AbstractServlet {
 								{"2013/1/9",  "4",   "7"},
 								{"2013/1/10",  "10",   "30"}};
 					
-		String[][] assoluti = {{"2013/1",  "100",   "40"},
+		/*String[][] assoluti = {{"2013/1",  "100",   "40"},
 								{"2013/2",  "100",   "400"},
 								{"2013/3",  "10",   "50"},
 								{"2013/4",  "5",   "5"},
@@ -87,9 +87,9 @@ public class StatisticheServlet extends AbstractServlet {
 								{"2013/7",  "70",   "30"},
 								{"2013/8",  "40",   "60"},
 								{"2013/9",  "40",   "70"},
-								{"2013/10",  "100",   "300"}};
+								{"2013/10",  "100",   "300"}};*/
 
-        request.setAttribute("dati_assoluti", assoluti);
+        //request.setAttribute("dati_assoluti", assoluti);
         request.setAttribute("dati_mensili", mensili);
 		////////TEMP
         
