@@ -459,14 +459,15 @@ public class Datasource {
 	 * inserisce anche una tupla nella relativa tabella
 	 * 
 	 * @param select contiene gli id dei libri
-	 * @param op operazione da eseguire
+	 * @param statoNuovo operazione da eseguire
 	 */
-	public void updateLibri(String[] select, int op) {
-		String query;
-		
+	public void updateLibri(String[] select, int statoNuovo) {
+		String query;		
+		int statoPrecedente = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		try {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			
@@ -477,32 +478,36 @@ public class Datasource {
 				// aggiungo la data di fine del prestito
 				
 				// se è stato prenotato due volte lo stesso libro, l'utente si è sbagliato
-				if(op != 1){
-					query = "SELECT l.stato FROM libro l WHERE l.id=?";
-					pstmt = con.prepareStatement(query);
-					pstmt.clearParameters();
-					pstmt.setInt(1, Integer.parseInt(select[i]));
-					rs = pstmt.executeQuery();
-					if(rs.next()){
-						if(rs.getInt(1) == 1){ // era prenotato!
-							// aggiungo la data di fine prestito
-							query = "UPDATE prestito SET dataf=current_date WHERE dataf is NULL and id_libro="+select[i];
-							pstmt = con.prepareStatement(query);
-							pstmt.clearParameters();
-							pstmt.executeUpdate();
-							System.out.println(query);
-						}
+				query = "SELECT l.stato FROM libro l WHERE l.id=?";
+				pstmt = con.prepareStatement(query);
+				pstmt.clearParameters();
+				pstmt.setInt(1, Integer.parseInt(select[i]));
+				rs = pstmt.executeQuery();
+				
+				if(rs.next())// sempre vero
+					statoPrecedente = rs.getInt(1);
+
+				if(statoNuovo != 1){ // non deve essere prenotato
+					if(statoPrecedente == 1){ // era prenotato!
+						// aggiungo la data di fine prestito
+						query = "UPDATE prestito SET dataf=current_date WHERE dataf is NULL and id_libro="+select[i];
+						pstmt = con.prepareStatement(query);
+						pstmt.clearParameters();
+						pstmt.executeUpdate();
 					}
-				} else { // aggiungo una prenotazione se prima non era prenotato
-					query = "INSERT INTO prestito (id_libro, datai) VALUES(?, current_date)";
-					pstmt = con.prepareStatement(query);
-					pstmt.clearParameters();
-					pstmt.setInt(1, Integer.parseInt(select[i]));
-					pstmt.executeUpdate();
+				} else {
+					// aggiungo una prenotazione se prima non era prenotato
+					if(statoPrecedente != 1){
+						query = "INSERT INTO prestito (id_libro, datai) VALUES(?, current_date)";
+						pstmt = con.prepareStatement(query);
+						pstmt.clearParameters();
+						pstmt.setInt(1, Integer.parseInt(select[i]));
+						pstmt.executeUpdate();
+					}
 				}
 				
 				// cambio infine lo stato del libro
-				query = "UPDATE libro SET stato=" + op + " WHERE id=" + select[i];
+				query = "UPDATE libro SET stato=" + statoNuovo + " WHERE id=" + select[i];
 				pstmt = con.prepareStatement(query);
 				pstmt.clearParameters();
 				pstmt.executeUpdate();
@@ -558,7 +563,7 @@ public class Datasource {
 	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi][3]
 	 */
 	public String[][] getStatAssolute(ArrayList<String> tuttiMesi) {
-		// TODO
+		// TODO http://www.w3schools.com/sql/sql_dates.asp
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
