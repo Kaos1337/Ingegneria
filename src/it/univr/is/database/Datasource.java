@@ -563,15 +563,6 @@ public class Datasource {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-
-		class Tripla {
-			public String l;
-			public String c;
-			public String r;
-			public String[] toArray(){
-				return new String[]{l, c, r};
-			}
-		}
 		
 		String[][] res = new String[tuttiMesi.size()][];
 		
@@ -584,8 +575,8 @@ public class Datasource {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for(int i = 0; i < tuttiMesi.size(); i++){
 				
-				Tripla t = new Tripla();
-				t.l = tuttiMesi.get(i);
+				Tripla<String> t = new Tripla<String>();
+				t.setLeft(tuttiMesi.get(i));
 				
 				String fineMese = tuttiMesi.get(i)+"-"+nGiorniMese(tuttiMesi.get(i));
 				String inizioMese = tuttiMesi.get(i)+"-01";
@@ -594,20 +585,18 @@ public class Datasource {
 
 				String query1 = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese + "' and u.dataisc<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query1);
-				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					t.c = rs.getString(1);
+					t.setCenter(rs.getString(1));
 				
 				
 				String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>='" + inizioMese + "' and p.dataf<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query2);
-				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 	
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					t.r = rs.getString(1);
+					t.setRight(rs.getString(1));
 				
 				res[i] = t.toArray();
 			}
@@ -639,15 +628,6 @@ public class Datasource {
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
 		
-		class Tripla {
-			public String l;
-			public String c;
-			public String r;
-			public String[] toArray(){
-				return new String[]{l, c, r};
-			}
-		}
-		
 		String[][] res = new String[trentaGiorni.size()][];
 		
 		Connection con = null;
@@ -657,24 +637,22 @@ public class Datasource {
 			
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for(int i = 0; i < trentaGiorni.size(); i++){
-				Tripla t = new Tripla();
-				t.l = trentaGiorni.get(i);
+				Tripla<String> t = new Tripla<String>();
+				t.setLeft(trentaGiorni.get(i));
 				
-				String query1 = "select count(*) from utente where dataisc='" + t.l + "'";
+				String query1 = "select count(*) from utente where dataisc='" + trentaGiorni.get(i) + "'";
 				pstmt = con.prepareStatement(query1);
-				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					t.c = rs.getString(1);
+					t.setCenter(rs.getString(1));
 				
-				String query2 = "select count(*) from prestito where datai='" + t.l + "'";
+				String query2 = "select count(*) from prestito where datai='" + trentaGiorni.get(i) + "'";
 				pstmt = con.prepareStatement(query2);
-				System.out.println(pstmt);
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) // magari 0, ma comunque sempre vero
-					t.r = rs.getString(1);
+					t.setRight(rs.getString(1));
 				
 				res[i] = t.toArray();
 				
