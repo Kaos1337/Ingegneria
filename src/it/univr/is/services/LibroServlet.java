@@ -84,37 +84,6 @@ public class LibroServlet extends AbstractServlet {
 		
 		request.setAttribute("lista_libri", ds.searchLibri((int) request.getSession().getAttribute("id")));
 		
-		///////////// TEMP
-		Libro libro = new Libro();
-		libro.setTitolo("V per vendetta");
-		libro.setAutore("Darkaos");
-		libro.setCategoria("Gore");
-		libro.setCategoria2("Telegram");
-		libro.setCopertina("}:-)");
-		libro.setEdizione("1 Edizione");
-		libro.setIsbn("1234567890AAA");
-		libro.setStato(0);
-		ArrayList<Libro> al= new ArrayList<Libro>();
-		al.add(libro);
-		libro=new Libro();
-		libro.setStato(1);
-		libro.setTitolo("Merda d'artista");
-		libro.setCopertina("img/cop/cop_2.jpg");
-		al.add(libro);
-		libro=new Libro();
-		libro.setStato(2);
-		libro.setTitolo("Mulino stanco");
-		al.add(libro);
-		libro=new Libro();
-		libro.setTitolo("It's all ogre");
-		al.add(libro);
-		libro=new Libro();
-		libro.setTitolo("Gregorio e grattacapi");
-		al.add(libro);
-		
-		request.setAttribute("lista_libri", al);
-		//////////////TEMP
-		
 		request.getRequestDispatcher("manage.jsp").forward(request, response);
 		
 	}
