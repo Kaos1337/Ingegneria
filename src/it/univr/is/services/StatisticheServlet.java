@@ -62,37 +62,9 @@ public class StatisticheServlet extends AbstractServlet {
 		ArrayList<String> trenta_giorni_da_oggi = this.getLast_30Days();
 		ArrayList<String> tutti_mesi = this.getAllMonthsFrom(2014,3);
 		
-		////////TEMP
-		
 		request.setAttribute("dati_assoluti", ds.getStatAssolute(tutti_mesi));
-		//request.setAttribute("dati_mensili", ds.getStatMensili(trenta_giorni_da_oggi););
+		request.setAttribute("dati_mensili", ds.getStatMensili(trenta_giorni_da_oggi));
 		
-		String[][] mensili = {{"2013/1/1",  "10",   "4"},
-								{"2013/1/2",  "10",   "40"},
-								{"2013/1/3",  "1",   "5"},
-								{"2013/1/4",  "0",   "0"},
-								{"2013/1/5",  "0",   "0"},
-								{"2013/1/6",  "19",   "20"},
-								{"2013/1/7",  "7",   "13"},
-								{"2013/1/8",  "4",   "16"},
-								{"2013/1/9",  "4",   "7"},
-								{"2013/1/10",  "10",   "30"}};
-					
-		/*String[][] assoluti = {{"2013/1",  "100",   "40"},
-								{"2013/2",  "100",   "400"},
-								{"2013/3",  "10",   "50"},
-								{"2013/4",  "5",   "5"},
-								{"2013/5",  "5",   "5"},
-								{"2013/6",  "90",   "200"},
-								{"2013/7",  "70",   "30"},
-								{"2013/8",  "40",   "60"},
-								{"2013/9",  "40",   "70"},
-								{"2013/10",  "100",   "300"}};
-
-        request.setAttribute("dati_assoluti", assoluti);*/
-        request.setAttribute("dati_mensili", mensili);
-		////////TEMP
-        
 		request.getRequestDispatcher("stats.jsp").forward(request, response);
 	
 		
