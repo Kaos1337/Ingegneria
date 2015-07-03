@@ -19,17 +19,17 @@
 		  <div class="form-group">
 		    <label for="nome">Nome</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare il proprio nome. Obbligatorio"></span>
 		    <!-- <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">  -->
-		    <input type="text" class="form-control" id="inputNome" name="nome" value="<%=request.getParameter("nome")%>">
+		    <input type="text" class="form-control" id="inputNome" name="nome" <%if (request.getParameter("nome") != null){%> value="<%=request.getParameter("nome")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="cognome">Cognome</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare il proprio cognome. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="cognome" value="<%=request.getParameter("cognome")%>">
+		    <input type="text" class="form-control" name="cognome" <%if (request.getParameter("cognome") != null){%> value="<%=request.getParameter("cognome")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="email">Email</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare la propria email. Obbligatorio"></span>
-		    <input type="email" class="form-control" name="email" value="<%=request.getParameter("email")%>">
+		    <input type="email" class="form-control" name="email" <%if (request.getParameter("nome") != null){%> value="<%=request.getParameter("email")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
@@ -39,32 +39,32 @@
 		  
 		  <div class="form-group">
 		    <label for="via">Via</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare la via. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="via" value="<%=request.getParameter("via")%>">
+		    <input type="text" class="form-control" name="via" <%if (request.getParameter("via") != null){%> value="<%=request.getParameter("via")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="civico">Civico</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare il numero civico."></span>
-		    <input type="text" class="form-control" name="civico" value="<%=request.getParameter("civico")%>">
+		    <input type="text" class="form-control" name="civico" <%if (request.getParameter("civico") != null){%> value="<%=request.getParameter("civico")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="cap">Cap</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare il codice di avviamento postale. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="cap" value="<%=request.getParameter("cap")%>">
+		    <input type="text" class="form-control" name="cap" <%if (request.getParameter("cap") != null){%> value="<%=request.getParameter("cap")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="citta">Città</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare la propria città. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="citta" value="<%=request.getParameter("citta")%>">
+		    <input type="text" class="form-control" name="citta" <%if (request.getParameter("citta") != null){%> value="<%=request.getParameter("citta")%>"<%}%>>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="provincia">Provincia</label><span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Specificare la propria provincia. Obbligatorio"></span>
-		    <input type="text" class="form-control" name="provincia" value="<%=request.getParameter("provincia")%>">
+		    <input type="text" class="form-control" name="provincia" <%if (request.getParameter("provincia") != null){%> value="<%=request.getParameter("provincia")%>"<%}%>>
 		  </div>
 		  
 		  <div class="checkbox">
 		    <label>
-		      <input type="checkbox"> Accetto i termini.
+		      <input type="checkbox" name="termini"> Accetto i termini.
 		    </label>
 		  </div>
 		  
