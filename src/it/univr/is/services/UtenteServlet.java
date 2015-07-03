@@ -450,6 +450,12 @@ public class UtenteServlet extends AbstractServlet {
 			error += "<li>provincia</li>";
 		}
 		
+		
+		if(request.getParameter("termini")==null) {
+			reqValid=false;
+			error += "<li>devi accettare i termini</li>";
+		}
+		
 		error+="</ul>";
 		
 		if(reqValid){
