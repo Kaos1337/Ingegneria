@@ -76,18 +76,17 @@ public class StatisticheServlet extends AbstractServlet {
 	 */
 	private ArrayList<String> getLast_30Days(){
 	    GregorianCalendar cal = new GregorianCalendar();
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    ArrayList<String> dates = new ArrayList<String>();
 	    
 	    int day = cal.get(GregorianCalendar.DAY_OF_MONTH);
 	    int month = cal.get(GregorianCalendar.MONTH);
 	    int year = cal.get(GregorianCalendar.YEAR);
 
-	        for(int i=day; i > (day-5); i--){
+	        for(int i=day; i > (day-30); i--){
+	        	
 	            cal.set(year, month, i);
-
-	            Date date = cal.getTime();
-	            dates.add(sdf.format(date));   
+	            dates.add(sdf.format(cal.getTime()));   
 	        }
 	    return dates;
 
