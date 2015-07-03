@@ -170,17 +170,17 @@ public class LibroServlet extends AbstractServlet {
 		}
 				
 		param = request.getParameter("categoria");
-		if(!(param.equals("Scienza") || param.equals("Fantasy") 
-				|| param.equals("Filosofia") || param.equals("Giallo") 
-				|| param.equals("Romanzo") ) ) {
+		if(!(param.equalsIgnoreCase("Scienza") || param.equalsIgnoreCase("Fantasy") 
+				|| param.equalsIgnoreCase("Filosofia") || param.equalsIgnoreCase("Giallo") 
+				|| param.equalsIgnoreCase("Romanzo") ) ) {
 			reqValid=false;
 			error += "<li>prima categoria</li>";
 		}
 		
 		param = request.getParameter("categoria2");
-		if(!(param.equals("Scienza") || param.equals("Fantasy") 
-				|| param.equals("Filosofia") || param.equals("Giallo") 
-				|| param.equals("Romanzo") || param.equals("") ) ) {
+		if(!(param.equalsIgnoreCase("Scienza") || param.equalsIgnoreCase("Fantasy") 
+				|| param.equalsIgnoreCase("Filosofia") || param.equalsIgnoreCase("Giallo") 
+				|| param.equalsIgnoreCase("Romanzo") || param.equals("") ) ) {
 			reqValid=false;
 			error += "<li>seconda categoria</li>";
 		}
@@ -192,10 +192,15 @@ public class LibroServlet extends AbstractServlet {
 		}
 				
 		param = request.getParameter("isbn").trim();
-		if(param.length()!=13 || param.charAt(0)<48 || param.charAt(0)>57 || Integer.parseInt(param)<=0) {
+		try{
+		if(param.length()!=13 || param.charAt(0)<48 || param.charAt(0)>57 || Long.parseLong(param)<=0) {
 			reqValid=false;
 			error += "<li>ISBN</li>";
 		}
+		}catch(NumberFormatException e){
+	        reqValid=false;
+			error += "<li>ISBN</li>";
+	    }
 				
 		error+="</ul>";
 		
