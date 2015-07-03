@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
@@ -83,7 +82,7 @@ public class StatisticheServlet extends AbstractServlet {
 	    int month = cal.get(GregorianCalendar.MONTH);
 	    int year = cal.get(GregorianCalendar.YEAR);
 
-	        for(int i=day; i > (day-30); i--){
+	    for(int i=day-29; i <= (day); i++){
 	        	
 	            cal.set(year, month, i);
 	            dates.add(sdf.format(cal.getTime()));   
