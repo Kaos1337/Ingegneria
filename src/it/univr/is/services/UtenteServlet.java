@@ -268,7 +268,7 @@ public class UtenteServlet extends AbstractServlet {
 				
 		param = request.getParameter("civico").trim();
 		try{
-		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)>0){
+		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)<=0){
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
@@ -280,7 +280,7 @@ public class UtenteServlet extends AbstractServlet {
 				
 		param = request.getParameter("cap").trim();
 		try{
-		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)>0 ) {
+		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)<=0 ) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
@@ -432,7 +432,7 @@ public class UtenteServlet extends AbstractServlet {
 				
 		param = request.getParameter("civico").trim();
 		try{
-		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)>0){
+		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)<=0){
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
@@ -444,7 +444,7 @@ public class UtenteServlet extends AbstractServlet {
 				
 		param = request.getParameter("cap").trim();
 		try{
-		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)>0 ) {
+		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)<=0 ) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
