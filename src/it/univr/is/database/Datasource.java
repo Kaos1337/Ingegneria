@@ -537,6 +537,19 @@ public class Datasource {
 		return null;
 	}
 
+	private int nGiorniMese(String aaaamm) {
+		String[] ma = aaaamm.split("-");
+
+		int anno = Integer.parseInt(ma[0]);
+		int mese = Integer.parseInt(ma[1]);
+
+		if (mese == 11 || mese == 4 || mese == 6 || mese == 9)
+			return 30;
+		if (mese == 2)
+			return (anno % 400 == 0 || (anno % 100 != 0 && anno % 4 == 0)) ? 29 : 28;
+		return 31;
+	}
+
 	/**
 	 * Metodo che recupera i dati delle prenotazioni e iscrizioni assolute e li immette in un array secondo il
 	 * formato: col.anno/mese n.iscritti n.prenotazioni { { 2010-01 , n_iscritti_2010-01 ,
@@ -551,38 +564,36 @@ public class Datasource {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		
-		int mesiDaProcessare = tuttiMesi.size()-1;
-		
-		String[][] res = new String[mesiDaProcessare][];
 
+		String[][] res = new String[tuttiMesi.size()][];
+
+		System.out.println(tuttiMesi.get(0));
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
-			for (int i = 0; i < mesiDaProcessare; i++) {
+			for (int i = 0; i < tuttiMesi.size(); i++) {
 
-				TriplaString t = new TriplaString();
+				Tripla<String> t = new Tripla<String>();
 				t.setLeft(tuttiMesi.get(i));
 
-				String inizioMese = tuttiMesi.get(i);
-				// all'ultimo ciclo qui viene utilizzato il mese in più
-				String inizioMeseSucc = tuttiMesi.get(i+1); 
+				String fineMese = tuttiMesi.get(i) + "-" + nGiorniMese(tuttiMesi.get(i));
+				String inizioMese = tuttiMesi.get(i) + "-01";
+
+				// System.out.println(inizioMese + " " + fineMese);
 
 				String query1 = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese
-						+ "' and u.dataisc<'" + inizioMeseSucc + "'";
+						+ "' and u.dataisc<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query1);
 				rs = pstmt.executeQuery();
 
-				System.out.println(pstmt);
-				
 				if (rs.next()) // magari 0, ma comunque sempre vero
 					t.setCenter(rs.getString(1));
 
 				String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>='" + inizioMese
-						+ "' and p.dataf<'" + inizioMeseSucc + "'";
+						+ "' and p.dataf<='" + fineMese + "'";
 				pstmt = con.prepareStatement(query2);
 				rs = pstmt.executeQuery();
 
@@ -627,7 +638,7 @@ public class Datasource {
 
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for (int i = 0; i < trentaGiorni.size(); i++) {
-				TriplaString t = new TriplaString();
+				Tripla<String> t = new Tripla<String>();
 				t.setLeft(trentaGiorni.get(i));
 
 				String query1 = "select count(*) from utente where dataisc='" + trentaGiorni.get(i) + "'";
