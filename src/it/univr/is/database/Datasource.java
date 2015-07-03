@@ -553,7 +553,7 @@ public class Datasource {
 		// porre una riga con valori numerici 0 nei conteggi
 		
 		int mesiDaProcessare = tuttiMesi.size()-1;
-		
+
 		String[][] res = new String[mesiDaProcessare][];
 
 		Connection con = null;
@@ -564,8 +564,8 @@ public class Datasource {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for (int i = 0; i < mesiDaProcessare; i++) {
 
-				TriplaString t = new TriplaString();
-				t.setLeft(tuttiMesi.get(i));
+				ArrayList<String> t = new ArrayList<String>();
+				t.add(tuttiMesi.get(i));
 
 				String inizioMese = tuttiMesi.get(i);
 				// all'ultimo ciclo qui viene utilizzato il mese in più
@@ -575,21 +575,19 @@ public class Datasource {
 						+ "' and u.dataisc<'" + inizioMeseSucc + "'";
 				pstmt = con.prepareStatement(query1);
 				rs = pstmt.executeQuery();
-
-				System.out.println(pstmt);
 				
 				if (rs.next()) // magari 0, ma comunque sempre vero
-					t.setCenter(rs.getString(1));
+					t.add(rs.getString(1));
 
 				String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>='" + inizioMese
 						+ "' and p.dataf<'" + inizioMeseSucc + "'";
 				pstmt = con.prepareStatement(query2);
 				rs = pstmt.executeQuery();
-
+				
 				if (rs.next()) // magari 0, ma comunque sempre vero
-					t.setRight(rs.getString(1));
+					t.add(rs.getString(1));
 
-				res[i] = t.toArray();
+				res[i] = t.toArray(res[i]);
 			}
 
 		} catch (Exception e) {
@@ -601,6 +599,7 @@ public class Datasource {
 				e.printStackTrace();
 			}
 		}
+
 		return res;
 	}
 
@@ -627,24 +626,25 @@ public class Datasource {
 
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			for (int i = 0; i < trentaGiorni.size(); i++) {
-				TriplaString t = new TriplaString();
-				t.setLeft(trentaGiorni.get(i));
 
+				ArrayList<String> t = new ArrayList<String>();
+				t.add(trentaGiorni.get(i));
+				
 				String query1 = "select count(*) from utente where dataisc='" + trentaGiorni.get(i) + "'";
 				pstmt = con.prepareStatement(query1);
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) // magari 0, ma comunque sempre vero
-					t.setCenter(rs.getString(1));
+					t.add(rs.getString(1));
 
 				String query2 = "select count(*) from prestito where datai='" + trentaGiorni.get(i) + "'";
 				pstmt = con.prepareStatement(query2);
 				rs = pstmt.executeQuery();
 
 				if (rs.next()) // magari 0, ma comunque sempre vero
-					t.setRight(rs.getString(1));
+					t.add(rs.getString(1));
 
-				res[i] = t.toArray();
+				res[i] = t.toArray(res[i]);
 
 			}
 
