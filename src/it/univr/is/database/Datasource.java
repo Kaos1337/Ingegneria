@@ -586,7 +586,8 @@ public class Datasource {
 				
 				if (rs.next()) // magari 0, ma comunque sempre vero
 					t.add(rs.getString(1));
-
+				
+				res[i] = new String[3];
 				res[i] = t.toArray(res[i]);
 			}
 
@@ -618,7 +619,7 @@ public class Datasource {
 		// porre una riga con valori numerici 0 nei conteggi
 
 		String[][] res = new String[trentaGiorni.size()][];
-
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -643,7 +644,7 @@ public class Datasource {
 
 				if (rs.next()) // magari 0, ma comunque sempre vero
 					t.add(rs.getString(1));
-
+				res[i] = new String[3];
 				res[i] = t.toArray(res[i]);
 
 			}
