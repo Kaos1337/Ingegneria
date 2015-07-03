@@ -580,7 +580,7 @@ public class Datasource {
 					t.add(rs.getString(1));
 
 				String query2 = "SELECT count(*) FROM prestito p WHERE p.datai>='" + inizioMese
-						+ "' and p.dataf<'" + inizioMeseSucc + "'";
+						+ "' and p.datai<'" + inizioMeseSucc + "'";
 				pstmt = con.prepareStatement(query2);
 				rs = pstmt.executeQuery();
 				
