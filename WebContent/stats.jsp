@@ -43,8 +43,8 @@
           
           <% String[][] arrayBid2 = (String[][]) request.getAttribute("dati_assoluti");
           
-			for(int i = 0; i < arrayBid[0].length; i++){ %>
-        	  	<%= "['" + arrayBid2[0][i] + "'," + arrayBid2[1][i] + "," + arrayBid2[2][i] + "]," %>
+			for(int i = 0; i < arrayBid.length; i++){ %>
+        	  	<%= "['" + arrayBid2[i][0] + "'," + arrayBid2[i][1] + "," + arrayBid2[i][2] + "]," %>
 			<% } %>
           
         ]);
