@@ -158,31 +158,41 @@ public class LibroServlet extends AbstractServlet {
 		boolean reqValid=true;
 		String error = "Dati non validi:<ul>";
 		
-		String param = request.getParameter("titolo");
-		if(param==null || param.length()>40) {
+		String param = request.getParameter("titolo").trim();
+		if(param.equals("") || param.length()>40) {
 			reqValid=false;
 			error += "<li>titolo</li>";}
 			
-		param = request.getParameter("autore");
-		if(param==null || param.length()<2 || param.length()>20) {
+		param = request.getParameter("autore").trim();
+		if(param.equals("") || param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>autore</li>";
 		}
 				
 		param = request.getParameter("categoria");
-		if(param==null ) {
+		if(!(param.equals("Scienza") || param.equals("Fantasy") 
+				|| param.equals("Filosofia") || param.equals("Giallo") 
+				|| param.equals("Romanzo") ) ) {
 			reqValid=false;
-			error += "<li>categoria</li>";
+			error += "<li>prima categoria</li>";
+		}
+		
+		param = request.getParameter("categoria2");
+		if(!(param.equals("Scienza") || param.equals("Fantasy") 
+				|| param.equals("Filosofia") || param.equals("Giallo") 
+				|| param.equals("Romanzo") || param.equals("") ) ) {
+			reqValid=false;
+			error += "<li>seconda categoria</li>";
 		}
 				
-		param = request.getParameter("edizione");
-		if(param!=null &&  (param.length()>10)) {
+		param = request.getParameter("edizione").trim();
+		if(param.length()>10) {
 			reqValid=false;
 			error += "<li>edizione</li>";
 		}
 				
-		param = request.getParameter("isbn");
-		if(param!=null && param.length()!=13) {
+		param = request.getParameter("isbn").trim();
+		if(param.length()!=13 || param.charAt(0)<48 || param.charAt(0)>57 || Integer.parseInt(param)>0) {
 			reqValid=false;
 			error += "<li>ISBN</li>";
 		}

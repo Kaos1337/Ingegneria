@@ -105,24 +105,24 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		String error = "Perfavore completa i campi:<ul>";
 		
-		String param = request.getParameter("messaggio");
-		if(param==null) {
+		String param = request.getParameter("messaggio").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>messaggio</li>";}
 			
-		param = request.getParameter("oggetto");
-		if(param==null) {
+		param = request.getParameter("oggetto").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>oggetto</li>";
 		}
 		
-		param = request.getParameter("nomecognome");
-		if(param==null) {
+		param = request.getParameter("nomecognome").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>nome e cognome</li>";}
 		
-		param = request.getParameter("email");
-		if(param==null) {
+		param = request.getParameter("email").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>email</li>";}
 		
@@ -155,13 +155,13 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		String error = "Perfavore completa i campi:<ul>";
 		
-		String param = request.getParameter("messaggio");
-		if(param==null) {
+		String param = request.getParameter("messaggio").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>messaggio</li>";}
 			
-		param = request.getParameter("oggetto");
-		if(param==null) {
+		param = request.getParameter("oggetto").trim();
+		if(param.equals("")) {
 			reqValid=false;
 			error += "<li>oggetto</li>";
 		}
@@ -243,58 +243,68 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		String error = "Dati non validi:<ul>";
 			
-		String param = request.getParameter("email");
-		if(param!=null && (!param.contains("@") || param.length()>40)) {
+		String param = request.getParameter("email").trim();
+		if( !param.contains("@") || param.length()>40) {
 			reqValid=false;
 			error += "<li>email</li>";}
 			
-		param = request.getParameter("password");
-		if(!param.equals("") && (param.length()<4 || param.length()>20)) {
+		param = request.getParameter("password").trim();
+		if(!param.equals("") && ( param.length()<4 || param.length()>20 )) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
-		
-		param=request.getParameter("password_attuale");		
-		if(param.equals("") || param.length()<4 || param.length()>20) {
+				
+		param=request.getParameter("password_attuale").trim();		
+		if(param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>password attuale</li>";
 		}
 		
-		param = request.getParameter("via");
-		if(param!=null && param.length()>20) {
+		param = request.getParameter("via").trim();
+		if(param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>via</li>";
 		}
 				
-		param = request.getParameter("civico");
-		if(param!=null && param.length()>3) {
+		param = request.getParameter("civico").trim();
+		try{
+		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)>0){
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
-		else
-			for (char c : param.toCharArray())
-				if ( (int) c < 48 || (int) c > 57){
-					reqValid=false;
-					error += "<li>civico</li>";
-				}
+	 	}catch(NumberFormatException e){
+	        reqValid=false;
+			error += "<li>civico</li>";
+	    }
+		
 				
-		param = request.getParameter("cap");
-		if(param!=null && param.length()!=5) {
+		param = request.getParameter("cap").trim();
+		try{
+		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)>0 ) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
+		}catch(NumberFormatException e){
+	        reqValid=false;
+			error += "<li>cap</li>";
+	    }
 				
-		param = request.getParameter("citta");
-		if(param!=null && param.length()>20) {
+		param = request.getParameter("citta").trim();
+		if(param.length()<1 || param.length()>20) {
 			reqValid=false;
 			error += "<li>citta</li>";
 		}
 				
 		param = request.getParameter("provincia");
-		if(param!=null && param.length()!=2) {
+		if(param.length()!=2) {
 			reqValid=false;
 			error += "<li>provincia</li>";
-		}
+		}else 
+			for( char c : param.toCharArray())
+				if(!(c>=41 && c<=90) && !(c>=97 && c<=122)){
+					reqValid=false;
+					error += "<li>provincia</li>";
+				}
 		
 		error+="</ul>";
 		
@@ -391,64 +401,74 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		String error = "Dati non validi:<ul>";
 		
-		String param = request.getParameter("nome");
-		if(param==null || param.length()<2 || param.length()>20) {
+		String param = request.getParameter("nome").trim();
+		if(param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>nome</li>";
 		}
 		
-		param = request.getParameter("cognome");
-		if(param==null || param.length()<4 || param.length()>20) {
+		param = request.getParameter("cognome").trim();
+		if(param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>cognome</li>";
 		}
 		
-		param = request.getParameter("email");
-		if(param==null || !param.contains("@") || param.length()>40) {
+		param = request.getParameter("email").trim();
+		if( !param.contains("@") || param.length()>40) {
 			reqValid=false;
 			error += "<li>email</li>";}
 			
-		param = request.getParameter("password");
-		if(param==null || param.length()<4 || param.length()>20) {
+		param = request.getParameter("password").trim();
+		if( param.length()<4 || param.length()>20) {
 			reqValid=false;
 			error += "<li>password</li>";
 		}
 				
-		param = request.getParameter("via");
-		if(param==null || param.length()>20) {
+		param = request.getParameter("via").trim();
+		if(param.length()<2 || param.length()>20) {
 			reqValid=false;
 			error += "<li>via</li>";
 		}
 				
-		param = request.getParameter("civico");
-		if(param==null || param.length()>3) {
+		param = request.getParameter("civico").trim();
+		try{
+		if( param.length()<1 || param.length()>4 || Integer.parseInt(param)>0){
 			reqValid=false;
 			error += "<li>civico</li>";
 		}
-		else
-			for (char c : param.toCharArray())
-				if ( (int) c < 48 || (int) c > 57){
-					reqValid=false;
-					error += "<li>civico</li>";
-				}
+	 	}catch(NumberFormatException e){
+	        reqValid=false;
+			error += "<li>civico</li>";
+	    }
+		
 				
-		param = request.getParameter("cap");
-		if(param==null || param.length()!=5) {
+		param = request.getParameter("cap").trim();
+		try{
+		if( param.length()!=5 || param.charAt(0)<48 || param.charAt(0)>57  || Integer.parseInt(param)>0 ) {
 			reqValid=false;
 			error += "<li>cap</li>";
 		}
+		}catch(NumberFormatException e){
+	        reqValid=false;
+			error += "<li>cap</li>";
+	    }
 				
-		param = request.getParameter("citta");
-		if(param==null || param.length()>20) {
+		param = request.getParameter("citta").trim();
+		if(param.length()<1 || param.length()>20) {
 			reqValid=false;
 			error += "<li>citta</li>";
 		}
 				
-		param = request.getParameter("provincia");
-		if(param==null || param.length()!=2) {
+		param = request.getParameter("provincia").trim();
+		if(param.length()!=2) {
 			reqValid=false;
 			error += "<li>provincia</li>";
-		}
+		}else 
+			for( char c : param.toCharArray())
+				if(!(c>=41 && c<=90) && !(c>=97 && c<=122)){
+					reqValid=false;
+					error += "<li>provincia</li>";
+				}
 		
 		
 		if(request.getParameter("termini")==null) {
