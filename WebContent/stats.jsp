@@ -25,7 +25,7 @@
 
         var options = {
           title: 'Statistiche Ultimi 30g',
-          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}, slantedText: true},
           vAxis: {minValue: 0}
         };
 
@@ -51,7 +51,7 @@
 
         var options = {
           title: 'Statistiche Globali',
-          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}},
+          hAxis: {title: 'Giorni',  titleTextStyle: {color: '#333'}, slantedText: true},
           vAxis: {minValue: 0}
         };
 

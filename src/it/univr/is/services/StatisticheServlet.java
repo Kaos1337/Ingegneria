@@ -61,7 +61,16 @@ public class StatisticheServlet extends AbstractServlet {
 		ArrayList<String> trenta_giorni_da_oggi = this.getLast_30Days();
 		ArrayList<String> tutti_mesi = this.getAllMonthsFrom(2014,3);
 		
-		request.setAttribute("dati_assoluti", ds.getStatAssolute(tutti_mesi));
+		String[][] mesi = ds.getStatAssolute(tutti_mesi);
+		
+		//tolgo il giorno dalla data per indicare i valori nel mese
+		String[] part;
+		for(String[] s : mesi) {
+			part = s[0].split("-");
+			s[0] = part[0]+"-"+part[1];
+		}
+		
+		request.setAttribute("dati_assoluti", mesi);
 		request.setAttribute("dati_mensili", ds.getStatMensili(trenta_giorni_da_oggi));
 		
 		request.getRequestDispatcher("stats.jsp").forward(request, response);
