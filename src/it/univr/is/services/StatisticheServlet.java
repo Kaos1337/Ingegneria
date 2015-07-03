@@ -129,15 +129,19 @@ public class StatisticheServlet extends AbstractServlet {
 		
 		ArrayList<String> dates = new ArrayList<String>();
 	
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM/dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         GregorianCalendar calendar = new GregorianCalendar(anno,mese-1,1);
         GregorianCalendar  actual = new GregorianCalendar();
 
+        dates.add(sdf.format(calendar.getTime()));
+        
         while (calendar.before(actual)) {
                 
-                dates.add(sdf.format(calendar.getTime()).split("/")[0]);
+        	calendar.add(Calendar.MONTH, 1);
+        	
+            dates.add(sdf.format(calendar.getTime()));
                 
-                calendar.add(Calendar.MONTH, 1);
+                
         }
             
         return dates;

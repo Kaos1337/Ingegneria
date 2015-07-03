@@ -556,8 +556,9 @@ public class Datasource {
 	 * n_prenotazioni_2010-01}, { 2010-02 , .......... , ...............}, ..}
 	 * 
 	 * @param tutti_mesi
-	 *            ArrayList di stringhe formato: aaaa-mm
-	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi][3]
+	 *            ArrayList di stringhe formato: aaaa-mm-01 con ultima data 
+	 *            rappresentante il mese successivo oggi, da escludere nel ritorno
+	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi-1][3]
 	 */
 	public String[][] getStatAssolute(ArrayList<String> tuttiMesi) {
 		// Nota: è necessario che esista per ogni giorno una riga,
