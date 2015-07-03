@@ -64,7 +64,7 @@ public class Datasource {
 		Utente usr = checkAndCastUtente(utente);
 		String query = "SELECT u.email FROM utente u where u.email=?";
 		boolean nuovoUtente = true;
-
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -82,15 +82,16 @@ public class Datasource {
 						+ "VALUES(?,?,?,?,?,?,?,?,?,current_date)";
 				pstmt = con.prepareStatement(query);
 				pstmt.clearParameters();
-				pstmt.setString(1, usr.getEmail());
-				pstmt.setString(2, usr.getNome());
-				pstmt.setString(3, usr.getCognome());
-				pstmt.setString(4, usr.getPassword());
-				pstmt.setString(5, usr.getVia());
-				pstmt.setInt(6, usr.getCivico());
-				pstmt.setString(7, usr.getCap());
-				pstmt.setString(8, usr.getCitta());
-				pstmt.setString(9, usr.getProvincia().toUpperCase());
+				int n = 1;
+				pstmt.setString(n++, usr.getEmail());
+				pstmt.setString(n++, usr.getNome());
+				pstmt.setString(n++, usr.getCognome());
+				pstmt.setString(n++, usr.getPassword());
+				pstmt.setString(n++, usr.getVia());
+				pstmt.setInt(n++, usr.getCivico());
+				pstmt.setString(n++, usr.getCap());
+				pstmt.setString(n++, usr.getCitta());
+				pstmt.setString(n, usr.getProvincia().toUpperCase());
 				pstmt.executeUpdate();
 			}
 
@@ -107,6 +108,37 @@ public class Datasource {
 		return nuovoUtente;
 	}
 
+	/**
+	 * Elimina un utente data la mail
+	 * Usata solo nel test
+	 * */
+	public boolean eliminaUtente(Entity utente) {
+		Utente usr = checkAndCastUtente(utente);
+		String query = "delete from utente where email=?";
+		boolean nuovoUtente = true;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setString(1, usr.getEmail());
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return nuovoUtente;
+	}
+	
 	/**
 	 * Effettua un controllo sull'esistenza della mail e se positivo ritorna true
 	 * 
@@ -189,16 +221,18 @@ public class Datasource {
 					pstmt = con.prepareStatement(query);
 					pstmt.clearParameters();
 					// aggiorno tutti i campi, se quelli nuovi sono a null prendo i valori attuali
-					pstmt.setString(1, nuovo.getEmail() == null ? attuale.getEmail() : nuovo.getEmail());
-					pstmt.setString(2, nuovo.getNome() == null ? attuale.getNome() : nuovo.getNome());
-					pstmt.setString(3, nuovo.getCognome() == null ? attuale.getCognome() : nuovo.getCognome());
-					pstmt.setString(4,
+					int n = 1;
+					pstmt.setString(n++, nuovo.getEmail() == null ? attuale.getEmail() : nuovo.getEmail());
+					pstmt.setString(n++, nuovo.getNome() == null ? attuale.getNome() : nuovo.getNome());
+					pstmt.setString(n++,
+							nuovo.getCognome() == null ? attuale.getCognome() : nuovo.getCognome());
+					pstmt.setString(n++,
 							nuovo.getPassword().equals("") ? attuale.getPassword() : nuovo.getPassword());
-					pstmt.setString(5, nuovo.getVia() == null ? attuale.getVia() : nuovo.getVia());
-					pstmt.setInt(6, nuovo.getCivico() <= 0 ? attuale.getCivico() : nuovo.getCivico());
-					pstmt.setString(7, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
-					pstmt.setString(8, nuovo.getCitta() == null ? attuale.getCitta() : nuovo.getCitta());
-					pstmt.setString(9,
+					pstmt.setString(n++, nuovo.getVia() == null ? attuale.getVia() : nuovo.getVia());
+					pstmt.setInt(n++, nuovo.getCivico() <= 0 ? attuale.getCivico() : nuovo.getCivico());
+					pstmt.setString(n++, nuovo.getCap() == null ? attuale.getCap() : nuovo.getCap());
+					pstmt.setString(n++, nuovo.getCitta() == null ? attuale.getCitta() : nuovo.getCitta());
+					pstmt.setString(n++,
 							nuovo.getProvincia() == null ? attuale.getProvincia() : nuovo.getProvincia());
 					pstmt.executeUpdate();
 				}
@@ -230,7 +264,7 @@ public class Datasource {
 		Utente u = checkAndCastUtente(utente);
 
 		String query = "INSERT INTO libro(titolo, utente, autore, "
-				+ "categoria, categoria2, stato, edizione, isbn, copertina) " + "VALUES(?,?,?,?,?,0,?,?,?)";
+				+ "categoria, categoria2, stato, edizione, isbn, copertina) VALUES(?,?,?,?,?,0,?,?,?)";
 		// disponibile, prenotato, non disponibile(non in prestito), eliminato
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -238,15 +272,15 @@ public class Datasource {
 			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
 			pstmt = con.prepareStatement(query);
 			pstmt.clearParameters();
-
-			pstmt.setString(1, l.getTitolo());
-			pstmt.setInt(2, u.getId());
-			pstmt.setString(3, l.getAutore());
-			pstmt.setString(4, l.getCategoria());
-			pstmt.setString(5, l.getCategoria2());
-			pstmt.setString(6, l.getEdizione());
-			pstmt.setString(7, l.getIsbn());
-			pstmt.setString(8, l.getCopertina());
+			int n = 1;
+			pstmt.setString(n++, l.getTitolo());
+			pstmt.setInt(n++, u.getId());
+			pstmt.setString(n++, l.getAutore());
+			pstmt.setString(n++, l.getCategoria());
+			pstmt.setString(n++, l.getCategoria2());
+			pstmt.setString(n++, l.getEdizione());
+			pstmt.setString(n++, l.getIsbn());
+			pstmt.setString(n++, l.getCopertina());
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -308,12 +342,12 @@ public class Datasource {
 			pstmt.setString(n++, provincia.equals("") ? "%" : provincia.toUpperCase());
 			pstmt.setString(n++, l.getTitolo().equals("") ? "%" : "%" + l.getTitolo() + "%");
 			pstmt.setString(n++, l.getAutore().equals("") ? "%" : "%" + l.getAutore() + "%");
-			
+
 			pstmt.setString(n++, l.getCategoria().equals("") ? "%" : "%" + l.getCategoria() + "%");
 			pstmt.setString(n++, l.getCategoria2().equals("") ? "%" : "%" + l.getCategoria2() + "%");
 			pstmt.setString(n++, l.getCategoria2().equals("") ? "%" : "%" + l.getCategoria2() + "%");
-			pstmt.setString(n++, l.getCategoria().equals("")? "%" : "%" + l.getCategoria() + "%");
-			
+			pstmt.setString(n++, l.getCategoria().equals("") ? "%" : "%" + l.getCategoria() + "%");
+
 			pstmt.setString(n++, l.getEdizione().equals("") ? "%" : "%" + l.getEdizione() + "%");
 			pstmt.setString(n++, l.getIsbn().equals("") ? "%" : "%" + l.getIsbn() + "%");
 
@@ -323,7 +357,7 @@ public class Datasource {
 			}
 
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				LibroUtente li = new LibroUtente();
 				n = 1;
@@ -340,7 +374,7 @@ public class Datasource {
 				li.setNome(rs.getString(n++));
 				li.setCognome(rs.getString(n++));
 				li.setCitta(rs.getString(n++));
-				li.setProvincia(rs.getString(n++));
+				li.setProvincia(rs.getString(n));
 				result.add(li);
 			}
 
@@ -377,16 +411,17 @@ public class Datasource {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Libro libro = new Libro();
-				libro.setId(rs.getInt(1));
-				libro.setTitolo(rs.getString(2));
-				libro.setUtente(rs.getInt(3));
-				libro.setAutore(rs.getString(4));
-				libro.setCategoria(rs.getString(5));
-				libro.setCategoria2(rs.getString(6));
-				libro.setStato(rs.getInt(7));
-				libro.setEdizione(rs.getString(8));
-				libro.setIsbn(rs.getString(9));
-				libro.setCopertina(rs.getString(10));
+				int n = 1;
+				libro.setId(rs.getInt(n++));
+				libro.setTitolo(rs.getString(n++));
+				libro.setUtente(rs.getInt(n++));
+				libro.setAutore(rs.getString(n++));
+				libro.setCategoria(rs.getString(n++));
+				libro.setCategoria2(rs.getString(n++));
+				libro.setStato(rs.getInt(n++));
+				libro.setEdizione(rs.getString(n++));
+				libro.setIsbn(rs.getString(n++));
+				libro.setCopertina(rs.getString(n));
 				result.add(libro);
 			}
 
@@ -428,18 +463,20 @@ public class Datasource {
 
 			if (rs.next()) {
 				loggato = new Utente();
-				loggato.setId(rs.getInt(1));
-				loggato.setEmail(rs.getString(2));
-				loggato.setNome(rs.getString(3));
-				loggato.setCognome(rs.getString(4));
-				loggato.setPassword(null); // password a null
-				loggato.setVia(rs.getString(6));
-				loggato.setCivico(rs.getInt(7));
-				loggato.setCap(rs.getString(8));
-				loggato.setCitta(rs.getString(9));
-				loggato.setProvincia(rs.getString(10));
-				loggato.setDataisc(rs.getString(11));
-				loggato.setRuolo(rs.getInt(12));
+				int n = 1;
+				loggato.setId(rs.getInt(n++));
+				loggato.setEmail(rs.getString(n++));
+				loggato.setNome(rs.getString(n++));
+				loggato.setCognome(rs.getString(n++));
+				loggato.setPassword(null);
+				n++;// password a null
+				loggato.setVia(rs.getString(n++));
+				loggato.setCivico(rs.getInt(n++));
+				loggato.setCap(rs.getString(n++));
+				loggato.setCitta(rs.getString(n++));
+				loggato.setProvincia(rs.getString(n++));
+				loggato.setDataisc(rs.getString(n++));
+				loggato.setRuolo(rs.getInt(n));
 			}
 
 		} catch (Exception e) {
@@ -543,16 +580,16 @@ public class Datasource {
 	 * n_prenotazioni_2010-01}, { 2010-02 , .......... , ...............}, ..}
 	 * 
 	 * @param tutti_mesi
-	 *            ArrayList di stringhe formato: aaaa-mm-01 con ultima data 
-	 *            rappresentante il mese successivo oggi, da escludere nel ritorno
+	 *            ArrayList di stringhe formato: aaaa-mm-01 con ultima data rappresentante il mese successivo
+	 *            oggi, da escludere nel ritorno
 	 * @return arraybidimensionale di dimensioni [lunghezza tutti_mesi-1][3]
 	 */
 	public String[][] getStatAssolute(ArrayList<String> tuttiMesi) {
 		// Nota: è necessario che esista per ogni giorno una riga,
 		// se non sono presenti risultati per un giorno
 		// porre una riga con valori numerici 0 nei conteggi
-		
-		int mesiDaProcessare = tuttiMesi.size()-1;
+
+		int mesiDaProcessare = tuttiMesi.size() - 1;
 
 		String[][] res = new String[mesiDaProcessare][];
 
@@ -569,13 +606,13 @@ public class Datasource {
 
 				String inizioMese = tuttiMesi.get(i);
 				// all'ultimo ciclo qui viene utilizzato il mese in più
-				String inizioMeseSucc = tuttiMesi.get(i+1); 
+				String inizioMeseSucc = tuttiMesi.get(i + 1);
 
 				String query1 = "SELECT count(*) FROM utente u WHERE u.dataisc>='" + inizioMese
 						+ "' and u.dataisc<'" + inizioMeseSucc + "'";
 				pstmt = con.prepareStatement(query1);
 				rs = pstmt.executeQuery();
-				
+
 				if (rs.next()) // magari 0, ma comunque sempre vero
 					t.add(rs.getString(1));
 
@@ -583,10 +620,10 @@ public class Datasource {
 						+ "' and p.datai<'" + inizioMeseSucc + "'";
 				pstmt = con.prepareStatement(query2);
 				rs = pstmt.executeQuery();
-				
+
 				if (rs.next()) // magari 0, ma comunque sempre vero
 					t.add(rs.getString(1));
-				
+
 				res[i] = new String[3];
 				res[i] = t.toArray(res[i]);
 			}
@@ -619,7 +656,7 @@ public class Datasource {
 		// porre una riga con valori numerici 0 nei conteggi
 
 		String[][] res = new String[trentaGiorni.size()][];
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -630,7 +667,7 @@ public class Datasource {
 
 				ArrayList<String> t = new ArrayList<String>();
 				t.add(trentaGiorni.get(i));
-				
+
 				String query1 = "select count(*) from utente where dataisc='" + trentaGiorni.get(i) + "'";
 				pstmt = con.prepareStatement(query1);
 				rs = pstmt.executeQuery();
