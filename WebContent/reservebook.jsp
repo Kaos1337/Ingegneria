@@ -24,7 +24,7 @@
 		<form action="MainServlet" method="POST">
 		  <div class="form-group">
 		    <label for="oggetto">Oggetto</label>
-		    <input type="text" class="form-control" name="oggetto" value="<%= request.getParameter("oggetto") %>">
+		    <input type="text" class="form-control" name="oggetto" <%if (request.getParameter("oggetto") != null){%> value="<%=request.getParameter("oggetto")%>"<%}%>>
 		  </div>
 		  
 		   <div class="form-group">
