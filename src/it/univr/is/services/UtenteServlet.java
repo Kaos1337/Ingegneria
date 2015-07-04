@@ -6,7 +6,6 @@ import it.univr.is.support.EntityFactory;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -243,12 +242,7 @@ public class UtenteServlet extends AbstractServlet {
 		boolean reqValid = true;
 		String error = "Dati non validi:<ul>";
 			
-		String param = request.getParameter("email").trim();
-		if( !param.contains("@") || param.length()>40) {
-			reqValid=false;
-			error += "<li>email</li>";}
-			
-		param = request.getParameter("password").trim();
+		String param = request.getParameter("password").trim();
 		if(!param.equals("") && ( param.length()<4 || param.length()>20 )) {
 			reqValid=false;
 			error += "<li>password</li>";
