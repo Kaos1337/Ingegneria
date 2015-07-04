@@ -192,7 +192,7 @@ public class LibroServlet extends AbstractServlet {
 				
 		param = request.getParameter("isbn").trim();
 		try{
-		if(param.length()!=13 || param.charAt(0)<48 || param.charAt(0)>57 || Long.parseLong(param)<=0) {
+		if(!param.equals("") && (param.length()!=13 || param.charAt(0)<48 || param.charAt(0)>57 || Long.parseLong(param)<=0)) {
 			reqValid=false;
 			error += "<li>ISBN</li>";
 		}
