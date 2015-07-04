@@ -25,8 +25,6 @@ public abstract class EntityFactory {
 			return new LibroFactory();
 		else if(string==Constant.LIBROUTENTE)
 			return new LibroUtenteFactory();
-		else if(string==Constant.PRESTITO)
-			return new PrestitoFactory();
 		else
 			return null;
 	}
