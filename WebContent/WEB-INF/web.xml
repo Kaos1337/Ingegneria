@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
     <description></description>
     <display-name>MainServlet</display-name>
@@ -19,4 +20,38 @@
     <servlet-name>MainServlet</servlet-name>
       <url-pattern>/MainServlet</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>UtenteServlet</display-name>
+    <servlet-name>UtenteServlet</servlet-name>
+    <servlet-class>it.univr.is.services.UtenteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UtenteServlet</servlet-name>
+      <url-pattern>/UtenteServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>LibroServlet</display-name>
+    <servlet-name>LibroServlet</servlet-name>
+    <servlet-class>it.univr.is.services.LibroServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LibroServlet</servlet-name>
+      <url-pattern>/LibroServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>StatisticheServlet</display-name>
+    <servlet-name>StatisticheServlet</servlet-name>
+    <servlet-class>it.univr.is.services.StatisticheServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatisticheServlet</servlet-name>
+      <url-pattern>/StatisticheServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

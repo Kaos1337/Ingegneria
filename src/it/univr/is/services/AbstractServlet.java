@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author marco
  *
  */
-@WebServlet("/AbstractServlet")
+
 abstract public class AbstractServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

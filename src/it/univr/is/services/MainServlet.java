@@ -35,7 +35,7 @@ public class MainServlet extends AbstractServlet {
 	/**
 	 * Determina a quale Servlet secondaria deve essere passata la richiesta
 	 */
-	public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// ottenimento tipo di richiesta
 				String tipoInterrogazione = request.getParameter("mode");
