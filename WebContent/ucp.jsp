@@ -57,6 +57,10 @@
 		  <button type="submit" class="btn btn-default" name="mode" value="modifica_utente">Modifica</button>
 		</form>
 		
+		<% if(request.getAttribute("info") != null){ %>
+		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+		<% } %>
+		
 		<% if(request.getAttribute("error") != null){ %>
 		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
 		<% } %>
