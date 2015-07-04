@@ -58,7 +58,7 @@
 		</form>
 		
 		<% if(request.getAttribute("info") != null){ %>
-		<br><p class="bg-danger"><%=request.getAttribute("error")%></p>
+		<br><p class="bg-danger"><%=request.getAttribute("info")%></p>
 		<% } %>
 		
 		<% if(request.getAttribute("error") != null){ %>
