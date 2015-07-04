@@ -309,8 +309,11 @@ public class UtenteServlet extends AbstractServlet {
 		
 			//se l'aggiornamento ha successo
 			if(ds.updateUtente(bean, EntityFactory.getFactory(Constant.UTENTE).makeElement(request.getSession()), request.getParameter("password_attuale"))){
-				request.getSession().invalidate();
-				request.getRequestDispatcher("index.jsp").forward(request, response);
+				request.getSession().removeAttribute("utente");
+				bean = ds.getUtente((int)request.getSession().getAttribute("id"));
+				request.getSession().setAttribute("utente", bean);
+				request.setAttribute("info", "Dati modificati con successo");
+				request.getRequestDispatcher("ucp.jsp").forward(request, response);
 				
 			}
 			
