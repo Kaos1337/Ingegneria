@@ -64,7 +64,7 @@ public class Datasource {
 		Utente usr = checkAndCastUtente(utente);
 		String query = "SELECT u.email FROM utente u where u.email=?";
 		boolean nuovoUtente = true;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -109,14 +109,12 @@ public class Datasource {
 	}
 
 	/**
-	 * Elimina un utente data la mail
-	 * Usata solo nel test
+	 * Elimina un utente data la mail Usata solo nel test
 	 * */
-	public boolean eliminaUtente(Entity utente) {
+	public void eliminaUtente(Entity utente) {
 		Utente usr = checkAndCastUtente(utente);
 		String query = "delete from utente where email=?";
-		boolean nuovoUtente = true;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -135,10 +133,8 @@ public class Datasource {
 				e.printStackTrace();
 			}
 		}
-
-		return nuovoUtente;
 	}
-	
+
 	/**
 	 * Effettua un controllo sull'esistenza della mail e se positivo ritorna true
 	 * 
@@ -569,9 +565,49 @@ public class Datasource {
 	 * @return
 	 */
 	public Utente getUtente(int id) {
-		// TODO String query = "SELECT * FROM utente u WHERE u.id=?";
-		// NON UTILIZZATO NEL PROTOTIPO
-		return null;
+		String query = "SELECT * FROM utente u WHERE u.id=?";
+
+		Utente loggato = new Utente();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = DriverManager.getConnection(dburl, dbusr, dbpswd);
+			pstmt = con.prepareStatement(query);
+			pstmt.clearParameters();
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				loggato = new Utente();
+				int n = 1;
+				loggato.setId(rs.getInt(n++));
+				loggato.setEmail(rs.getString(n++));
+				loggato.setNome(rs.getString(n++));
+				loggato.setCognome(rs.getString(n++));
+				loggato.setPassword(null);
+				n++;// password a null
+				loggato.setVia(rs.getString(n++));
+				loggato.setCivico(rs.getInt(n++));
+				loggato.setCap(rs.getString(n++));
+				loggato.setCitta(rs.getString(n++));
+				loggato.setProvincia(rs.getString(n++));
+				loggato.setDataisc(rs.getString(n++));
+				loggato.setRuolo(rs.getInt(n));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return loggato;
+
 	}
 
 	/**
