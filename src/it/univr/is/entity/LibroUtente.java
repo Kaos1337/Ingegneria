@@ -30,6 +30,7 @@ public class LibroUtente extends Libro {
 		setCategoria2(request.getParameter("categoria2"));
 		setEdizione(request.getParameter("edizione"));
 		setIsbn(request.getParameter("isbn"));
+		setCopertina(request.getParameter("copertina"));
 		setNome(request.getParameter("nome"));
 		setCognome(request.getParameter("cognome"));
 		setCitta(request.getParameter("citta"));
