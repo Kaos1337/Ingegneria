@@ -10,7 +10,7 @@
       <div class="jumbotron">
         <h2>Home</h2>
         <p><font size="3">
-        Benvenuto moderno sistema di geolocalizzazione culturale.<br>
+        Benvenuto nel moderno sistema di geolocalizzazione culturale.<br>
         Qui avrai la possibilità si inserire i libri che desideri imprestare.<br>
         Inoltre avrai l'opportunità di conoscere altri utenti con i tuoi stessi interessi.<br>
         Il servizio è gratuito e alla portata di tutti.
